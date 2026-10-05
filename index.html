@@ -43,7 +43,7 @@
   .obj{position:fixed;top:calc(max(10px,env(safe-area-inset-top)) + 52px);left:50%;transform:translateX(-50%);z-index:3;pointer-events:none;background:rgba(43,36,56,.5);color:#fff;border-radius:999px;padding:6px 16px;font-weight:800;font-size:clamp(.9rem,2.6vh,1.2rem);backdrop-filter:blur(4px)}
   .obj:empty{display:none}
   #controls[hidden]{display:none}
-  #moveZone{position:fixed;left:0;top:0;bottom:0;width:50%;z-index:2;touch-action:none}
+  #moveZone{position:fixed;left:0;top:0;bottom:0;width:50%;z-index:2;touch-action:none;pointer-events:auto}
   #moveZone .pad{position:absolute;left:max(16px,env(safe-area-inset-left));bottom:max(16px,env(safe-area-inset-bottom));width:min(40vw,240px);height:clamp(80px,20vh,120px);border-radius:999px;background:rgba(43,36,56,.28);backdrop-filter:blur(4px);display:flex;flex-direction:column;align-items:center;justify-content:center;color:rgba(255,255,255,.75);font-weight:800;pointer-events:none;transition:background .08s}
   #moveZone .pad span{font-size:clamp(1.6rem,6vh,2.4rem);line-height:1}
   #moveZone .pad small{font-size:clamp(.6rem,1.8vh,.8rem);opacity:.8}
@@ -378,7 +378,7 @@ function dropFlower(x,y){loose.push({x:x,y:y,vx:(Math.random()-0.5)*260,vy:-Math
 /* ---------- input: left thumb runs, right thumb hits ---------- */
 var input={run:false,back:false,runL:false};var pd=null;var holdTimer=null;
 var moveEl=$("moveZone");
-moveEl.addEventListener("pointerdown",function(e){e.preventDefault();if(state==="stunt"){stuntTap();return;}if(state==="hoop"){throwBall();return;}if(state!=="play"){canvasTap(e);return;}var l=toLogical(e);pd={x:l.x,y:l.y,t:performance.now(),id:e.pointerId,moved:false};moveEl.setPointerCapture(e.pointerId);
+moveEl.addEventListener("pointerdown",function(e){e.preventDefault();if(state==="stunt"){stuntTap();return;}if(state==="hoop"){throwBall();return;}if(state!=="play"){canvasTap(e);return;}var l=toLogical(e);pd={x:l.x,y:l.y,t:performance.now(),id:e.pointerId,moved:false};try{moveEl.setPointerCapture(e.pointerId);}catch(err){}
   holdTimer=setTimeout(function(){if(pd&&!pd.moved){input.run=true;moveEl.classList.add("on");}},140);});
 moveEl.addEventListener("pointermove",function(e){if(!pd)return;var l=toLogical(e);var dx=l.x-pd.x,dy=l.y-pd.y;if(Math.abs(dx)>40||Math.abs(dy)>40)pd.moved=true;
   if(dx<-60&&!pd.swiped){pd.swiped=true;input.run=false;moveEl.classList.remove("on");input.runL=true;moveEl.classList.add("on");}if(dy<-70&&!pd.swiped){pd.swiped=true;jump();}});
