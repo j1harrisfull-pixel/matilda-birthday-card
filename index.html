@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Matilda">
+<meta name="theme-color" content="#ff5fa2">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <title>Black Belt Birthday</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,14 +28,9 @@
   #beltPip{width:26px;height:12px;border-radius:4px;background:#f5f2ea;box-shadow:0 0 0 2px rgba(255,255,255,.5)}
   #controls{position:fixed;inset:0;z-index:4;pointer-events:none}
   #controls[hidden]{display:none}
-  #movePad{position:absolute;left:max(14px,env(safe-area-inset-left));bottom:max(14px,env(safe-area-inset-bottom));width:min(44vw,300px);height:clamp(84px,22vh,130px);border-radius:999px;background:rgba(43,36,56,.28);pointer-events:auto;touch-action:none;display:flex;backdrop-filter:blur(4px)}
-  #movePad span{flex:1;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:clamp(1.6rem,6vh,2.6rem);font-weight:800;border-radius:999px;transition:background .06s}
-  #movePad.l span:first-child,#movePad.r span:last-child{background:rgba(255,255,255,.28);color:#fff}
   .act{position:absolute;bottom:max(14px,env(safe-area-inset-bottom));width:clamp(84px,20vh,124px);height:clamp(84px,20vh,124px);border-radius:50%;border:0;pointer-events:auto;touch-action:none;font-family:inherit;font-weight:800;font-size:clamp(.9rem,3vh,1.25rem);color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.35);
     box-shadow:0 8px 0 rgba(0,0,0,.35),inset 0 -7px 0 rgba(0,0,0,.22),inset 0 3px 0 rgba(255,255,255,.28);transition:transform .05s,box-shadow .05s}
   .act.down{transform:translateY(6px);box-shadow:0 2px 0 rgba(0,0,0,.35),inset 0 -2px 0 rgba(0,0,0,.22)}
-  #chopBtn{right:max(14px,env(safe-area-inset-right));background:radial-gradient(circle at 35% 30%,#ff7070,#c8302f)}
-  #jumpBtn{right:calc(max(14px,env(safe-area-inset-right)) + clamp(84px,20vh,124px) + 16px);bottom:calc(max(14px,env(safe-area-inset-bottom)) + 30px);background:radial-gradient(circle at 35% 30%,#6aa8ff,#2f66b8)}
   .items{position:fixed;top:max(10px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));display:flex;gap:6px;z-index:3;pointer-events:none;background:rgba(43,36,56,.5);border-radius:999px;padding:6px 12px;backdrop-filter:blur(4px)}
   .items span{font-size:clamp(1.1rem,3.2vh,1.5rem);opacity:.3;filter:grayscale(1);transition:all .3s}
   .items span.got{opacity:1;filter:none;transform:scale(1.15)}
@@ -37,17 +38,17 @@
   .chip.bump{animation:chipbump .35s ease-out}
   @keyframes chipbump{30%{transform:scale(1.25)}100%{transform:scale(1)}}
   @keyframes beltflash{0%{transform:scale(1)}20%{transform:scale(2.2);box-shadow:0 0 0 6px #fff}100%{transform:scale(1)}}
-  #moveZone .pad span{font-size:clamp(1.3rem,5vh,2rem)}
-  body.desk #moveZone{width:35%}
-  body.desk #moveZone .pad{width:220px;height:110px}
   .obj{position:fixed;top:calc(max(10px,env(safe-area-inset-top)) + 52px);left:50%;transform:translateX(-50%);z-index:3;pointer-events:none;background:rgba(43,36,56,.5);color:#fff;border-radius:999px;padding:6px 16px;font-weight:800;font-size:clamp(.9rem,2.6vh,1.2rem);backdrop-filter:blur(4px)}
   .obj:empty{display:none}
   #controls[hidden]{display:none}
-  #moveZone{position:fixed;left:0;top:0;bottom:0;width:50%;z-index:2;touch-action:none;pointer-events:auto}
-  #moveZone .pad{position:absolute;left:max(16px,env(safe-area-inset-left));bottom:max(16px,env(safe-area-inset-bottom));width:min(40vw,240px);height:clamp(80px,20vh,120px);border-radius:999px;background:rgba(43,36,56,.28);backdrop-filter:blur(4px);display:flex;flex-direction:column;align-items:center;justify-content:center;color:rgba(255,255,255,.75);font-weight:800;pointer-events:none;transition:background .08s}
-  #moveZone .pad span{font-size:clamp(1.6rem,6vh,2.4rem);line-height:1}
-  #moveZone .pad small{font-size:clamp(.6rem,1.8vh,.8rem);opacity:.8}
-  #moveZone.on .pad{background:rgba(255,255,255,.35);color:#fff}
+  /* left thumb: LEFT and RIGHT side by side, JUMP above; every control opts back in to touches itself */
+  :root{--cs:clamp(64px,19vh,96px);--cg:12px;--cl:max(16px,env(safe-area-inset-left));--cb:max(16px,env(safe-area-inset-bottom))}
+  .ctl{position:fixed;z-index:3;pointer-events:auto;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;border:0;border-radius:24px;width:var(--cs);height:var(--cs);font-family:inherit;font-weight:800;color:#fff;font-size:clamp(1.5rem,6vh,2.4rem);line-height:1;text-shadow:0 2px 0 rgba(0,0,0,.35);background:radial-gradient(circle at 35% 30%,#8c88b8,#4f4a7a);box-shadow:0 7px 0 rgba(0,0,0,.35),inset 0 -6px 0 rgba(0,0,0,.2),inset 0 3px 0 rgba(255,255,255,.3);transition:transform .05s,box-shadow .05s,filter .05s}
+  .ctl.down{transform:translateY(6px) scale(.95);box-shadow:0 1px 0 rgba(0,0,0,.35),inset 0 -2px 0 rgba(0,0,0,.2),0 0 0 5px rgba(255,255,255,.75);filter:brightness(1.3)}
+  #leftBtn{left:var(--cl);bottom:var(--cb)}
+  #rightBtn{left:calc(var(--cl) + var(--cs) + var(--cg));bottom:var(--cb)}
+  #jumpBtn{left:calc(var(--cl) + (var(--cs) + var(--cg)) / 2);bottom:calc(var(--cb) + var(--cs) + var(--cg) + 6px);border-radius:50%;font-size:clamp(.95rem,3.2vh,1.25rem);background:radial-gradient(circle at 35% 30%,#6aa8ff,#2f66b8)}
+  .act{pointer-events:auto}
   .act{position:fixed;bottom:max(16px,env(safe-area-inset-bottom));width:clamp(84px,20vh,124px);height:clamp(84px,20vh,124px);border-radius:50%;border:0;z-index:3;touch-action:none;font-family:inherit;font-weight:800;font-size:clamp(.9rem,3vh,1.2rem);color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.35);box-shadow:0 8px 0 rgba(0,0,0,.35),inset 0 -7px 0 rgba(0,0,0,.22),inset 0 3px 0 rgba(255,255,255,.28);transition:transform .05s,box-shadow .05s}
   .act.down{transform:translateY(6px);box-shadow:0 2px 0 rgba(0,0,0,.35),inset 0 -2px 0 rgba(0,0,0,.22)}
   #kickBtn{right:max(16px,env(safe-area-inset-right));background:radial-gradient(circle at 35% 30%,#ff9a3d,#d9641a)}
@@ -73,12 +74,17 @@
   .btn:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
   .pulse{animation:pulse 1.4s ease-in-out infinite}
   @keyframes pulse{50%{transform:scale(1.06)}}
+  /* short landscape phones: everything on the start screen must fit without cropping */
+  @media (max-height:520px){.screen{padding:max(8px,env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(24px,env(safe-area-inset-left));overflow-y:auto;justify-content:center}
+    #startScreen h1{font-size:clamp(1.4rem,8.5vh,2.6rem);margin-bottom:4px}#startScreen .sub{font-size:clamp(.75rem,3.6vh,1rem);margin:4px auto 8px;max-width:640px}
+    #startScreen .btn{padding:10px 32px;font-size:clamp(1rem,5vh,1.3rem)}#startScreen .hint{margin-top:6px;font-size:clamp(.65rem,3.2vh,.9rem);max-width:700px}}
   .hint{margin-top:18px;font-weight:700;color:var(--ink);opacity:.75;font-size:clamp(.85rem,2.4vh,1.1rem)}
   #rotate{position:fixed;inset:0;z-index:9;background:var(--candy);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-weight:800;font-size:clamp(1.3rem,5vw,2rem);padding:30px}
   #rotate[hidden]{display:none}
   #rotate .ph{font-size:5rem;animation:turn 1.6s ease-in-out infinite}
   @keyframes turn{0%,100%{transform:rotate(0)}50%{transform:rotate(90deg)}}
   #endScreen{background:linear-gradient(rgba(43,36,56,0),rgba(43,36,56,.88) 38%);padding-top:28px;bottom:0;padding-bottom:max(14px,env(safe-area-inset-bottom))}
+  body.onStart .hud,body.onStart .items,body.onStart .obj,body.onStart #mute{visibility:hidden}
   body.cardMode .hud,body.cardMode .items,body.cardMode .obj,body.cardMode #controls{display:none}
   .card{width:min(560px,100%);background:var(--cream);border:4px solid #fff;border-radius:28px;box-shadow:0 14px 0 rgba(43,36,56,.22);padding:22px}
   video{width:100%;max-height:52vh;border-radius:16px;border:4px solid #fff;background:#000}
@@ -95,7 +101,7 @@
 <div class="obj" id="objective"></div>
 <button id="skip" hidden>Skip</button>
 <button id="mute" title="Sound">🔊</button>
-<div id="controls" hidden><div id="moveZone"><div class="pad"><span>▶ RUN</span><small id="padHint">hold to run · tap to jump</small></div></div>
+<div id="controls" hidden><button class="ctl" id="leftBtn" aria-label="Left">◀</button><button class="ctl" id="rightBtn" aria-label="Right">▶</button><button class="ctl" id="jumpBtn">JUMP</button>
 <button class="act" id="punchBtn">PUNCH</button>
 <button class="act" id="kickBtn">KICK</button>
 <button class="act" id="stormBtn" title="Dahlia Storm"><span class="fl">🌸</span><small>STORM</small></button></div>
@@ -105,7 +111,8 @@
   <p class="sub">The Grumpy Goat and his gang have taken over the party. Get across town, pick dahlias for Mummy, get past the gang, and do three STUNTS on the way.</p>
   <button class="btn pulse" id="startBtn">Tap to play</button>
   <button class="btn" id="contBtn" hidden style="margin-top:12px;background:var(--blue)">Continue</button>
-  <p class="hint" id="hint">Tap the left side to jump. Swipe left to dodge. Three punches in a row is an uppercut.</p>
+  <p class="hint" id="iosTip" hidden>For full screen on iPhone: tap Share, then Add to Home Screen.</p>
+  <p class="hint" id="hint">Hold ◀ or ▶ to walk, tap JUMP to jump. PUNCH and KICK to fight, hold KICK to block. Swipe down to dodge. Three punches make an uppercut.</p>
 </div>
 <div id="endScreen" hidden><p class="from" id="score"></p><button class="btn" id="againBtn">Play again</button><p class="from" id="fromLine"></p></div>
 <script>
@@ -357,10 +364,12 @@ function reset(startLevel){
   actors.push({k:"boss",who:"duck",x:8500,home:8500,hp:9,maxhp:9,st:"sleep",t:0,face:-1,beltIdx:4,name:"THE GRUMPY GOAT",item:"cake",line:"Baaa. MY party. Go home.",y:0,oy:0,vy:0,hits:0});
   var fx=800;while(fx<LEVEL_END-900){var near=false;[[BUS_X-350,BUS_X+350],[LOOP.x-300,LOOP.x+300],[FAMILY_X-300,FAMILY_X+300],[5300,6100],[6200,6500],[7600,9000]].forEach(function(r){if(fx>r[0]&&fx<r[1])near=true;});
     if(!near){var n=3+Math.floor(Math.random()*3);for(var j=0;j<n;j++){var xx=fx+j*44;var hh=(j%2?70:30)+Math.random()*50;flowers.push({x:xx,y:groundY(xx)-hh,got:false,t:Math.random()*6});}}fx+=260+Math.random()*240;}
+  if(levelIdx>0){actors.forEach(function(a){if(a.k==="dummy"||a.k==="runcat"||(a.k==="boss"&&a.who==="cat")||(a.k==="ninja"&&a.x<3000)){a.dead=true;a.gone=true;}if(a.k==="board")a.broken=true;});lesson.dummies=2;lesson.spring=true;}
+  if(levelIdx>1){presentCount=PRESENTS_NEEDED;actors.forEach(function(a){if(a.k==="bush")a.open=true;if(a.k==="kid")a.st="done";if((a.k==="boss"&&a.who==="ninja")||(a.k==="ninja"&&a.x<6200)){a.dead=true;a.gone=true;}});}
   totalFlowers=flowers.length+4;setObjective(levelIdx===0?RUN_HINT+". Punch the dummies":(levelIdx===1?"Find the presents 0/4":"Climb to the roof"));updateHUD();
 }
 function mk(k,x,v){return {k:k,x:x,x0:x,v:v||"",t:Math.random()*6,hp:k==="pigeon"?1:k==="dummy"?2:(k==="ninja"?(v==="big"?5:(v==="fast"?2:3)):2),st:"patrol",face:-1,vy:0,oy:0,hurtT:0,flash:0,dead:false};}
-var RUN_HINT=TOUCH?"Hold left side to run":"Hold → to run";
+var RUN_HINT=TOUCH?"Hold ▶ to run":"Hold → to run";
 function setObjective(t){objective=t;$("objective").textContent=t;}
 function chipBump(id){var e=$(id);if(!e||!e.parentNode)return;var c=e.parentNode;c.classList.remove("bump");void c.offsetWidth;c.classList.add("bump");}
 function updateHUD(){var sb=$("stormBtn");if(sb){var ch=bouquet>=stormCost();if(ch&&!sb.classList.contains("charged")){sb.classList.add("charged");}if(!ch)sb.classList.remove("charged");}$("flowerCount").textContent=bouquet+"/"+BOUQUET_GOAL;$("beltPip").style.background=belt>=0?BELTS[belt].c:"#f5f2ea";$("beltLabel").textContent=belt>=0?BELTS[belt].n:"WHITE BELT";for(var k in ITEMS){var e=$("it_"+k);if(e)e.classList.toggle("got",!!got[k]);}}
@@ -377,13 +386,16 @@ function dropFlower(x,y){loose.push({x:x,y:y,vx:(Math.random()-0.5)*260,vy:-Math
 
 /* ---------- input: left thumb runs, right thumb hits ---------- */
 var input={run:false,back:false,runL:false};var pd=null;var holdTimer=null;
-var moveEl=$("moveZone");
-moveEl.addEventListener("pointerdown",function(e){e.preventDefault();if(state==="stunt"){stuntTap();return;}if(state==="hoop"){throwBall();return;}if(state!=="play"){canvasTap(e);return;}var l=toLogical(e);pd={x:l.x,y:l.y,t:performance.now(),id:e.pointerId,moved:false};try{moveEl.setPointerCapture(e.pointerId);}catch(err){}
-  holdTimer=setTimeout(function(){if(pd&&!pd.moved){input.run=true;moveEl.classList.add("on");}},140);});
-moveEl.addEventListener("pointermove",function(e){if(!pd)return;var l=toLogical(e);var dx=l.x-pd.x,dy=l.y-pd.y;if(Math.abs(dx)>40||Math.abs(dy)>40)pd.moved=true;
-  if(dx<-60&&!pd.swiped){pd.swiped=true;input.run=false;moveEl.classList.remove("on");input.runL=true;moveEl.classList.add("on");}if(dy<-70&&!pd.swiped){pd.swiped=true;jump();}});
-function endMove(e){if(!pd)return;clearTimeout(holdTimer);var held=performance.now()-pd.t;if(held<200&&!pd.moved&&!pd.swiped)jump();pd=null;input.run=false;input.runL=false;moveEl.classList.remove("on");}
-["pointerup","pointercancel"].forEach(function(ev){moveEl.addEventListener(ev,endMove);});
+/* left thumb buttons: hold LEFT or RIGHT to walk that way (she turns to face it), tap JUMP */
+function holdBtn(id,on,off){var el=$(id);
+  el.addEventListener("pointerdown",function(e){e.preventDefault();try{el.setPointerCapture(e.pointerId);}catch(err){}el.classList.add("down");on();});
+  ["pointerup","pointercancel","lostpointercapture"].forEach(function(ev){el.addEventListener(ev,function(){if(!el.classList.contains("down"))return;el.classList.remove("down");off();});});}
+holdBtn("leftBtn",function(){if(state==="stunt"){stuntTap();return;}idleT=0;input.runL=true;},function(){input.runL=false;});
+holdBtn("rightBtn",function(){if(state==="stunt"){stuntTap();return;}idleT=0;input.run=true;},function(){input.run=false;});
+holdBtn("jumpBtn",function(){if(state==="stunt"){stuntTap();return;}if(state==="hoop"){throwBall();return;}if(state==="play"){idleT=0;pd=true;jump();}},function(){pd=null;});
+/* swipe down anywhere on the scene to dodge */
+var cvSwipe=null;cv.addEventListener("pointerdown",function(e){cvSwipe={y:e.clientY,t:performance.now()};});
+cv.addEventListener("pointerup",function(e){if(cvSwipe&&state==="play"&&e.clientY-cvSwipe.y>50&&performance.now()-cvSwipe.t<500)swipe(-1);cvSwipe=null;});
 function bindHit(id,fn,blk){var el=$(id);el.addEventListener("pointerdown",function(e){e.preventDefault();el.classList.add("down");if(state==="stunt"){stuntTap();return;}if(state==="hoop"){throwBall();return;}if(state==="play"){idleT=0;fn();if(blk){clearTimeout(holdT[id]);holdT[id]=setTimeout(function(){if(el.classList.contains("down")&&state==="play")startBlock();},320);}}});
   ["pointerup","pointercancel","pointerleave"].forEach(function(ev){el.addEventListener(ev,function(){el.classList.remove("down");if(blk){clearTimeout(holdT[id]);endBlock();}});});}
 bindHit("punchBtn",punch,false);bindHit("kickBtn",kick,true);
@@ -391,8 +403,8 @@ $("stormBtn").addEventListener("pointerdown",function(e){e.preventDefault();if(s
 function canvasTap(e){var l=toLogical(e);if(state==="intro"&&intro&&intro.t>0.5)nextCard();else if(state==="card")cardTap(l);}
 cv.addEventListener("pointerdown",function(e){e.preventDefault();if(state==="stunt"){stuntTap();return;}if(state==="hoop"){throwBall();return;}if(state!=="play"){canvasTap(e);return;}var l=toLogical(e);tapThing(l);});
 window.addEventListener("keydown",function(e){if(e.repeat)return;var c=e.code;if(state==="intro"&&intro&&intro.t>0.5&&(c==="Space"||c==="Enter")){nextCard();return;}
-  if(state==="stunt"&&(c==="Space"||c==="KeyX"||c==="KeyC"||c==="Enter"||c==="ArrowUp"||c==="KeyW")){e.preventDefault();stuntTap();return;}if(state==="hoop"&&(c==="Space"||c==="KeyX"||c==="KeyC"||c==="Enter")){throwBall();return;}if(state!=="play")return;idleT=0;if(c==="ArrowRight"||c==="KeyD")input.run=true;if(c==="ArrowLeft"||c==="KeyA")input.runL=true;if(c==="ArrowDown"||c==="KeyS")swipe(-1);if(c==="Space"||c==="ArrowUp"||c==="KeyW"){e.preventDefault();jump();}if(c==="KeyX"||c==="KeyJ"||c==="KeyZ")punch();if(c==="KeyB"||c==="ShiftLeft"||c==="ShiftRight")storm();if(c==="KeyC"||c==="KeyK"||c==="KeyV"){kick();clearTimeout(holdT.key);holdT.key=setTimeout(function(){if(keyKick&&state==="play")startBlock();},320);keyKick=true;}});
-var keyKick=false;window.addEventListener("keyup",function(e){var c=e.code;if(c==="ArrowRight"||c==="KeyD")input.run=false;if(c==="ArrowLeft"||c==="KeyA")input.runL=false;if(c==="KeyC"||c==="KeyK"||c==="KeyV"){keyKick=false;clearTimeout(holdT.key);endBlock();}});
+  if(state==="stunt"&&(c==="Space"||c==="KeyX"||c==="KeyC"||c==="Enter"||c==="ArrowUp"||c==="KeyW")){e.preventDefault();stuntTap();return;}if(state==="hoop"&&(c==="Space"||c==="KeyX"||c==="KeyC"||c==="Enter")){throwBall();return;}if(state!=="play")return;idleT=0;if(c==="ArrowRight"||c==="KeyD")input.run=true;if(c==="ArrowLeft"||c==="KeyA")input.runL=true;if(c==="ArrowDown"||c==="KeyS")swipe(-1);if(c==="Space"||c==="ArrowUp"||c==="KeyW"){e.preventDefault();pd=true;jump();}if(c==="KeyX"||c==="KeyJ"||c==="KeyZ")punch();if(c==="KeyB"||c==="ShiftLeft"||c==="ShiftRight")storm();if(c==="KeyC"||c==="KeyK"||c==="KeyV"){kick();clearTimeout(holdT.key);holdT.key=setTimeout(function(){if(keyKick&&state==="play")startBlock();},320);keyKick=true;}});
+var keyKick=false;window.addEventListener("keyup",function(e){var c=e.code;if(c==="Space"||c==="ArrowUp"||c==="KeyW")pd=null;if(c==="ArrowRight"||c==="KeyD")input.run=false;if(c==="ArrowLeft"||c==="KeyA")input.runL=false;if(c==="KeyC"||c==="KeyK"||c==="KeyV"){keyKick=false;clearTimeout(holdT.key);endBlock();}});
 function tapRing(x,y,c){taps.push({x:x,y:y,t:0,c:c||"#fff"});}
 function tappables(){var list=[];for(var i=0;i<actors.length;i++){var a=actors[i];if(a.gone||a.dead||a.hidden)continue;
   if(a.k==="bush"&&!a.open)list.push({a:a,x:a.x,y:groundY(a.x)-40,r:70,kind:"bush"});}
@@ -497,12 +509,12 @@ function updatePlayer(dt){
       p.vx+=(tgt-p.vx)*Math.min(1,dt*(mv?10:14));}
   }
   p.x+=p.vx*dt;if(stunt&&stunt.live&&stunt.bus&&(p.plat||(stunt.wasIn&&!stunt.exited)))p.x+=stunt.bus.v*dt;
-  var minX=arena?arena.l+30:20,maxX=arena?arena.r-30:LEVEL_END-60;if(p.x<minX){p.x=minX;p.vx=0;}if(p.x>maxX){p.x=maxX;p.vx=0;}
-  if(!p.plat&&p.y>BASE-30&&p.x>GATE_X-16&&p.x<GATE_X+120){p.x=GATE_X-16;if(p.vx>0)p.vx=0;if(frame%40===0)addFloat(GATE_X+40,BASE-190,"Jump twice!","#ffd23f",true);}
+  var minX=arena?arena.l+30:Math.max(20,levelIdx?ZONES[levelIdx].s+10:20),maxX=arena?arena.r-30:LEVEL_END-60;if(p.x<minX){p.x=minX;p.vx=0;}if(p.x>maxX){p.x=maxX;p.vx=0;}
+  if(!p.plat&&p.y>BASE-30&&p.x>GATE_X-16&&p.x<GATE_X+120){var gFrom=p.x-p.vx*dt;if(gFrom>=GATE_X+52){p.x=GATE_X+120;if(p.vx<0)p.vx=0;}else{p.x=GATE_X-16;if(p.vx>0)p.vx=0;}if(frame%40===0)addFloat(GATE_X+40,BASE-190,"Jump twice!","#ffd23f",true);}
   var moving=Math.abs(p.vx)>20;if(moving)p.anim+=dt*Math.abs(p.vx)/22;else p.idleT+=dt;
-  var g=(p.vy<0&&pd&&!input.run)?1250:2100;var prevY=p.y;p.vy+=g*dt;p.y+=p.vy*dt;
+  var g=(p.vy<0&&pd)?1250:2100;var prevY=p.y;p.vy+=g*dt;p.y+=p.vy*dt;
   var gy=groundY(p.x);var pt=platTop(p.x);var onPlat=false;if(pt!==null&&p.vy>=0&&prevY<=pt+6&&p.y>=pt)onPlat=true;
-  if(onPlat&&pt===BASE-CASTLE.h&&p.x>CASTLE.x&&p.x<CASTLE.x+CASTLE.w&&!(stunt&&stunt.kind==="fall")&&!(p.stuck>0)){castleBounce(p);}
+  if(onPlat&&pt===BASE-CASTLE.h&&p.x>CASTLE.x&&p.x<CASTLE.x+CASTLE.w&&!stuntDone.fall&&!(stunt&&stunt.kind==="fall")&&!(p.stuck>0)){castleBounce(p);}
   if(onPlat||p.y>=gy){var fy=onPlat?pt:gy;if(!p.ground){SFX.land();puff(p.x,fy,5);p.sq=1.2;p.st=0.82;}p.y=fy;p.vy=0;p.ground=true;p.jumps=0;p.rot=0;p.plat=onPlat;}
   else{if(p.ground)p.coyote=0.1;p.ground=false;p.plat=false;}
   if(!p.loop&&p.ground&&p.vx>150&&Math.abs(p.x-(LOOP.x-LOOP.r-10))<14&&p.hurtT<=0){p.loop={th:0};p.ground=false;SFX.woosh();}
@@ -555,6 +567,7 @@ function stompCheck(a,w,h){var p=P;var ay=a.y!==undefined?a.y:groundY(a.x);retur
 function touchCheck(a,w,h){var p=P;var ay=a.y!==undefined?a.y:groundY(a.x);return Math.abs(p.x-a.x)<w/2+12&&p.y>ay-h&&p.y-96<ay;}
 function bounce(a){var p=P;p.vy=-520;p.ground=false;p.jumps=1;p.sq=1.3;p.st=0.75;hitEnemy(a,1);hitstop=0.05;shake=0.25;}
 function openBush(a){a.open=true;a.t=0;petals(a.x,groundY(a.x)-40,10);SFX.pop();shake=0.2;
+  if(a.has==="present"&&presentCount>=PRESENTS_NEEDED)a.has="flowers";
   if(a.has==="present"){presentCount++;bigText={text:"Present "+presentCount+" of "+PRESENTS_NEEDED+"!",t:1.6,col:"#ff8fc7",small:true};SFX.perfect();confetti(a.x,groundY(a.x)-60,20);flying.push({kind:"presentSmall",x:a.x,y:groundY(a.x)-50,sx:a.x,sy:groundY(a.x)-50,t:0});setObjective("Find the presents "+presentCount+"/"+PRESENTS_NEEDED);
     if(presentCount>=PRESENTS_NEEDED){got.present=true;updateHUD();setTimeout(function(){awardBelt(2);setObjective("Head through the park");},600);}}
   else if(a.has==="pigeon"){var pg=mk("pigeon",a.x);pg.st="climb";pg.y=groundY(a.x)-40;pg.face=1;actors.push(pg);addFloat(a.x,groundY(a.x)-120,"CROW!","#ff6a3d");}
@@ -664,7 +677,7 @@ function bossPick(a,gy){var r=Math.random(),pick;var canGuard=a.hits>0&&a.last!=
 function killBoss(a){zoom=1.18;a.dead=true;a.t=0;a.dvx=P.face*(a.who==="duck"?260:420);a.dvy=a.who==="duck"?-1500:-760;if(a.who==="duck")SFX.quack2();a.dy=0;a.rot=0;a.dspin=P.face*9;SFX.thud();confetti(a.x,a.y-80,70);addFloat(a.x,a.y-200,"K.O.!","#ff5fa2",true);shake=0.8;buzz([40,60,40,60,120]);bossBar=null;
   for(var i=0;i<5;i++)dropFlower(a.x,a.y-100);flying.push({kind:a.item,x:a.x,y:a.y-120,sx:a.x,sy:a.y-120,t:0});
   var idx=a.beltIdx;var missed=a.who==="ninja"&&belt<2;if(missed){presentCount=PRESENTS_NEEDED;got.present=true;}setTimeout(function(){arena=null;if(missed){awardBelt(2);setTimeout(function(){awardBelt(idx);},2400);}else awardBelt(idx);if(a.who==="cat")setObjective("On to the park");if(a.who==="ninja")setObjective("Find the kid with the ball");},900);}
-function awardBelt(i){belt=i;updateHUD();if(i===0)actors.forEach(function(a){if(a.k==="senseiNPC"){a.gone=true;puff(a.x,groundY(a.x),8);}});SFX.belt();confetti(P.x,P.y-60,60);
+function awardBelt(i){if(i<=belt)return;belt=i;updateHUD();if(i===0)actors.forEach(function(a){if(a.k==="senseiNPC"){a.gone=true;puff(a.x,groundY(a.x),8);}});SFX.belt();confetti(P.x,P.y-60,60);
   beltToast={i:i,t:0};var bp=$("beltPip");bp.classList.remove("flash");void bp.offsetWidth;bp.classList.add("flash");
   P.target=null;P.vx=0;P.block=false;P.atkT=0;beltToast.sub=["New move: UPPERCUT. Three punches in a row.","New move: DOUBLE JUMP. Jump again in the air.","New move: BLOCK. Hold KICK.","Dahlia Storm charges faster.",""][i];
   if(i===4){actors.forEach(function(a){if((a.k==="ninja"||a.k==="pigeon")&&!a.dead&&!a.gone){a.gone=true;puff(a.x,(a.y!==undefined?a.y:groundY(a.x))-30,8);}});setObjective("");$("controls").hidden=true;input.run=false;input.runL=false;state="enter";timer=0;fam.locked=false;doorOpen=0;SFX.pop();P.victory=1.2;}
@@ -1086,18 +1099,23 @@ function draw(){ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.heig
   ctx.restore();}
 var last=0,running=false;
 function loop(ts){if(!last)last=ts;var dt=Math.min((ts-last)/1000,0.04);last=ts;var portrait=isPortrait();$("rotate").hidden=!portrait;if(running&&!portrait)update(dt);draw();requestAnimationFrame(loop);}
-function goFull(){try{var el=document.documentElement;var f=el.requestFullscreen||el.webkitRequestFullscreen;if(f)f.call(el).then(function(){if(screen.orientation&&screen.orientation.lock)screen.orientation.lock("landscape").catch(function(){})}).catch(function(){});}catch(e){}}
+function goFull(){/* the whole page is the game (every layer is fixed to it), so the page root goes full screen */
+  try{var el=document.documentElement,f=el.requestFullscreen||el.webkitRequestFullscreen;if(!f||document.fullscreenElement||document.webkitFullscreenElement)return;
+    var r=f.call(el,{navigationUI:"hide"});var lock=function(){try{if(screen.orientation&&screen.orientation.lock)screen.orientation.lock("landscape").catch(function(){});}catch(e){}};
+    if(r&&r.then)r.then(lock).catch(function(){});else lock();}catch(e){}}
 function nextCard(){if(state!=="intro")return;intro.i++;intro.t=0;SFX.flower();if(intro.i>=3)endIntro();}
 function endIntro(){state="play";intro=null;$("skip").hidden=true;zoneShown=-1;}
 $("skip").addEventListener("click",function(e){e.stopPropagation();if(state==="opening")endOpening();});
-$("startBtn").addEventListener("click",function(){goFull();$("startScreen").hidden=true;A();reset(0);running=true;$("controls").hidden=true;startOpening();$("skip").hidden=false;});
-$("contBtn").addEventListener("click",function(){goFull();$("startScreen").hidden=true;A();SFX.jump();var lv=load("level")||0;reset(lv);running=true;$("controls").hidden=false;var s=actors.filter(function(a){return a.k==="senseiNPC"})[0];s.hideUntilOpening=false;});
+document.body.classList.add("onStart");
+$("startBtn").addEventListener("click",function(){document.body.classList.remove("onStart");goFull();$("startScreen").hidden=true;A();reset(0);running=true;$("controls").hidden=true;startOpening();$("skip").hidden=false;});
+$("contBtn").addEventListener("click",function(){document.body.classList.remove("onStart");goFull();$("startScreen").hidden=true;A();SFX.jump();var lv=load("level")||0;reset(lv);running=true;$("controls").hidden=false;var s=actors.filter(function(a){return a.k==="senseiNPC"})[0];s.hideUntilOpening=false;});
 $("mute").addEventListener("click",function(){setMuted(!muted);});
 (function(){var lv=load("level");if(lv&&lv>0){$("contBtn").hidden=false;$("contBtn").textContent="Continue from level "+(lv+1);}if(load("muted"))setMuted(true);})();
 $("againBtn").addEventListener("click",function(){document.body.classList.remove("cardMode");$("endScreen").hidden=true;reset(0);running=true;$("controls").hidden=true;startOpening();$("skip").hidden=false;});
 $("fromLine").textContent="Love from "+FROM;
-if(!TOUCH)$("hint").textContent="On a computer: hold → to run, space to jump, X punch, C kick (hold to block), ↓ dodge, B for the Dahlia Storm.";
-if(!TOUCH){document.body.classList.add("desk");$("padHint").textContent="hold here or press → · click to jump";}
+if(!TOUCH)$("hint").textContent="On a computer: hold ← or → to walk, space to jump, X punch, C kick (hold to block), ↓ dodge, B for the Dahlia Storm.";
+if(!TOUCH){document.body.classList.add("desk");}
+(function(){var ua=navigator.userAgent,iPhone=/iPhone|iPod/.test(ua),standalone=navigator.standalone||(window.matchMedia&&matchMedia("(display-mode: fullscreen), (display-mode: standalone)").matches);if(iPhone&&!standalone)$("iosTip").hidden=false;})();
 reset(0);
 document.fonts.load("800 20px 'Baloo 2'").then(function(){requestAnimationFrame(loop)},function(){requestAnimationFrame(loop)});
 
