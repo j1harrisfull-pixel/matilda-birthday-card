@@ -1250,6 +1250,9 @@ function sliceReset(){
   totalFlowers=flowers.length;checkpoint=120;
 }
 
+/* painted part helpers (the seagull and Crumbs rigs) */
+function partAt(img,M,i,x,y,rot,sx,sy){var f=M.frames[i];if(!f)return;ctx.save();ctx.translate(x,y);if(rot)ctx.rotate(rot);ctx.scale((sx||1)/M.res,(sy||1)/M.res);ctx.drawImage(img,f[0],f[1],f[2],f[3],-f[4],-f[5],f[2],f[3]);ctx.restore();}
+function rotAbout(px,py,cx,cy,a){var c=Math.cos(a),s=Math.sin(a),dx=px-cx,dy=py-cy;return [cx+dx*c-dy*s,cy+dx*s+dy*c];}
 /* ---------- her moves (Tekken style frame data, 60 fps frames: startup, active, recovery) ----------
    Jab 5/3/10, cross 6/3/12, hook 7/4/16, kick 8/4/16, launcher 9/4/18. Punch punch punch ends in a hook; punch punch
    kick is the launcher. Mashing queues the next hit for the end of recovery; pressing inside recovery cancels it
