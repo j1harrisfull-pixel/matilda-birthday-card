@@ -506,7 +506,7 @@ function update(dt0){
   cam+=(target-cam)*Math.min(1,(state==="stunt"?(1/60):dt0)*(state==="opening"?2.4:(state==="stunt"?9:9)));
   if(P.ground)P.lastGY=P.y;var camRef=P.ground?P.y:Math.min(P.lastGY||BASE,P.y+150);var camYT=(state==="play"||state==="dead")?Math.min(0,camRef-290):0;camY+=(camYT-camY)*Math.min(1,dt0*(camYT<camY?6:2.5));cam=Math.max(0,Math.min(cam,LEVEL_END-LW));
   for(var bb=bubbles.length-1;bb>=0;bb--){bubbles[bb].t-=dt0;if(bubbles[bb].t<=0)bubbles.splice(bb,1);}
-  for(var s=0;s<flowers.length;s++){var f=flowers[s];if(f.got)continue;f.t+=dt0*2;if(Math.abs(f.x-P.x)<34&&Math.abs(f.y-(P.y-45))<60){f.got=true;grab(f.x,f.y);}}
+  for(var s=0;s<flowers.length;s++){var f=flowers[s];if(f.got)continue;f.t+=dt0*2;if(Math.abs(f.x-P.x)<(SLICE?38:34)&&Math.abs(f.y-(P.y-(SLICE?55:45)))<(SLICE?75:60)){f.got=true;if(SLICE&&f.tr)trailGot(f.tr,f);grab(f.x,f.y);}}
   for(var l=loose.length-1;l>=0;l--){var lo=loose[l];lo.t+=dt0;lo.vy+=1400*dt0;lo.x+=lo.vx*dt0;lo.y+=lo.vy*dt0;var gy=groundY(lo.x)-8;if(lo.y>gy){lo.y=gy;lo.vy*=-0.4;lo.vx*=0.7;}lo.l-=dt0;
     if(lo.t>0.5&&Math.abs(lo.x-P.x)<40&&Math.abs(lo.y-(P.y-45))<70){loose.splice(l,1);grab(lo.x,lo.y);continue;}if(lo.l<=0)loose.splice(l,1);}
   for(var p=parts.length-1;p>=0;p--){var q=parts[p];if(q.k==="conf"){q.vy+=500*dt0;q.rot+=q.vr*dt0;}else if(q.k==="spark")q.vy+=500*dt0;else if(q.k==="fw"){q.vy+=120*dt0;q.vx*=0.98;q.vy*=0.98;}else if(q.k==="heart"){q.vy-=20*dt0;q.x+=Math.sin(q.l*6)*1.2;}else if(q.k==="bal"){q.vy-=12*dt0;q.x+=Math.sin(q.l*4)*1.4;}else q.vy-=20*dt0;q.x+=q.vx*dt0;q.y+=q.vy*dt0;q.l-=dt0*(q.k==="conf"?0.6:(q.k==="heart"?0.7:(q.k==="fw"?0.8:(q.k==="bal"?0.4:1.7))));if(q.l<=0)parts.splice(p,1);}
@@ -1228,12 +1228,17 @@ function chimeN(n){var r=Math.pow(2,SL_NOTES[Math.min(n,SL_NOTES.length-1)]/12);
 /* ---------- the level ---------- */
 function sliceReset(){
   reset(0);zoneShown=0;belt=-1;bouquet=0;updateHUD();actors=[];flowers=[];SL_OBJ=[];
-  SL={t:0,goT:0,streak:0,lastTick:-9,tickQ:0,tickT:0,pk:[],fz:{state:"armed",wave:0,wait:0},crumbsBeaten:false,flyby:null,flybyDone:false,doneT:-1,done:false,lost:[],snatched:0,hits:0,holds:0,duel:null,wins:null,finish:null,reachedBoss:null,pc:0,stormT:0,stormReady:false,gold:[],blooms:0,bloomLost:0,storms:0,firstStorm:null,proj:[],stolen:[],presents:0,found:0,bossBeaten:false};P.bloom=false;P.bloomT=0;if(SL_LEVEL==="park")zoneShown=1;
+  SL={t:0,goT:0,streak:0,lastTick:-9,tickQ:0,tickT:0,pk:[],fz:{state:"armed",wave:0,wait:0},crumbsBeaten:false,flyby:null,flybyDone:false,doneT:-1,done:false,lost:[],snatched:0,hits:0,holds:0,duel:null,wins:null,finish:null,reachedBoss:null,pc:0,stormT:0,stormReady:false,gold:[],blooms:0,bloomLost:0,storms:0,firstStorm:null,perfect:0,proj:[],stolen:[],presents:0,found:0,bossBeaten:false};P.bloom=false;P.bloomT=0;if(SL_LEVEL==="park")zoneShown=1;
   P.str=0;P.strT=9;P.sa=null;P.qd=null;
-  function F(x,y){flowers.push({x:x,y:y,got:false,t:Math.random()*6});}
-  function line(x0,n,h){for(var i=0;i<n;i++){var x=x0+i*50;F(x,groundY(x)-h);}}
+  /* dahlias you earn: every jump arc of four or more is a trail; take every one in it and it pays a bonus.
+     The running line only keeps breadcrumbs (half as many, twice as far apart) */
+  var curTr=null;SL.trails=[];
+  function F(x,y){var f={x:x,y:y,got:false,t:Math.random()*6};if(curTr){f.tr=curTr;curTr.n++;curTr.x1=Math.max(curTr.x1,x);}flowers.push(f);}
+  function trailStart(){curTr={n:0,got:0,x1:-1e9,done:false,failed:false};SL.trails.push(curTr);}
+  function trailEnd(){if(curTr&&curTr.n<4){var t0=curTr;SL.trails.pop();flowers.forEach(function(f){if(f.tr===t0)delete f.tr;});}curTr=null;}
+  function line(x0,n,h){var m=Math.ceil(n/2);for(var i=0;i<m;i++){var x=x0+i*100;F(x,groundY(x)-h);}}
   /* an arc that matches a running jump: up from the take off, over the top of the obstacle, down to the landing */
-  function arc(x0,x1,peak,n,base){for(var i=0;i<n;i++){var u=(i+0.5)/n,x=lerp(x0,x1,u);F(x,(base!==undefined?base:Math.min(groundY(x0),groundY(x1)))-40-peak*4*u*(1-u));}}
+  function arc(x0,x1,peak,n,base){trailStart();for(var i=0;i<n;i++){var u=(i+0.5)/n,x=lerp(x0,x1,u);F(x,(base!==undefined?base:Math.min(groundY(x0),groundY(x1)))-40-peak*4*u*(1-u));}trailEnd();}
   function obj(o){o.top=(o.base!==undefined?o.base:groundY(o.x))-o.h;SL_OBJ.push(o);return o;}
   function crate(x,n){var r=[];for(var i=0;i<n;i++)r.push(obj({k:"crate",x:x,w:60,h:58,br:true,base:groundY(x)-58*i}));return r;}
   function bin(x){return obj({k:"bin",x:x,w:50,h:86,br:true});}
@@ -1244,7 +1249,7 @@ function sliceReset(){
   function gapEdges(g){var gy=groundY(g[0]-2);obj({k:"edge",x:g[0]+3,w:6,h:90,base:gy+90});obj({k:"edge",x:g[0]+g[1]-3,w:6,h:90,base:gy+90});}
   function gull(x,v,hov){var a=mk("pigeon",x);a.k="gull";a.v=v;a.hp=1;a.hov=hov||160;a.st=v==="stand"?"idle":"patrol";a.y=v==="stand"?groundY(x):groundY(x)-a.hov;a.ga=gullAnim();actors.push(a);return a;}
   SL_GAPS.forEach(gapEdges);SL_FLAGS.forEach(function(x){SL_OBJ.push({k:"flag",x:x,w:0,h:0,top:groundY(x),pass:false});});
-  if(SL_LEVEL==="park"){parkLayout({F:F,line:line,arc:arc,crate:crate,gift:gift,wall:wall});totalFlowers=flowers.length;checkpoint=120;return;}
+  if(SL_LEVEL==="park"){parkLayout({F:F,line:line,arc:arc,crate:crate,gift:gift,wall:wall,trailStart:trailStart,trailEnd:trailEnd});totalFlowers=flowers.length;checkpoint=120;return;}
   /* 1. warm up: run, smash, jump, jump jump */
   line(300,6,40);
   gift(600);                                         /* the first gift box sits right in her path: she learns Bloom by doing it */
@@ -1360,7 +1365,7 @@ function parkLayout(h){var F=h.F,line=h.line,arc=h.arc,crate=h.crate,gift=h.gift
   bush(5520,"present");bunny(5660,"big");gift(5800);
   /* 5. the run up, the last present, the loop with dahlias round it, the slide, the kicker, the bridge */
   line(5960,4,40);bush(6150,"present");line(6180,1,40);
-  for(var k=0;k<14;k++){var th=k/14*Math.PI*2;F(LOOP.x+(LOOP.r-30)*Math.sin(th),BASE-LOOP.r+(LOOP.r-30)*Math.cos(th)-30);}
+  h.trailStart();for(var k=0;k<14;k++){var th=k/14*Math.PI*2;F(LOOP.x+(LOOP.r-30)*Math.sin(th),BASE-LOOP.r+(LOOP.r-30)*Math.cos(th)-30);}h.trailEnd();
   for(var s2=0;s2<6;s2++){var sx=SLIDE.a+40+s2*90;F(sx,groundY(sx)-60);}
   arc(KICKER_X,KICKER_X+300,140,6,groundY(KICKER_X)-20);
   gift(PK.fluff-560);                                 /* a gift box where she lands, so she can meet Fluffini bloomed */
@@ -1502,6 +1507,11 @@ function drawParkExtras(){var s=SL;for(var i=0;i<s.proj.length;i++){var q=s.proj
   for(var j=0;j<s.stolen.length;j++){var st=s.stolen[j];if(st.t<0||st.cx===undefined)continue;drawItem("present",st.cx-cam,st.cy,0.45);}
   for(var k=0;k<actors.length;k++){var b=actors[k];if(b.k==="bush"&&!b.open&&b.has==="present"&&frame%24<2)sparks(b.x+(Math.random()-0.5)*40,groundY(b.x)-70,1,"#fff3a0");}}
 
+/* trails: the whole trail without a miss = PERFECT! +5. Started trails glow gold on the dahlias still to get */
+function trailGot(tr,f){tr.got++;if(tr.got===tr.n&&!tr.failed&&!tr.done){tr.done=true;SL.perfect++;SL.tickQ+=5;petals(f.x,f.y,16);sparks(f.x,f.y,16,"#ffd23f");addFloat(f.x,f.y-50,"PERFECT! +5","#ffd23f",true);
+  for(var i=0;i<4;i++)(function(i){setTimeout(function(){chimeN(8+i*2);},i*70);})(i);}}
+function trailCheck(){var p=P;for(var i=0;i<SL.trails.length;i++){var tr=SL.trails[i];if(!tr.done&&!tr.failed&&tr.got>0&&p.x>tr.x1+90){tr.failed=true;}}}
+function drawTrails(){for(var i=0;i<flowers.length;i++){var f=flowers[i];if(f.got||!f.tr||f.tr.done||f.tr.failed||f.tr.got===0)continue;var x=f.x-cam;if(x<-40||x>LW+40)continue;ctx.save();ctx.globalAlpha=0.55+Math.sin(frame/4+i)*0.25;ctx.strokeStyle="#ffd23f";ctx.lineWidth=4;ctx.beginPath();ctx.arc(x,f.y,24,0,7);ctx.stroke();ctx.restore();}}
 /* painted part helpers (the seagull and Crumbs rigs) */
 function partAt(img,M,i,x,y,rot,sx,sy){var f=M.frames[i];if(!f)return;ctx.save();ctx.translate(x,y);if(rot)ctx.rotate(rot);ctx.scale((sx||1)/M.res,(sy||1)/M.res);ctx.drawImage(img,f[0],f[1],f[2],f[3],-f[4],-f[5],f[2],f[3]);ctx.restore();}
 function rotAbout(px,py,cx,cy,a){var c=Math.cos(a),s=Math.sin(a),dx=px-cx,dy=py-cy;return [cx+dx*c-dy*s,cy+dx*s+dy*c];}
@@ -1820,7 +1830,7 @@ function sliceLaunch(p,full){p.crouchT=0;p.vy=-(full?JUMP_V:S_HOP);p.ground=fals
 
 /* ---------- per frame ---------- */
 function sliceUpdate(dt){var s=SL;if(!s)return;s.t+=dt;if(s.goT>0)s.goT-=dt;if(s.flash>0)s.flash-=dt;if(s.duel)s.duel.t+=dt;if(s.wins)s.wins.t+=dt;
-  var p=P;sliceObjUpdate(dt);slicePickUpdate(dt);goldUpdate(dt);
+  var p=P;sliceObjUpdate(dt);slicePickUpdate(dt);goldUpdate(dt);trailCheck();
   for(var fi=0;fi<SL_OBJ.length;fi++){var fo=SL_OBJ[fi];if(fo.k==="flag"&&!fo.pass&&p.x>fo.x){fo.pass=true;fo.t=0;checkpoint=Math.max(checkpoint,fo.x-40);confetti(fo.x,groundY(fo.x)-150,30);fx("chime",0.4,1.0);setTimeout(function(){fx("chime",0.4,1.5);},110);setTimeout(function(){fx("chime",0.45,2.0);},220);fx("whoosh0",0.35,0.9);}if(fo.k==="flag"&&fo.pass)fo.t=(fo.t||0)+dt;}stormUpdate(dt);bloomTick(dt);if(s.stormT>0){var sb=$("stormBtn");if(sb)sb.style.setProperty("--ring",Math.round(100*s.stormT/STORM_T));}
   /* the fight zone: camera holds, the crew walks in from both sides in waves of two or three */
   var fz=s.fz;
@@ -1861,7 +1871,7 @@ function drawSliceProps(){
   var s=SL;if(!s)return;
   for(var j=0;j<s.lost.length;j++){var b=s.lost[j];slBalloon(b.x-cam,b.y,b.c,null);}
   if(s.flyby){var fb=s.flyby;ctx.save();ctx.translate(fb.x-cam,fb.y);ctx.scale(0.62,0.62);drawCrumbsRig({x:0,y:0,face:-1,st:"hover",balloons:5,ca:{leg:Math.sin(fb.t*9)*0.3,head:0,rot:0,sx:1,sy:1+Math.sin(fb.t*22)*0.04}},0,0);ctx.restore();}
-  drawPicks();drawGold();if(SL_LEVEL==="park")drawParkExtras();}
+  drawTrails();drawPicks();drawGold();if(SL_LEVEL==="park")drawParkExtras();}
 function slBalloon(x,y,c,tie){if(tie){ctx.strokeStyle="rgba(255,255,255,.9)";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,y+22);ctx.quadraticCurveTo((x+tie.x)/2+6,(y+tie.y)/2,tie.x,tie.y);ctx.stroke();}else{ctx.strokeStyle="rgba(255,255,255,.8)";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,y+22);ctx.lineTo(x-4,y+60);ctx.stroke();}
   ell(x,y,17,22,c);ctx.globalAlpha=0.45;ell(x-6,y-8,5,7,"#fff");ctx.globalAlpha=1;ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(x-4,y+24);ctx.lineTo(x+4,y+24);ctx.lineTo(x,y+19);ctx.fill();}
 function drawSliceActor(a){var x=a.x-cam;if(x<-260||x>LW+260||a.gone)return;
@@ -1903,7 +1913,7 @@ function drawSliceHUD(){var s=SL;if(!s)return;
     /* the bouquet grows to the level's dahlia total */var grow=Math.min(1,Math.max(0,(s.doneT-1.6)/1.6)),nb=Math.round(bouquet*grow),nf=Math.min(36,4+Math.floor(nb/4));
     ctx.save();ctx.translate(LW/2-300,cy+70);ctx.strokeStyle="#3a8a3a";ctx.lineWidth=3;for(var bi=0;bi<nf;bi++){var ba=(bi/(Math.max(1,nf-1))-0.5)*1.5,br=60+(bi%3)*22;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(Math.sin(ba)*br,-Math.cos(ba)*br);ctx.stroke();}
     for(var bj=0;bj<nf;bj++){var bb=(bj/(Math.max(1,nf-1))-0.5)*1.5,bR=60+(bj%3)*22;dahlia(Math.sin(bb)*bR,-Math.cos(bb)*bR,0.42,bj);}rr(-18,-6,36,40,8,"#ff8fc7");txt(String(nb),0,58,30,"#ffd23f");ctx.restore();
-    txt("Hearts "+lives+"   ·   Time "+Math.round(stats.time)+" s",LW/2+60,cy+16,24,"#ff8fc7");txt("Tap to play again",LW/2,cy+80+Math.sin(frame/8)*4,30,"#fff");ctx.restore();}}
+    txt("Perfect trails "+s.perfect+"/"+s.trails.length+"   ·   Hearts "+lives+"   ·   "+Math.round(stats.time)+" s",LW/2+60,cy+16,24,"#ff8fc7");txt("Tap to play again",LW/2,cy+80+Math.sin(frame/8)*4,30,"#fff");ctx.restore();}}
 
 
 if(SLICE)sliceReset();else reset(0);
