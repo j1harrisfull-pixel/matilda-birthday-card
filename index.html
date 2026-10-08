@@ -369,7 +369,7 @@ function groundY(x){var h=Math.sin(x/430)*30+Math.sin(x/190+1.3)*14;var y=BASE-h
   if(x>SLIDE.a&&x<SLIDE.c){var rise=x<SLIDE.b?smooth((x-SLIDE.a)/(SLIDE.b-SLIDE.a)):1-smooth((x-SLIDE.b)/(SLIDE.c-SLIDE.b));y-=rise*230;}return y;}
 function slope(x){return (groundY(x+6)-groundY(x-6))/12;}
 
-var camLook=0,camY=0;
+var camLook=0,camY=0,CAM_LEAD=134.4,CAM_RATE=9;
 var P,cam,actors,flowers,parts,floats,bouquet,belt,state,timer,bigText,frame=0,shake=0,hitstop=0,zoneShown=-1,arena=null,loose=[],cut=null,bossBar=null;
 var got={},flying=[],sensei=null,bossLine=null,intro=null,balloons=[],balloonCount=0,presentCount=0,lesson={dummies:0,spring:false},projectiles=[],fireworksT=0,card=null,objective="";
 var opening=null,bubbles=[],fade=0;
@@ -501,9 +501,9 @@ function update(dt0){
     if(u>=1){flying.splice(fi,1);if(it.kind!=="presentSmall"){got[it.kind]=true;updateHUD();addFloat(P.x,P.y-150,ITEMS[it.kind]+" BACK!","#3fd8c7",true);}SFX.flower();sparks(P.x,P.y-80,14,"#fff");}}
   if(bossLine&&bossLine!==VOX_BOSS){VOX_BOSS=bossLine;voxLine(bossLine.text);}
   if(bossLine){bossLine.t-=dt0;if(bossLine.t<=0)bossLine=null;}
-  var lookT=(state==="play"&&!arena&&!stunt)?Math.max(-1,Math.min(1,P.vx/RUN))*LW*0.14:0;camLook+=(lookT-camLook)*Math.min(1,dt0*2.2);
+  var lookT=(state==="play"&&!arena&&!stunt)?Math.max(-1,Math.min(1,P.vx/RUN))*CAM_LEAD:0;camLook+=(lookT-camLook)*Math.min(1,dt0*2.2);
   var target=P.x-LW*0.38+camLook;if(arena)target=Math.max(arena.l,Math.min(arena.r-LW,target));if(state==="card")target=cam;if(state==="opening"&&opening.camX!==undefined)target=opening.camX;if(state==="hoop")target=KID_X-LW*0.42;if(state==="stunt"&&stunt&&stunt.camX!==undefined)target=stunt.camX;
-  cam+=(target-cam)*Math.min(1,(state==="stunt"?(1/60):dt0)*(state==="opening"?2.4:(state==="stunt"?9:9)));
+  cam+=(target-cam)*Math.min(1,(state==="stunt"?(1/60):dt0)*(state==="opening"?2.4:(state==="stunt"?9:CAM_RATE)));
   if(P.ground)P.lastGY=P.y;var camRef=P.ground?P.y:Math.min(P.lastGY||BASE,P.y+150);var camYT=(state==="play"||state==="dead")?Math.min(0,camRef-290):0;camY+=(camYT-camY)*Math.min(1,dt0*(camYT<camY?6:2.5));cam=Math.max(0,Math.min(cam,LEVEL_END-LW));
   for(var bb=bubbles.length-1;bb>=0;bb--){bubbles[bb].t-=dt0;if(bubbles[bb].t<=0)bubbles.splice(bb,1);}
   for(var s=0;s<flowers.length;s++){var f=flowers[s];if(f.got)continue;f.t+=dt0*2;if(Math.abs(f.x-P.x)<(SLICE?38:34)&&Math.abs(f.y-(P.y-(SLICE?55:45)))<(SLICE?75:60)){f.got=true;if(SLICE&&f.tr)trailGot(f.tr,f);grab(f.x,f.y);}}
@@ -552,12 +552,13 @@ function updatePlayer(dt){
   var minX=arena?arena.l+30:Math.max(20,levelIdx?ZONES[levelIdx].s+10:20),maxX=arena?arena.r-30:LEVEL_END-60;if(p.x<minX){p.x=minX;p.vx=0;}if(p.x>maxX){p.x=maxX;p.vx=0;}
   if(!p.plat&&p.y>BASE-30&&p.x>GATE_X-16&&p.x<GATE_X+120){var gFrom=p.x-p.vx*dt;if(gFrom>=GATE_X+52){p.x=GATE_X+120;if(p.vx<0)p.vx=0;}else{p.x=GATE_X-16;if(p.vx>0)p.vx=0;}if(frame%40===0)addFloat(GATE_X+40,BASE-190,"Jump twice!","#ffd23f",true);}
   var moving=Math.abs(p.vx)>20;if(moving)p.anim+=dt*Math.abs(p.vx)/(SLICE?(SL_RUN_NEW&&ART_META.matrun?SL_CYCLE_NEW:SL_CYCLE)/(Math.PI*2):22);else p.idleT+=dt;
-  if(p.vy<0&&p.playerJump&&!pd&&!p.jumpCut){p.vy*=JUMP_CUT;p.jumpCut=true;}
-  var g=p.vy<0?(pd&&p.playerJump?G_HOLD:G_UP):G_FALL;if(SLICE){if(p.crouchT>0&&p.ground){p.crouchT-=dt;if(p.crouchT<=0)sliceLaunch(p,!!pd);}if(p.playerJump&&Math.abs(p.vy)<S_HANGV)g=S_HANG;}var prevY=p.y;p.vy=Math.min(MAX_FALL,p.vy+g*dt);p.y+=p.vy*dt;
+  if(S_NEW){if(p.vy<0&&p.playerJump&&!pd)p.relJ=true;}else if(p.vy<0&&p.playerJump&&!pd&&!p.jumpCut){p.vy*=JUMP_CUT;p.jumpCut=true;}
+  var g=p.vy<0?(S_NEW&&p.playerJump&&p.relJ?G_REL:(pd&&p.playerJump?G_HOLD:G_UP)):G_FALL;if(SLICE){if(p.crouchT>0&&p.ground){p.crouchT-=dt;if(p.crouchT<=0)sliceLaunch(p,!!pd);}if(p.playerJump&&Math.abs(p.vy)<S_HANGV&&!(S_NEW&&(p.relJ||!(S_HANG>0))))g=S_HANG;}var prevY=p.y;p.vy=Math.min(MAX_FALL,p.vy+g*dt);p.y+=p.vy*dt;
   var gy=groundY(p.x);var pt=platTop(p.x);var onPlat=false;if(pt!==null&&p.vy>=0&&prevY<=pt+6&&p.y>=pt)onPlat=true;if(SLICE&&onPlat&&p.vy>380){var bo=sliceObjAt(p.x);if(bo&&bo.br&&Math.abs(bo.top-pt)<2){breakObj(bo,"stomp");p.vy=Math.min(p.vy,300);onPlat=false;}}
   if(onPlat&&pt===BASE-CASTLE.h&&p.x>CASTLE.x&&p.x<CASTLE.x+CASTLE.w&&!stuntDone.fall&&!(stunt&&stunt.kind==="fall")&&!(p.stuck>0)){castleBounce(p);}
   if(onPlat||p.y>=gy){var fy=onPlat?pt:gy;if(!p.ground){var impact=p.vy;SFX.land();if(SLICE){p.landT=0.12;p.dj=false;}puff(p.x,fy,5);p.sq=1.2;p.st=0.82;if(impact>1000){dustAt(p.x,fy);dustAt(p.x,fy);p.sq=1.32;p.st=0.72;shake=Math.max(shake,0.15);}}p.y=fy;p.vy=0;p.ground=true;p.jumps=0;p.rot=0;p.plat=onPlat;p.playerJump=false;
     if(p.jumpBuf>0){p.jumpBuf=0;jump(false,true);}}
+  else if(S_NEW&&p.ground&&!p.playerJump&&p.vy>=0&&Math.min(gy,(pt!==null&&pt>=prevY-2)?pt:1e9)-p.y<=S_STEP){var sf=Math.min(gy,(pt!==null&&pt>=prevY-2)?pt:1e9);p.y=sf;p.vy=0;p.plat=sf!==gy;}   /* a small drop: stay on the ground */
   else{if(p.ground)p.coyote=COYOTE;p.ground=false;p.plat=false;}
   if(p.ground&&Math.abs(p.vx)>RUN*0.7&&!p.slide&&Math.random()<dt*14)parts.push({x:p.x-p.face*14,y:p.y-2,vx:-p.face*(60+Math.random()*60),vy:-Math.random()*40,l:0.35,r:4+Math.random()*4,c:"rgba(214,196,160,.75)",k:"puff"});
   if(!p.loop&&p.ground&&p.vx>150&&Math.abs(p.x-(LOOP.x-LOOP.r-10))<14&&p.hurtT<=0){p.loop={th:0};p.ground=false;SFX.woosh();}
@@ -1170,7 +1171,8 @@ if(!TOUCH){document.body.classList.add("desk");}
    Built to prove the level is fun before anything else. Nothing here runs without the parameter.
    v2: a rigged Matilda whose feet stay planted, Sonic style speed, Crash style crates, Ratchet style pickups,
    Sonic style dahlia scatter, a Tekken style string, a Streets of Rage style fight zone and a duel with Crumbs. ---------- */
-var SL_LEVEL=(location.search.match(/[?&]slice=(street|park)\b/)||[])[1]||null,SLICE=!!SL_LEVEL;
+var GYM=(location.search.match(/[?&]gym=(move)\b/)||[])[1]||null;   /* test rooms (2026-10-08): ?gym=move, more areas to come */
+var SL_LEVEL=(location.search.match(/[?&]slice=(street|park)\b/)||[])[1]||(GYM?"gym":null),SLICE=!!SL_LEVEL;
 var SL=null,SL_OBJ=[],SL_FZ=3400;
 /* feel numbers (logical px and seconds). Starting points from the Sonic Physics Guide (acceleration = friction
    0.046875 px per frame squared, turn deceleration 0.5, top speed 6, slope factor 0.125, air acceleration twice the
@@ -1179,6 +1181,10 @@ var SL=null,SL_OBJ=[],SL_FZ=3400;
 var S_TOP=440,S_JOG=150,S_ACC=290,S_AIR=580,S_FRIC=900,S_DEC=2200,S_SLP=450,S_HOP=640,S_HANG=1600,S_HANGV=100,S_CROUCH=0.08;
 /* run cycle: the six painted frames cover about 120 px of ground, so the cycle plays at her speed over that */
 /* the generated run: 8 frames at 24 fps, so 3 loops a second at top speed (440 / 3 = about 145 px a loop) */
+/* S_NEW: the movement fixes found in the gym (jump on the press, no crouch delay; release while rising = tap gravity;
+   a press just before landing is remembered instead of spending the double jump; small steps are walked up).
+   On in the gym only, until James sends values back for the slices */
+var S_NEW=!!GYM,G_REL=8000,S_STEP=24,GYM_END=8400;
 var SL_CYCLE=120,SL_CYCLE_NEW=145,S_DJ=840,SL_RUN_NEW=!/[?&]run=old\b/.test(location.search),matRunBelts={},matFightBelts={};
 function sliceSteps(p){if(!p.ground||Math.abs(p.vx)<20){p.lastRunI=-1;return;}var cyc=((p.anim%(Math.PI*2))+Math.PI*2)%(Math.PI*2),i=Math.floor(cyc/(Math.PI*2)*6)%6;
   if(i!==p.lastRunI){if(i===0||i===3){var sf=Math.min(1,Math.abs(p.vx)/S_TOP);fx(p.plat?"stepwood":"step"+((i/3)+2*Math.floor(Math.random()*2)),0.16+0.14*sf,0.92+Math.random()*0.16);}p.lastRunI=i;}}
@@ -1196,6 +1202,7 @@ if(SLICE){
     LOOP.x=PK.loop;SLIDE={a:PK.loop+50,b:PK.loop+310,c:PK.loop+610};KICKER_X=SLIDE.c+70;FAMILY_X=SLIDE.c+190;KID_X=PK.kid;HOOP.x=PK.kid+260;
     FLATS=[[SL_FZ-700,SL_FZ+700],[PK.loop-700,LEVEL_END]];SL_HILLS=[[1300,800,70],[4500,800,60]];SL_GAPS=[[2300,150],[5150,170]];SL_FLAGS=[2700,3920,5850];
     STORY=[{k:"banner",x:1000},{k:"scrap0",x:2000},{k:"scrap1",x:2120},{k:"scrap0",x:4300},{k:"banner",x:5560},{k:"scrap1",x:7700},{k:"scrap0",x:7850}];}
+  if(GYM){BUS_X=1e7;LEVEL_END=GYM_END;ZONES[0].e=1e7;FLATS=[[-1e4,1e5]];SL_HILLS=[[2900,800,120],[3900,500,150]];SL_GAPS=[[4700,160],[5100,260]];SL_FLAGS=[];STORY=[];}
   /* hills to carry speed down, gaps in the pavement to jump */
   var _groundY=groundY;groundY=function(x){var y=_groundY(x),i;for(i=0;i<SL_HILLS.length;i++){var h=SL_HILLS[i];if(x>h[0]&&x<h[0]+h[1])y-=h[2]*0.5*(1-Math.cos((x-h[0])/h[1]*Math.PI*2));}
     for(i=0;i<SL_GAPS.length;i++){var g=SL_GAPS[i];if(x>g[0]&&x<g[0]+g[1])y+=90;}return y;};
@@ -1203,6 +1210,7 @@ if(SLICE){
   var stEl=$("startTitle");if(stEl)stEl.innerHTML="MATILDA'S<br>BLACK BELT BIRTHDAY<br><small style=\"font-size:.45em\">"+(SL_LEVEL==="park"?"THE PARK":"THE STREET")+" · test level</small>";
   var sub=document.querySelector("#startScreen .sub");if(sub)sub.textContent=SL_LEVEL==="park"?"The presents are hidden in the bushes, and The Great Fluffini wants them for his hat. Find them and keep them!":"Captain Crumbs and his seagull crew have taken the balloons and the cake. Get them back!";
   var hn=$("hint");if(hn)hn.textContent=TOUCH?"Hold ◀ ▶ to run. Hold JUMP for a big jump, tap it for a hop. PUNCH PUNCH KICK pops a seagull into the air. Hold KICK to block.":"Arrows to run, hold space for a big jump. X punch, C kick: X X C pops a seagull into the air. Hold C to block.";
+  if(GYM){if(stEl)stEl.innerHTML="MATILDA'S<br>BLACK BELT BIRTHDAY<br><small style=\"font-size:.45em\">THE GYM · moving and jumping</small>";if(sub)sub.textContent="A bare room for tuning how Matilda runs and jumps. Tap TUNE at the top right for the sliders.";if(hn)hn.textContent=TOUCH?"Hold ◀ ▶ to run, JUMP to jump. TUNE opens the sliders.":"Arrows to run, space to jump, R back to the start. TUNE opens the sliders.";}
 }
 function sliceStart(){document.body.classList.remove("onStart");goFull();$("startScreen").hidden=true;$("endScreen").hidden=true;A();sliceSounds();sliceReset();running=true;$("controls").hidden=false;$("skip").hidden=true;}
 
@@ -1249,6 +1257,7 @@ function sliceReset(){
   function gapEdges(g){var gy=groundY(g[0]-2);obj({k:"edge",x:g[0]+3,w:6,h:90,base:gy+90});obj({k:"edge",x:g[0]+g[1]-3,w:6,h:90,base:gy+90});}
   function gull(x,v,hov){var a=mk("pigeon",x);a.k="gull";a.v=v;a.hp=1;a.hov=hov||160;a.st=v==="stand"?"idle":"patrol";a.y=v==="stand"?groundY(x):groundY(x)-a.hov;a.ga=gullAnim();actors.push(a);return a;}
   SL_GAPS.forEach(gapEdges);SL_FLAGS.forEach(function(x){SL_OBJ.push({k:"flag",x:x,w:0,h:0,top:groundY(x),pass:false});});
+  if(GYM){gymLayout({obj:obj,crate:crate});SL.fz.state="done";totalFlowers=0;checkpoint=150;return;}
   if(SL_LEVEL==="park"){parkLayout({F:F,line:line,arc:arc,crate:crate,gift:gift,wall:wall,trailStart:trailStart,trailEnd:trailEnd});totalFlowers=flowers.length;checkpoint=120;return;}
   /* 1. warm up: run, smash, jump, jump jump */
   line(300,6,40);
@@ -1602,10 +1611,89 @@ function sliceMoves(dt){var p=P,s=SL,b=s.bus;
   if(s.loose){var bd=s.loose;bd.x+=bd.vx*dt;var fl=actors.filter(function(a){return a.k==="fluff";})[0];
     if(fl&&fl.st==="sleep"&&bd.x>fl.home-30){s.loose=null;fx("thump",0.55);shake=0.5;buzz(60);sparks(fl.home,groundY(fl.home)-140,14,"#ffd23f");addFloat(fl.home,groundY(fl.home)-220,"BONK!","#ff6a3d",true);fl.bonked=true;squeak(true);}
     else if(!fl||fl.st!=="sleep"||bd.x>fl.home+200)s.loose=null;}}
+/* ---------- THE GYM (?gym=move): a bare room for tuning how Matilda moves, with a slider panel James can use on
+   his phone. Nothing here runs without the parameter, and nothing here changes the slices. ---------- */
+var GYM_H=126;   /* Matilda's height in logical px, the unit the jump sliders are judged against */
+function gymLayout(h){var obj=h.obj,crate=h.crate;
+  /* steps of different heights */
+  [20,40,60,90,130].forEach(function(ht,i){obj({k:"step",x:1560+i*240,w:120,h:ht,lab:ht+" px"});});
+  /* wall to wall: pillars 130 px high with gaps of 200, 300 and 400 px between them */
+  var px=5700;[200,300,400,0].forEach(function(gp,i){obj({k:"step",x:px+60,w:120,h:130,lab:i===0?"130 px":"",gap:gp,gapLab:gp?gp+" px":""});px+=120+gp;});
+  /* crates: one, two and three high, then a row of three to run through */
+  crate(7300,1);crate(7520,2);crate(7740,3);crate(7980,1);crate(8040,1);crate(8100,1);}
+function gymDraw(){var H=GYM_H,gx,d,k;
+  for(d=0;d<=1100;d+=100){gx=200+d-cam;if(gx<-60||gx>LW+60)continue;rr(gx-1,BASE-2,3,d%500?10:20,1,"rgba(255,255,255,.85)");if(d%500===0)txt(d+" px",gx,BASE+34,14,"#fff");}
+  gx=1000-cam;if(gx>-260&&gx<LW+60){rr(gx-2,BASE-3*H-10,4,3*H+10,2,"rgba(255,255,255,.75)");for(k=1;k<=3;k++){rr(gx-30,BASE-k*H-1,60,3,1,"#ffd23f");txt(k+"× her height, "+k*H+" px",gx+40,BASE-k*H+5,13,"#ffd23f","left");}}
+  SL_HILLS.forEach(function(h){var x=h[0]+h[1]/2-cam;if(x>-200&&x<LW+200)txt("slope "+Math.round(Math.atan(Math.PI*h[2]/h[1])*180/Math.PI)+"°",x,BASE+34,15,"#fff");});
+  SL_GAPS.forEach(function(g){var x=g[0]+g[1]/2-cam;if(x>-200&&x<LW+200)txt("gap "+g[1]+" px",x,BASE-150,15,"#ffd23f");});}
+/* live readout: speed, the last jump's height and air time */
+var GM={h:0,air:0,y0:0,minY:0,t:0,inAir:false};
+function gymUpdate(dt){var p=P;
+  if(!p.ground){if(!GM.inAir){GM.inAir=true;GM.y0=p.y;GM.minY=p.y;GM.t=0;}GM.t+=dt;GM.minY=Math.min(GM.minY,p.y);}
+  else if(GM.inAir){GM.inAir=false;if(GM.t>0.1){GM.h=Math.round(GM.y0-GM.minY);GM.air=GM.t;}}
+  var r=document.getElementById("tuneRead");if(r&&frame%6===0)r.textContent="speed "+Math.round(Math.abs(p.vx))+" px/s · last jump "+GM.h+" px ("+(GM.h/GYM_H).toFixed(2)+"× her height) · in the air "+GM.air.toFixed(2)+" s";}
+/* the sliders, in the units James thinks in; tuneApply turns them into the engine's numbers */
+var TUNE_DEF=[
+  ["top","Top speed","px/s",200,1200,10],
+  ["accT","Time to top speed","s",0.1,2.5,0.05],
+  ["coast","Coast after letting go","s",0.05,2.5,0.05],
+  ["skid","Skid and turn time","s",0.05,0.6,0.01],
+  ["jumpH","Jump height, held","px",80,420,5],
+  ["tapH","Jump height, tapped","px",20,250,5],
+  ["riseT","Time to the top of the jump","s",0.2,0.8,0.01],
+  ["hang","Hang at the top (extra)","s",0,0.4,0.01],
+  ["fall","Fall speed (gravity × rise)","×",0.8,4,0.05],
+  ["djH","Double jump height","px",0,320,5],
+  ["coyote","Coyote time","s",0,0.25,0.01],
+  ["buffer","Jump buffer","s",0,0.25,0.01],
+  ["lead","Camera lead distance","px",0,320,5],
+  ["smooth","Camera smoothing","s",0.02,0.5,0.01]];
+/* presets. Current = the slices today. Mario = Super Mario Bros. (NES) running values from the game's own tables
+   (SMBpedia), Sonic = Sonic 1 and 2 (Sonic Physics Guide); both scaled from the hero's height to Matilda's 126 px
+   (big Mario 32 px, Sonic 40 px). Neither game has a double jump, so both keep the current one */
+var TUNE_PRESETS={
+  current:{name:"Current feel",v:{top:440,accT:1.0,coast:0.49,skid:0.2,jumpH:190,tapH:70,riseT:0.36,hang:0.06,fall:1.2,djH:122,coyote:0.1,buffer:0.1,lead:134,smooth:0.11}},
+  mario:{name:"Mario feel",v:{top:590,accT:0.75,coast:0.82,skid:0.41,jumpH:315,tapH:85,riseT:0.53,hang:0,fall:3.6,djH:122,coyote:0,buffer:0,lead:0,smooth:0.02}},
+  sonic:{name:"Sonic feel",v:{top:1130,accT:2.13,coast:2.13,skid:0.2,jumpH:305,tapH:125,riseT:0.5,hang:0,fall:1.0,djH:122,coyote:0,buffer:0,lead:0,smooth:0.02}}};
+var TUNE_ORDER=["mario","sonic","current"],TUNE={},TUNE_NAME="Current feel";
+function tuneApply(){var v=TUNE;
+  S_TOP=v.top;RUN=S_TOP;S_ACC=Math.max(50,(S_TOP-S_JOG)/v.accT);S_FRIC=S_TOP/v.coast;S_DEC=S_TOP/v.skid;
+  G_UP=G_HOLD=2*v.jumpH/(v.riseT*v.riseT);JUMP_V=2*v.jumpH/v.riseT;G_REL=Math.max(G_UP,JUMP_V*JUMP_V/(2*Math.min(v.tapH,v.jumpH)));G_FALL=G_UP*v.fall;
+  S_HANG=v.hang>0?2*S_HANGV/(S_HANGV/G_UP+S_HANGV/G_FALL+v.hang):0;
+  S_DJ=v.djH>0?Math.sqrt(2*G_UP*v.djH):0;COYOTE=v.coyote;JUMP_BUFFER=v.buffer;CAM_LEAD=v.lead;CAM_RATE=1/v.smooth;}
+function tuneFmt(d,x){return d[5]>=1?String(Math.round(x)):x.toFixed(2);}
+function tuneSet(key){var P0=TUNE_PRESETS[key];TUNE_NAME=P0.name;for(var k in P0.v)TUNE[k]=P0.v[k];tuneApply();tuneSync();}
+function tuneSync(){TUNE_DEF.forEach(function(d){var r=document.getElementById("tr_"+d[0]),o=document.getElementById("to_"+d[0]);if(r)r.value=TUNE[d[0]];if(o)o.textContent=tuneFmt(d,TUNE[d[0]])+" "+d[2];});var b=document.getElementById("tunePreset");if(b)b.textContent="Feel: "+TUNE_NAME;}
+function tuneText(){var L=["Matilda movement values from the gym ("+TUNE_NAME+")"];TUNE_DEF.forEach(function(d){L.push(d[1]+": "+tuneFmt(d,TUNE[d[0]])+" "+d[2]);});var j={};TUNE_DEF.forEach(function(d){j[d[0]]=+tuneFmt(d,TUNE[d[0]]);});L.push("GYM "+JSON.stringify(j));return L.join("\n");}
+function gymGo(x){var p=P;p.x=x;p.vx=0;p.vy=0;p.y=groundY(x);p.ground=true;p.plat=false;p.dj=false;p.sa=null;cam=Math.max(0,x-LW*0.38);}
+function gymPanel(){
+  var css=document.createElement("style");css.textContent="#tuneBtn{position:fixed;top:8px;right:60px;z-index:60;background:#ffd23f;color:#2b2438;font:800 15px 'Baloo 2',system-ui,sans-serif;padding:6px 14px;border-radius:14px;border:3px solid #2b2438;pointer-events:auto;cursor:pointer;user-select:none}"+
+    "#tunePanel{position:fixed;top:48px;right:8px;z-index:61;width:min(440px,94vw);max-height:calc(100vh - 140px);overflow:auto;background:rgba(20,16,32,.9);color:#fff;font:13px system-ui,sans-serif;padding:10px 12px;border-radius:12px;pointer-events:auto;-webkit-overflow-scrolling:touch}"+
+    "#tunePanel button{font:700 13px system-ui,sans-serif;margin:0 6px 6px 0;padding:6px 10px;border-radius:9px;border:0;background:#3a3150;color:#fff}#tunePanel button.main{background:#ffd23f;color:#2b2438}"+
+    "#tunePanel .row{display:grid;grid-template-columns:1fr auto;gap:2px 8px;margin:6px 0}#tunePanel .row input{grid-column:1/3;width:100%;margin:0}#tunePanel .val{color:#ffd23f;font-weight:700}#tuneRead{color:#7fd0ff;margin:4px 0 2px}#tunePanel textarea{width:100%;height:120px;font:11px monospace}";
+  document.head.appendChild(css);
+  var btn=document.createElement("div");btn.id="tuneBtn";btn.textContent="TUNE";document.body.appendChild(btn);
+  var pn=document.createElement("div");pn.id="tunePanel";pn.hidden=true;
+  var h='<button class="main" id="tunePreset">Feel</button><button id="tuneCopy">Copy values</button><button id="tuneClose">Close</button><div id="tuneRead"></div><div>'+
+    [["Start",150],["Steps",1380],["Slopes",2760],["Gaps",4520],["Pillars",5560],["Crates",7140]].map(function(g){return '<button data-go="'+g[1]+'">'+g[0]+'</button>';}).join("")+'</div>';
+  TUNE_DEF.forEach(function(d){h+='<div class="row"><span>'+d[1]+'</span><span class="val" id="to_'+d[0]+'"></span><input type="range" id="tr_'+d[0]+'" min="'+d[3]+'" max="'+d[4]+'" step="'+d[5]+'"></div>';});
+  h+='<div id="tuneOut" hidden><textarea id="tuneTxt" readonly></textarea></div>';
+  pn.innerHTML=h;document.body.appendChild(pn);
+  var stop=function(e){e.stopPropagation();};["pointerdown","pointerup","touchstart","touchend","mousedown","click","keydown"].forEach(function(t){pn.addEventListener(t,stop);btn.addEventListener(t,stop);});
+  btn.addEventListener("click",function(){pn.hidden=!pn.hidden;});
+  document.getElementById("tuneClose").addEventListener("click",function(){pn.hidden=true;});
+  document.getElementById("tunePreset").addEventListener("click",function(){var cur=TUNE_ORDER.map(function(k){return TUNE_PRESETS[k].name;}).indexOf(TUNE_NAME);tuneSet(TUNE_ORDER[(cur+1)%TUNE_ORDER.length]);});
+  document.getElementById("tuneCopy").addEventListener("click",function(){var t=tuneText(),b=this;var show=function(){var o=document.getElementById("tuneOut"),x=document.getElementById("tuneTxt");o.hidden=false;x.value=t;x.focus();x.select();};
+    try{navigator.clipboard.writeText(t).then(function(){b.textContent="Copied!";setTimeout(function(){b.textContent="Copy values";},1500);},show);}catch(e){show();}});
+  pn.querySelectorAll("[data-go]").forEach(function(b){b.addEventListener("click",function(){gymGo(+b.getAttribute("data-go"));});});
+  TUNE_DEF.forEach(function(d){var r=document.getElementById("tr_"+d[0]);r.addEventListener("input",function(){TUNE[d[0]]=+r.value;TUNE_NAME="Custom";tuneApply();tuneSync();});r.addEventListener("change",function(){r.blur();});});
+  window.addEventListener("keydown",function(e){if((e.key==="r"||e.key==="R")&&state==="play")gymGo(150);});
+  tuneSet("current");}
 function sliceTop(x){var b=SL&&SL.bus;if(b&&P.bm&&(P.bm.ph==="in"||P.bm.ph==="thru")&&x>b.x+10&&x<b.x+BUS_LEN-44)return groundY(b.x+BUS_LEN/2)-BUS_FLOOR;var o=sliceObjAt(x);return o?o.top:null;}
 function crateAbove(o){for(var i=0;i<SL_OBJ.length;i++){var q=SL_OBJ[i];if(q!==o&&!q.gone&&Math.abs(q.x-o.x)<20&&q.top<o.top)return q;}return null;}
 function sliceWalls(p,prevX){for(var i=0;i<SL_OBJ.length;i++){var o=SL_OBJ[i];if(o.gone||o.k==="flag")continue;var L=o.x-o.w/2-12,R=o.x+o.w/2+12;
   if(p.y>o.top+6&&p.y-110<o.top+o.h&&p.x>L&&p.x<R){
+    if(S_NEW&&p.ground&&p.y-o.top<=S_STEP){p.y=o.top;p.plat=true;continue;}   /* a small step: walk up it */
     /* Crash style: a single crate breaks if she runs into it at speed */
     if((o.k==="crate"||o.k==="gift")&&!crateAbove(o)&&p.ground&&Math.abs(p.vx)>S_TOP*0.6){breakObj(o,"run");p.vx*=0.96;continue;}
     if(prevX<=L+1||(prevX<o.x&&p.vx>=0))p.x=L;else p.x=R;if(Math.abs(p.vx)>200&&o.k!=="edge"){fx(o.k==="crate"?"stepwood":"block",0.3,0.8,0.2);}p.vx=0;}}}
@@ -1846,12 +1934,15 @@ function sliceMove(p,dt){if(p.bm||p.kf){p.face=1;p.vx=p.bm?p.bm.vx:540;return;}v
   if(p.ground&&!p.plat){var sl=slope(p.x);p.vx+=S_SLP*sl/Math.sqrt(1+sl*sl)*dt;}
   p.vx=Math.max(-S_TOP*1.4,Math.min(S_TOP*1.4,p.vx));}
 function sliceJump(buffered){var p=P;if(p.hurtT>0||state!=="play"||(p.sa&&p.sa.fin)||p.bm||p.kf)return;
+  if(S_NEW){if(p.ground||p.coyote>0){p.sa=null;p.qd=null;p.jumpBuf=0;sliceLaunch(p,true);return;}
+    /* falling and about to land: remember the press for the ground instead of spending the double jump */
+    if(p.vy>0&&!buffered){var fl=groundY(p.x),pt0=platTop(p.x);if(pt0!==null&&pt0>=p.y-2)fl=Math.min(fl,pt0);if((fl-p.y)<p.vy*JUMP_BUFFER){p.jumpBuf=JUMP_BUFFER;return;}}}
   if(p.ground&&!(p.crouchT>0)){p.sa=null;p.qd=null;p.crouchT=S_CROUCH;p.jumpBuf=0;return;}
   if(!p.ground&&p.coyote>0){sliceLaunch(p,!!pd);return;}
   /* double jump: once per airtime, a tucked forward flip about 70% as high as the first */
-  if(!p.ground&&!p.dj&&!buffered&&!stunt){p.dj=true;p.sa=null;p.qd=null;p.vy=-S_DJ;p.playerJump=true;p.jumpCut=false;p.spinT=0.5;fx("whoosh0",0.45,1.35);fx("jump",0.3,1.45);sparks(p.x,p.y-40,6,"#bff3ff");return;}
+  if(!p.ground&&!p.dj&&!buffered&&!stunt&&S_DJ>0){p.dj=true;p.sa=null;p.qd=null;p.vy=-S_DJ;p.playerJump=true;p.jumpCut=false;p.relJ=false;p.spinT=0.5;fx("whoosh0",0.45,1.35);fx("jump",0.3,1.45);sparks(p.x,p.y-40,6,"#bff3ff");return;}
   if(!buffered)p.jumpBuf=JUMP_BUFFER;}
-function sliceLaunch(p,full){p.crouchT=0;p.vy=-(full?JUMP_V:S_HOP);p.ground=false;p.plat=false;p.coyote=0;p.jumps=1;p.playerJump=true;p.jumpCut=!full;p.sq=0.84;p.st=1.2;SFX.jump();puff(p.x,p.y,5);}
+function sliceLaunch(p,full){p.crouchT=0;p.relJ=false;p.vy=-(full?JUMP_V:S_HOP);p.ground=false;p.plat=false;p.coyote=0;p.jumps=1;p.playerJump=true;p.jumpCut=!full;p.sq=0.84;p.st=1.2;SFX.jump();puff(p.x,p.y,5);}
 
 /* ---------- per frame ---------- */
 function sliceUpdate(dt){var s=SL;if(!s)return;s.t+=dt;if(s.goT>0)s.goT-=dt;if(s.flash>0)s.flash-=dt;if(s.duel)s.duel.t+=dt;if(s.wins)s.wins.t+=dt;
@@ -1870,7 +1961,7 @@ function sliceUpdate(dt){var s=SL;if(!s)return;s.t+=dt;if(s.goT>0)s.goT-=dt;if(s
   for(var i=s.lost.length-1;i>=0;i--){var b=s.lost[i];b.t+=dt;b.y-=(70+b.t*40)*dt;b.x+=Math.sin(b.t*3)*40*dt;if(b.y<vt-200)s.lost.splice(i,1);}
   if(s.goT>0&&s.goSnd!==Math.ceil(s.goT)&&!arena){s.goSnd=Math.ceil(s.goT);}
   /* the end: the bus stunt is done */
-  sliceMoves(dt);if(SL_LEVEL==="park"){parkProjUpdate(dt);if(s.bossBeaten&&got.ball&&state==="play"&&!hoop&&s.doneT<0)s.doneT=0;}
+  sliceMoves(dt);if(GYM)gymUpdate(dt);if(SL_LEVEL==="park"){parkProjUpdate(dt);if(s.bossBeaten&&got.ball&&state==="play"&&!hoop&&s.doneT<0)s.doneT=0;}
   else if(stuntDone.bus&&!stunt&&!P.bm&&s.doneT<0)s.doneT=0;
   if(s.doneT>=0)s.doneT+=dt;if(s.doneT>1.4&&!s.done){s.done=true;$("controls").hidden=true;input.run=input.runL=false;SFX.belt();confetti(cam+LW/2,vt+80,80);}}
 function sliceActor(a,dt){if(a.k==="crumbs")return updateCrumbs(a,dt);if(a.k==="bunny")return updateBunny(a,dt);if(a.k==="fluff")return updateFluff(a,dt);if(a.k==="crew")return updateCrew(a,dt);return updateGull(a,dt);}
@@ -1881,6 +1972,7 @@ function sliceRespawn(){var fz=SL.fz;if(fz.state==="on"){actors=actors.filter(fu
 
 /* ---------- drawing ---------- */
 function drawSliceProps(){
+  if(GYM)gymDraw();
   if(SL.bus){var SB=SL.bus;drawBusBody(SB.x-cam,groundY(SB.x+BUS_LEN/2),!!P.bm||(P.x>SB.x-80&&P.x<SB.x+BUS_LEN+60&&!stuntDone.bus),false);}
   if(SL_LEVEL==="park"){if(!SL.slideDone&&!P.board){var bx0=SLIDE.b+30;drawBoard(bx0-cam,groundY(bx0),Math.atan(slope(bx0))*0.8,0);}
     if(SL.loose){var LB=SL.loose;ctx.save();ctx.translate(LB.x-cam,groundY(LB.x));ctx.rotate(frame/4);ctx.scale(0.8,0.8);rr(-36,-6,72,10,5,"#3a2a5a");circ(-22,6,7,"#ffd23f");circ(22,6,7,"#ffd23f");ctx.restore();}}
@@ -1892,6 +1984,7 @@ function drawSliceProps(){
     if(o.k==="gift"){var bob=Math.sin(frame/9+i)*1.5;rr(x-w/2,top+bob,w,h,6,"#e83b6b");rr(x-w/2+4,top+4+bob,w-8,h-8,4,"#ff5f8a");rr(x-6,top+bob,12,h,2,"#ffd23f");rr(x-w/2,top+h/2-6+bob,w,12,2,"#ffd23f");ctx.fillStyle="#ffd23f";ctx.beginPath();ctx.ellipse(x-11,top-6+bob,12,8,-0.5,0,7);ctx.ellipse(x+11,top-6+bob,12,8,0.5,0,7);ctx.fill();circ(x,top-4+bob,6,"#f0b400");if(frame%20<2)sparks(o.x,top+bob,1,"#fff3a0");continue;}
     if(o.k==="crate"){rr(x-w/2,top,w,h,5,"#a8743c");rr(x-w/2+5,top+5,w-10,h-10,3,"#c48a4c");ctx.strokeStyle="#7a5028";ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(x-w/2+8,top+8);ctx.lineTo(x+w/2-8,top+h-8);ctx.moveTo(x+w/2-8,top+8);ctx.lineTo(x-w/2+8,top+h-8);ctx.stroke();rr(x-w/2,top,w,6,3,"#d9a066");continue;}
     if(o.k==="postbox"){rr(x-w/2,top+14,w,h-14,6,"#c8202a");ctx.fillStyle="#c8202a";ctx.beginPath();ctx.ellipse(x,top+16,w/2+3,16,0,Math.PI,0);ctx.fill();rr(x-w/2-3,top+12,w+6,8,4,"#9e1820");rr(x-12,top+32,24,5,2,"#2b1a1a");rr(x-w/2-2,top+h-8,w+4,10,3,"#2b2232");txt("ER",x,top+56,11,"#ffd23f","center","rgba(0,0,0,0)");continue;}
+    if(o.k==="step"){rr(x-w/2,top,w,h,6,"#6f5f86");rr(x-w/2,top,w,8,4,"#a898c8");if(o.lab)txt(o.lab,x,top-16,16,"#fff");if(o.gapLab){var gb=groundY(o.x);rr(x+w/2,gb-4,o.gap,4,2,"#ffd23f");txt(o.gapLab,x+w/2+o.gap/2,gb-20,16,"#ffd23f");}continue;}
     if(o.k==="wall"&&SL_LEVEL==="park"){rr(x-w/2,top+6,w,h-6,22,"#3f8f3a");for(var hb=0;hb<6;hb++)circ(x-w/2+14+hb*(w-28)/5,top+10+(hb%2)*6,16,"#4fa848");circ(x-w/2+20,top+30,4,"#ff8fc7");circ(x+w/2-30,top+24,4,"#ffd23f");continue;}
     if(o.k==="wall"){rr(x-w/2,top,w,h,4,"#b5653f");ctx.fillStyle="#8f4a2d";for(var by=0;by<h;by+=16)for(var bx=((by/16)%2?-w/2:-w/2+18);bx<w/2-4;bx+=36)ctx.fillRect(x+bx,top+by+13,30,3);rr(x-w/2-4,top-6,w+8,10,3,"#9aa0a6");continue;}
     if(o.k==="car"){var R=o.roof;rr(x-w/2,top,w,h-10,22,"#3a8cff");rr(R.x-cam-R.w/2,R.top,R.w,R.h+12,24,"#3a8cff");rr(R.x-cam-R.w/2+12,R.top+10,R.w/2-18,R.h-12,8,"#bfe6ff");rr(R.x-cam+6,R.top+10,R.w/2-18,R.h-12,8,"#bfe6ff");rr(x-w/2,top+h-28,w,8,4,"#2a6bd0");
@@ -1922,7 +2015,7 @@ function drawCrumbs(a,x,y){var gy=groundY(a.x);
   if(a.st==="puff"){var tp=1+Math.sin(frame/1.5)*0.08;ctx.save();ctx.translate(x+a.face*80,y-185);ctx.scale(tp,tp);rr(-14,-20,28,40,9,"#e03a3a");txt("!",0,0,30,"#ffd23f");ctx.restore();}
   if(a.st==="dizzy"||a.st==="stuck"||a.st==="finish"){for(var j=0;j<3;j++)starB(x+Math.cos(a.t*5+j*2.1)*44,y-205+Math.sin(a.t*5+j*2.1)*10,12,a.t*6);}}
 function drawSliceHUD(){var s=SL;if(!s)return;
-  if(!s.done&&!s.duel){var y=vb-16,x0=LW*0.25,w=LW*0.5;rr(x0,y-5,w,10,5,"rgba(43,36,56,.45)");(SL_LEVEL==="park"?[[SL_FZ,"#e03a3a"],[PK.loop,"#7fd0ff"],[PK.fluff,"#c58cff"],[PK.kid,"#ff8a2a"]]:[[SL_FZ,"#e03a3a"],[BUS_X,"#7fd0ff"],[BUS_X+700+BUS_LEN/2,"#ffd23f"]]).forEach(function(m){circ(x0+m[0]/LEVEL_END*w,y,7,m[1]);});var px=x0+Math.min(1,P.x/LEVEL_END)*w;circ(px,y,10,"#f5c5a3");rr(px-10,y-13,20,9,5,"#6b3a2a");rr(px-10,y-6,20,4,2,"#e03a3a");}
+  if(!s.done&&!s.duel&&!GYM){var y=vb-16,x0=LW*0.25,w=LW*0.5;rr(x0,y-5,w,10,5,"rgba(43,36,56,.45)");(SL_LEVEL==="park"?[[SL_FZ,"#e03a3a"],[PK.loop,"#7fd0ff"],[PK.fluff,"#c58cff"],[PK.kid,"#ff8a2a"]]:[[SL_FZ,"#e03a3a"],[BUS_X,"#7fd0ff"],[BUS_X+700+BUS_LEN/2,"#ffd23f"]]).forEach(function(m){circ(x0+m[0]/LEVEL_END*w,y,7,m[1]);});var px=x0+Math.min(1,P.x/LEVEL_END)*w;circ(px,y,10,"#f5c5a3");rr(px-10,y-13,20,9,5,"#6b3a2a");rr(px-10,y-6,20,4,2,"#e03a3a");}
   /* combo counter */
   if(state==="play"&&P.comboHits>=2&&P.comboShow>0){var cs=1+Math.max(0,P.comboShow-1.3)*3;ctx.save();ctx.translate(LW-150,vt+170);ctx.rotate(-0.06);ctx.scale(cs,cs);txt(P.comboHits+" HITS!",0,0,P.comboHits>=5?40:32,P.comboHits>=5?"#ff5fa2":"#ffd23f");ctx.restore();}
   /* the duel: both names, both bars */
@@ -1945,6 +2038,7 @@ function drawSliceHUD(){var s=SL;if(!s)return;
 
 
 if(SLICE)sliceReset();else reset(0);
+if(GYM)gymPanel();
 document.fonts.load("800 20px 'Baloo 2'").then(function(){requestAnimationFrame(loop)},function(){requestAnimationFrame(loop)});
 
 function drawTargets(){if(state!=="play")return;var list=tappables();for(var i=0;i<list.length;i++){var t=list[i];var x=t.x-cam;if(x<-100||x>LW+100)continue;var near=Math.abs(t.x-P.x)<340;
