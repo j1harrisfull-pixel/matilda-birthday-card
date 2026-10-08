@@ -561,7 +561,7 @@ function updatePlayer(dt){
   else{if(p.ground)p.coyote=COYOTE;p.ground=false;p.plat=false;}
   if(p.ground&&Math.abs(p.vx)>RUN*0.7&&!p.slide&&Math.random()<dt*14)parts.push({x:p.x-p.face*14,y:p.y-2,vx:-p.face*(60+Math.random()*60),vy:-Math.random()*40,l:0.35,r:4+Math.random()*4,c:"rgba(214,196,160,.75)",k:"puff"});
   if(!p.loop&&p.ground&&p.vx>150&&Math.abs(p.x-(LOOP.x-LOOP.r-10))<14&&p.hurtT<=0){p.loop={th:0};p.ground=false;SFX.woosh();}
-  if(SLICE)sliceSteps(p);
+  if(SLICE){sliceSteps(p);if(p.landT>0)p.landT-=dt;if(p.turnT>0)p.turnT-=dt;}   /* the landing pose lasts 0.12 s, then the run cycle takes over again */
 }
 function resolveAttack(){
   var p=P,atk=p.atk,rng=atk==="kick"?140:92,hx1=p.x+(p.face===1?10:-rng-10),hx2=hx1+rng+10,hit=false;
