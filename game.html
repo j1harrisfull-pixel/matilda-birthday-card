@@ -77,7 +77,7 @@
   var barIn = document.getElementById("barIn"), txt = document.getElementById("loadTxt");
   window.setLoad = function (v, t) { barIn.style.width = Math.round(Math.max(0, Math.min(1, v)) * 100) + "%"; if (t !== undefined) txt.textContent = t; };
   /* the engine (Phaser and the game code) loads first with its own progress, then the art and music */
-  var x = new XMLHttpRequest(); x.open("GET", "game/engine.js?v=20261010001306");
+  var x = new XMLHttpRequest(); x.open("GET", "game/engine.js?v=20261010004357");
   x.onprogress = function (e) { var tot = e.lengthComputable ? e.total : 1500000; window.setLoad(0.35 * Math.min(1, e.loaded / tot), "Loading the game…"); };
   x.onload = function () { if (x.status !== 200) { txt.textContent = "Could not load. Pull down to try again."; return; } var s = document.createElement("script"); s.text = x.responseText; document.body.appendChild(s); };
   x.onerror = function () { txt.textContent = "No connection. Pull down to try again."; };
