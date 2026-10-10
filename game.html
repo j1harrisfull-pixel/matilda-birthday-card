@@ -13,9 +13,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
 <style>
   :root{--ink:#2b2438;--pink:#ff5fa2;--lemon:#ffd23f}
-  html,body{margin:0;height:100%;background:var(--ink);overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;font-family:'Baloo 2',system-ui,sans-serif}
-  #game{position:fixed;inset:0}
-  #game canvas{display:block}
+  html,body{margin:0;height:100%;background:var(--ink);overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-text-size-adjust:100%;overscroll-behavior:none;font-family:'Baloo 2',system-ui,sans-serif}
+  #game{position:fixed;inset:0;touch-action:none}
+  #game canvas{display:block;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
   .scr{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:16px;background:radial-gradient(circle at 50% 35%,#5b3f9e,#2b2438 70%)}
   .scr[hidden]{display:none}
   #title{margin:0;font-size:clamp(30px,7vw,64px);line-height:.92;color:var(--pink);font-weight:800;text-shadow:0 4px 0 #fff,0 8px 0 rgba(0,0,0,.35);transform:scale(.9);opacity:.85}
@@ -31,19 +31,18 @@
   #tapStart{background:none;box-shadow:none;color:#fff;animation:blink 1s steps(2) infinite;font-size:26px}
   @keyframes blink{50%{opacity:.25}}
   .hint{margin:0;max-width:680px;color:#fff;opacity:.75;font-size:clamp(12px,2vw,15px)}
-  #controls{position:fixed;inset:0;z-index:5;pointer-events:none}
+  /* controls, console style. Left thumb: big arrows, low in the corner. Right thumb: JUMP the biggest, bottom right;
+     PUNCH to its left, KICK above PUNCH, STORM small and higher up. Every button at least 64 px, inside the safe area. */
+  #controls{position:fixed;inset:0;z-index:5;pointer-events:none;--sl:max(14px,env(safe-area-inset-left));--sr:max(14px,env(safe-area-inset-right));--sb:max(12px,env(safe-area-inset-bottom));--g:12px;--A:clamp(76px,25vh,108px);--J:clamp(88px,30vh,124px);--P:clamp(68px,22vh,94px);--S:64px}
   #controls[hidden]{display:none}
-  .pad{position:absolute;bottom:max(10px,env(safe-area-inset-bottom));pointer-events:none;display:flex;gap:min(12px,2.4vh);align-items:flex-end}
-  #padL{left:max(12px,env(safe-area-inset-left));flex-direction:column;align-items:flex-start}
-  #padL .row{display:flex;gap:min(12px,2.4vh)}
-  #padR{right:max(12px,env(safe-area-inset-right))}
-  .cb{pointer-events:auto;touch-action:none;border:0;border-radius:22px;font:inherit;font-weight:800;color:#fff;width:clamp(54px,15vh,82px);height:clamp(54px,15vh,82px);font-size:clamp(13px,3.2vh,18px);box-shadow:0 5px 0 rgba(0,0,0,.25);transition:transform .05s,filter .05s;-webkit-tap-highlight-color:transparent;opacity:.92}
+  .cb{position:absolute;pointer-events:auto;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;border:0;border-radius:50%;font:inherit;font-weight:800;color:#fff;box-shadow:0 5px 0 rgba(0,0,0,.25);transition:transform .05s,filter .05s;-webkit-tap-highlight-color:transparent;opacity:.8;padding:0}
   .cb.down{transform:translateY(4px) scale(.96);filter:brightness(1.25);box-shadow:0 2px 0 rgba(0,0,0,.25),0 0 0 4px #fff}
-  #bL,#bR{background:#6a5fbf;font-size:clamp(20px,5vh,30px)}
-  #bJ{background:#3a8cff;border-radius:50%;width:clamp(60px,18vh,94px);height:clamp(60px,18vh,94px);margin-left:calc(clamp(54px,15vh,82px)*.6)}
-  #bP{background:#e03a3a;border-radius:50%;width:clamp(62px,19vh,94px);height:clamp(62px,19vh,94px);margin-bottom:clamp(18px,6vh,40px)}
-  #bK{background:#ff8a2a;border-radius:50%;width:clamp(62px,19vh,94px);height:clamp(62px,19vh,94px)}
-  #bS{position:absolute;right:max(12px,env(safe-area-inset-right));bottom:calc(max(10px,env(safe-area-inset-bottom)) + clamp(62px,19vh,94px) + clamp(30px,9vh,60px));background:rgba(43,36,56,.5);border-radius:50%;width:clamp(48px,13vh,68px);height:clamp(48px,13vh,68px);font-size:clamp(10px,2.4vh,13px);color:rgba(255,255,255,.6)}
+  #bL,#bR{width:var(--A);height:var(--A);bottom:var(--sb);border-radius:24px;background:#6a5fbf;font-size:calc(var(--A)*.36)}
+  #bL{left:var(--sl)} #bR{left:calc(var(--sl) + var(--A) + var(--g))}
+  #bJ{width:var(--J);height:var(--J);right:var(--sr);bottom:var(--sb);background:#3a8cff;font-size:calc(var(--J)*.2)}
+  #bP{width:var(--P);height:var(--P);right:calc(var(--sr) + var(--J) + var(--g));bottom:var(--sb);background:#e03a3a;font-size:calc(var(--P)*.2)}
+  #bK{width:var(--P);height:var(--P);right:calc(var(--sr) + var(--J) + var(--g));bottom:calc(var(--sb) + var(--P) + var(--g));background:#ff8a2a;font-size:calc(var(--P)*.22)}
+  #bS{width:var(--S);height:var(--S);right:calc(var(--sr) + (var(--J) - var(--S)) / 2);bottom:calc(var(--sb) + var(--J) + var(--g) + 8px);background:rgba(43,36,56,.5);font-size:12px;color:rgba(255,255,255,.6)}
   #bS.ready{background:radial-gradient(#ffd23f,#ff5fa2);color:#fff;animation:pulse .6s infinite alternate;box-shadow:0 0 0 4px #fff,0 0 24px #ffd23f}
   #bS.storming{background:#ffd23f;color:#2b2438}
   @keyframes pulse{to{transform:scale(1.1)}}
@@ -56,8 +55,8 @@
 <body>
 <div id="game"></div>
 <div id="controls" hidden>
-  <div class="pad" id="padL"><button class="cb" id="bJ">JUMP</button><div class="row"><button class="cb" id="bL">◀</button><button class="cb" id="bR">▶</button></div></div>
-  <div class="pad" id="padR"><button class="cb" id="bP">PUNCH</button><button class="cb" id="bK">KICK</button></div>
+  <button class="cb" id="bL" aria-label="Left">◀</button><button class="cb" id="bR" aria-label="Right">▶</button>
+  <button class="cb" id="bP">PUNCH</button><button class="cb" id="bK">KICK</button><button class="cb" id="bJ">JUMP</button>
   <button class="cb" id="bS">STORM</button>
 </div>
 <button id="muteBtn" aria-label="Sound on or off">🔊</button>
@@ -77,7 +76,7 @@
   var barIn = document.getElementById("barIn"), txt = document.getElementById("loadTxt");
   window.setLoad = function (v, t) { barIn.style.width = Math.round(Math.max(0, Math.min(1, v)) * 100) + "%"; if (t !== undefined) txt.textContent = t; };
   /* the engine (Phaser and the game code) loads first with its own progress, then the art and music */
-  var x = new XMLHttpRequest(); x.open("GET", "game/engine.js?v=20261010015527");
+  var x = new XMLHttpRequest(); x.open("GET", "game/engine.js?v=20261010162727");
   x.onprogress = function (e) { var tot = e.lengthComputable ? e.total : 1500000; window.setLoad(0.35 * Math.min(1, e.loaded / tot), "Loading the game…"); };
   x.onload = function () { if (x.status !== 200) { txt.textContent = "Could not load. Pull down to try again."; return; } var s = document.createElement("script"); s.text = x.responseText; document.body.appendChild(s); };
   x.onerror = function () { txt.textContent = "No connection. Pull down to try again."; };
