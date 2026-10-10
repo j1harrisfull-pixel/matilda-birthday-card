@@ -8,3 +8,6 @@
 | mus_card | Happy Birthday (traditional, public domain), arranged and rendered in code for this game (art/music/happy_birthday.py) | ours |
 
 CC0 needs no credit; the composers are named here anyway, with thanks. Both Juhani Junkala packs say in their INFO.txt: "These music tracks have been released under CC0 creative commons license."
+
+## Font
+Baloo 2 by Ek Type, SIL Open Font License 1.1 (https://fonts.google.com/specimen/Baloo+2), shipped as game/fonts/baloo2.woff2.
