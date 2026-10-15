@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Matilda's Voice</title>
+<style>
+  :root { --bg: #fff6ea; --ink: #2b2438; --card: #ffffff; --a: #ff5fa2; --b: #3a8cff; --c: #3fc75a; --soft: #6b6278; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #1f1a29; --ink: #f4eefc; --card: #2b2438; --soft: #b8aec8; } }
+  :root[data-theme="dark"] { --bg: #1f1a29; --ink: #f4eefc; --card: #2b2438; --soft: #b8aec8; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 600 17px/1.4 -apple-system, system-ui, sans-serif; padding: 20px 16px 40px; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  p { margin: 0 0 18px; color: var(--soft); }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); max-width: 900px; }
+  .card { background: var(--card); border-radius: 18px; padding: 14px; box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+  .big { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; border: 0; border-radius: 14px; padding: 18px; font: 900 34px/1 system-ui, sans-serif; color: #fff; cursor: pointer; }
+  .big span { font-size: 18px; font-weight: 800; }
+  .A .big { background: var(--a); } .B .big { background: var(--b); } .C .big { background: var(--c); }
+  .line { display: block; width: 100%; margin-top: 8px; padding: 12px; border-radius: 12px; border: 2px solid rgba(127,127,127,.25); background: transparent; color: var(--ink); font: 700 16px system-ui, sans-serif; text-align: left; cursor: pointer; }
+  .line:active, .big:active { transform: scale(.98); }
+</style>
+</head>
+<body>
+<h1>Matilda's voice: A, B or C?</h1>
+<p>Each voice says the same three lines. Tap the big button to hear all three, or tap a line.</p>
+<div class="grid">
+  <div class="card A"><button class="big" data-v="A">A <span>▶ play all</span></button>
+    <button class="line" data-s="A1">"Party, here I come!"</button><button class="line" data-s="A2">"Hi-yah!"</button><button class="line" data-s="A3">"My Dahlia Storm is ready!"</button></div>
+  <div class="card B"><button class="big" data-v="B">B <span>▶ play all</span></button>
+    <button class="line" data-s="B1">"Party, here I come!"</button><button class="line" data-s="B2">"Hi-yah!"</button><button class="line" data-s="B3">"My Dahlia Storm is ready!"</button></div>
+  <div class="card C"><button class="big" data-v="C">C <span>▶ play all</span></button>
+    <button class="line" data-s="C1">"Party, here I come!"</button><button class="line" data-s="C2">"Hi-yah!"</button><button class="line" data-s="C3">"My Dahlia Storm is ready!"</button></div>
+</div>
+<script>
+  var cur = null, queue = [];
+  function play(k, next) { if (cur) { cur.pause(); cur.onended = null; } cur = new Audio("audition/" + k + ".mp3"); cur.onended = next || null; cur.play(); }
+  function playAll(v) { var ks = [v + "1", v + "2", v + "3"], i = 0; var go = function () { if (i < ks.length) { var k = ks[i++]; play(k, function () { setTimeout(go, 400); }); } }; go(); }
+  document.querySelectorAll(".big").forEach(function (b) { b.addEventListener("click", function () { playAll(b.dataset.v); }); });
+  document.querySelectorAll(".line").forEach(function (b) { b.addEventListener("click", function () { play(b.dataset.s); }); });
+</script>
+</body>
+</html>
