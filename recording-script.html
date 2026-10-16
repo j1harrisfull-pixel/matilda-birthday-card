@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recording Script</title>
+<style>
+  :root { --bg: #fffaf3; --ink: #2b2438; --card: #ffffff; --soft: #6b6278; --line: rgba(43,36,56,.12); --pink: #e8478f; --flag: #c0392b; --ok: #2e8b57; --chip: #f3e8ff; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #1d1826; --ink: #f4eefc; --card: #29233a; --soft: #b8aec8; --line: rgba(255,255,255,.12); --flag: #ff7b6b; --ok: #6fd39a; --chip: #3a2f52; } }
+  :root[data-theme="dark"] { --bg: #1d1826; --ink: #f4eefc; --card: #29233a; --soft: #b8aec8; --line: rgba(255,255,255,.12); --flag: #ff7b6b; --ok: #6fd39a; --chip: #3a2f52; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.5 -apple-system, system-ui, sans-serif; padding: 20px 16px 60px; }
+  main { max-width: 1120px; margin: 0 auto; }
+  h1 { font-size: 27px; margin: 0 0 4px; line-height: 1.2; }
+  h2 { font-size: 21px; margin: 36px 0 6px; padding-top: 10px; border-top: 2px solid var(--line); }
+  h3 { font-size: 16px; margin: 18px 0 6px; }
+  p, li { color: var(--soft); }
+  a { color: var(--pink); font-weight: 700; }
+  nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 6px; }
+  nav a { background: var(--chip); color: var(--ink); text-decoration: none; padding: 6px 12px; border-radius: 999px; font-size: 14px; }
+  .wrap { overflow-x: auto; background: var(--card); border-radius: 14px; box-shadow: 0 3px 12px rgba(0,0,0,.06); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 720px; }
+  th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--soft); padding: 10px; border-bottom: 2px solid var(--line); }
+  td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td.l { font-weight: 700; color: var(--ink); }
+  .flag { color: var(--flag); font-weight: 800; }
+  .ok { color: var(--ok); font-weight: 800; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 800; padding: 1px 7px; border-radius: 999px; background: var(--chip); color: var(--ink); white-space: nowrap; }
+  .card { background: var(--card); border-radius: 14px; padding: 14px 16px; box-shadow: 0 3px 12px rgba(0,0,0,.06); margin: 10px 0; }
+  .num { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<main>
+<style>.ln{background:var(--card);border-radius:14px;padding:12px 14px;margin:8px 0;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;gap:12px;align-items:baseline}.ln b.n{font:900 15px ui-monospace,monospace;color:var(--pink);min-width:3.2em}.ln .w{font-size:21px;font-weight:800;color:var(--ink);line-height:1.25}.ln .h{font-size:14px;color:var(--soft);margin-top:2px}.ln .m{font-size:12px;color:var(--soft);margin-top:2px;opacity:.8}.tips li{margin:6px 0;color:var(--ink)}.who{font-size:24px}.sub{font-size:15px;font-weight:800;margin:16px 0 4px;color:var(--soft);text-transform:uppercase;letter-spacing:.05em}</style>
+<h1>Recording script</h1><p>For Matilda's birthday game. Everyday voices, like talking at home. Nothing posh, nothing like an advert.</p>
+<nav><a href="#matilda">Matilda</a><a href="#leo">Leo</a><a href="#mummy">Mummy</a><a href="#sensei">Sensei</a><a href="#snuffles">Snuffles</a><a href="#olive">Olive</a></nav>
+<h2>How to record</h2><div class="card"><ol class="tips">
+<li><b>A quiet room with soft things in it.</b> A bedroom with the curtains shut and a duvet is best. Turn off the TV, the washing machine and any fans.</li>
+<li><b>Use Voice Memos on the iPhone.</b> If you can, first set Settings, Apps, Voice Memos, Audio Quality to Lossless.</li>
+<li><b>Hold the phone about a hand's width from your mouth</b>, a little to one side so the "p" and "b" sounds don't pop.</li>
+<li><b>One Voice Memo per character.</b> Rename it to the character, for example "Snuffles".</li>
+<li><b>Say the line number, then the line three times</b>, with a short pause (about two seconds) between each one. Like: "M3. Olive! Come on, girl! ... Olive! Come on, girl! ... Olive! Come on, girl!"</li>
+<li><b>Talk normally.</b> Say it the way you would at home. The three tries can be a bit different from each other, which helps.</li>
+<li><b>Record ten seconds first and listen back</b> to check it is clear and not too loud.</li>
+<li><b>For children:</b> read each line to them and let them say it back, as many tries as they like. Giggles and mistakes are fine; keep it a game and stop when they've had enough.</li>
+<li><b>Send them to the Mac:</b> in Voice Memos tap the recording, tap the three dots, Share, AirDrop, then James's Mac. On the Mac it lands in Downloads. Drag each file into the matching folder in <b>matilda-birthday/raw/voice/</b>: matilda, leo, mummy, sensei, snuffles (and olive).</li>
+</ol></div>
+<h2 id="matilda" class="who">Matilda</h2><p>Excited 8 year old. Normal speaking voice, just happy and quick. Full lines only in the opening, at the bosses, at Stunt Day and at the end. Folder: <b>raw/voice/matilda/</b></p>
+<div class="sub">Lines</div>
+<div class="ln"><b class="n">M1</b><div><div class="w">I won&#x27;t!</div><div class="h">excited, quick</div><div class="m">Opening, on the video call</div></div></div>
+<div class="ln"><b class="n">M2</b><div><div class="w">Let&#x27;s go!</div><div class="h">bursting to get going</div><div class="m">Running out of the dojo</div></div></div>
+<div class="ln"><b class="n">M3</b><div><div class="w">Olive! Come on, girl!</div><div class="h">delighted, calling her dog</div><div class="m">Olive catches up on the street</div></div></div>
+<div class="ln"><b class="n">M4</b><div><div class="w">Ooh! What&#x27;s that?</div><div class="h">curious</div><div class="m">Olive stops and points at something hidden</div></div></div>
+<div class="ln"><b class="n">M5</b><div><div class="w">Ooh, Storm&#x27;s ready!</div><div class="h">excited, a bit out of breath</div><div class="m">Her Storm is full</div></div></div>
+<div class="ln"><b class="n">M6</b><div><div class="w">Oi! My balloons!</div><div class="h">cross but funny</div><div class="m">Crumbs flies over with her balloons</div></div></div>
+<div class="ln"><b class="n">M7</b><div><div class="w">Give them back, Crumbs!</div><div class="h">determined</div><div class="m">Start of the Crumbs fight</div></div></div>
+<div class="ln"><b class="n">M8</b><div><div class="w">One more!</div><div class="h">fired up</div><div class="m">A boss has one hit left</div></div></div>
+<div class="ln"><b class="n">M9</b><div><div class="w">Yay, my balloons!</div><div class="h">happy</div><div class="m">Crumbs gives the balloons back</div></div></div>
+<div class="ln"><b class="n">M10</b><div><div class="w">Hey! Those are my presents!</div><div class="h">cross but giggly</div><div class="m">Start of the Fluffini fight</div></div></div>
+<div class="ln"><b class="n">M11</b><div><div class="w">Yay, my presents!</div><div class="h">happy</div><div class="m">Fluffini gives the presents back</div></div></div>
+<div class="ln"><b class="n">M12</b><div><div class="w">Snuffles! It&#x27;s my party!</div><div class="h">firm, not scared</div><div class="m">Start of the Snuffles fight</div></div></div>
+<div class="ln"><b class="n">M13</b><div><div class="w">Give it back!</div><div class="h">stroppy</div><div class="m">Snuffles fight, half way</div></div></div>
+<div class="ln"><b class="n">M14</b><div><div class="w">Do you want to come to my party?</div><div class="h">kind, gentle</div><div class="m">Snuffles sits down, sad</div></div></div>
+<div class="ln"><b class="n">M15</b><div><div class="w">Course you can!</div><div class="h">big smile</div><div class="m">Snuffles asks for cake</div></div></div>
+<div class="ln"><b class="n">M16</b><div><div class="w">Ready!</div><div class="h">brave, excited</div><div class="m">Stunt Day, at the edge of the roof</div></div></div>
+<div class="ln"><b class="n">M17</b><div><div class="w">Three... two... one...</div><div class="h">slow, grinning</div><div class="m">Stunt Day countdown</div></div></div>
+<div class="ln"><b class="n">M18</b><div><div class="w">I did it!</div><div class="h">huge joy</div><div class="m">She lands in the bouncy castle</div></div></div>
+<div class="ln"><b class="n">M19</b><div><div class="w">These are for you, Mummy.</div><div class="h">shy, proud</div><div class="m">Gives Mummy the dahlias</div></div></div>
+<div class="ln"><b class="n">M20</b><div><div class="w">Happy birthday to me!</div><div class="h">sing song</div><div class="m">Blowing out the candles</div></div></div>
+<div class="sub">Sounds</div>
+<div class="ln"><b class="n">MS1</b><div><div class="w">a giggle</div><div class="h">three different real giggles</div><div class="m">Riding, smashing, zipping</div></div></div>
+<div class="ln"><b class="n">MS2</b><div><div class="w">Yes!</div><div class="h">pleased</div><div class="m">A good moment</div></div></div>
+<div class="ln"><b class="n">MS3</b><div><div class="w">Hi-yah!</div><div class="h">short and sharp twice, then one long Hi-yaaah!</div><div class="m">Punch or kick, and a long one for the Storm</div></div></div>
+<div class="ln"><b class="n">MS4</b><div><div class="w">Ooh!</div><div class="h">surprised</div><div class="m">Finds a present in a bush</div></div></div>
+<div class="ln"><b class="n">MS5</b><div><div class="w">Whoa!</div><div class="h">thrilled</div><div class="m">Skateboard, big jump, the Stunt Day fall</div></div></div>
+<div class="ln"><b class="n">MS6</b><div><div class="w">Got it!</div><div class="h">quick, pleased</div><div class="m">Picks up a golden dahlia or opens a gift box</div></div></div>
+<div class="ln"><b class="n">MS7</b><div><div class="w">Wheee!</div><div class="h">laughing</div><div class="m">Wheelie bin and washing line</div></div></div>
+<div class="ln"><b class="n">MS8</b><div><div class="w">Ow!</div><div class="h">more surprised than hurt</div><div class="m">Bumped by a gull or a bunny</div></div></div>
+<div class="ln"><b class="n">MS9</b><div><div class="w">Oops!</div><div class="h">sheepish</div><div class="m">Back to the last flag</div></div></div>
+<div class="ln"><b class="n">MS10</b><div><div class="w">Hup!</div><div class="h">a little effort sound</div><div class="m">Jumping</div></div></div>
+<h2 id="leo" class="who">Leo</h2><p>Cheeky little brother. Teasing, laughing, never worried. Folder: <b>raw/voice/leo/</b></p>
+<div class="sub">Lines</div>
+<div class="ln"><b class="n">L1</b><div><div class="w">Don&#x27;t be late!</div><div class="h">cheeky, teasing</div><div class="m">Opening, video call</div></div></div>
+<div class="ln"><b class="n">L2</b><div><div class="w">Hurry up, Matilda!</div><div class="h">laughing</div><div class="m">Opening, face pressed to the window</div></div></div>
+<div class="ln"><b class="n">L3</b><div><div class="w">That was amazing!</div><div class="h">bouncing</div><div class="m">At the party</div></div></div>
+<div class="sub">Sounds</div>
+<div class="ln"><b class="n">LS1</b><div><div class="w">a giggle</div><div class="h">two different giggles</div><div class="m">At the window and the party</div></div></div>
+<h2 id="mummy" class="who">Mummy</h2><p>Warm and happy, just talking to her daughter. Folder: <b>raw/voice/mummy/</b></p>
+<div class="sub">Lines</div>
+<div class="ln"><b class="n">MU1</b><div><div class="w">Party&#x27;s at three, sweetheart!</div><div class="h">warm, smiling</div><div class="m">Opening, video call</div></div></div>
+<div class="ln"><b class="n">MU2</b><div><div class="w">Oh, they&#x27;re lovely! Thank you, darling.</div><div class="h">touched</div><div class="m">Gets the dahlias</div></div></div>
+<div class="ln"><b class="n">MU3</b><div><div class="w">Happy birthday, Matilda!</div><div class="h">warm, proud</div><div class="m">The birthday card</div></div></div>
+<h2 id="sensei" class="who">Sensei</h2><p>Her karate teacher. Calm, kind, a bit dry. Like a real coach, not a film. Folder: <b>raw/voice/sensei/</b></p>
+<div class="sub">Lines</div>
+<div class="ln"><b class="n">SE1</b><div><div class="w">Go on, off you go!</div><div class="h">brisk, smiling</div><div class="m">Sends her off from the dojo</div></div></div>
+<div class="ln"><b class="n">SE2</b><div><div class="w">One last test.</div><div class="h">calm</div><div class="m">On the roof at Stunt Day</div></div></div>
+<div class="ln"><b class="n">SE3</b><div><div class="w">That&#x27;s your black belt. Well done, Matilda.</div><div class="h">proud, quiet</div><div class="m">Ties the black belt</div></div></div>
+<div class="ln"><b class="n">SE4</b><div><div class="w">Black belt and a birthday. Not bad!</div><div class="h">dry, warm</div><div class="m">At the party</div></div></div>
+<h2 id="snuffles" class="who">Snuffles</h2><p>The grumpy monster. Blocked nose (pinch it lightly), sulky like a big toddler, never scary. Folder: <b>raw/voice/snuffles/</b></p>
+<div class="sub">Lines</div>
+<div class="ln"><b class="n">SN1</b><div><div class="w">Ooh, cake. Mine.</div><div class="h">grumpy, pleased with himself</div><div class="m">Opening, grabs the cake</div></div></div>
+<div class="ln"><b class="n">SN2</b><div><div class="w">Nobody invited me. So no party.</div><div class="h">sulky</div><div class="m">Start of his fight</div></div></div>
+<div class="ln"><b class="n">SN3</b><div><div class="w">No! My cake!</div><div class="h">stroppy</div><div class="m">His fight, half way</div></div></div>
+<div class="ln"><b class="n">SN4</b><div><div class="w">...Really?</div><div class="h">shy, surprised</div><div class="m">Matilda invites him</div></div></div>
+<div class="ln"><b class="n">SN5</b><div><div class="w">Can I have some cake?</div><div class="h">hopeful</div><div class="m">Straight after</div></div></div>
+<div class="ln"><b class="n">SN6</b><div><div class="w">Here you go, Olive.</div><div class="h">gentle</div><div class="m">Gives Olive a slice</div></div></div>
+<div class="sub">Sounds</div>
+<div class="ln"><b class="n">SNS1</b><div><div class="w">sniff, hmph, a big huff</div><div class="h">one of each</div><div class="m">Before his attacks and when he sits down</div></div></div>
+<h2 id="olive" class="who">Olive (only if she&#x27;ll bark)</h2><p>The real Olive, if she barks on cue. If not, skip this and I&#x27;ll suggest a free dog sound for James to approve. Folder: <b>raw/voice/olive/</b></p>
+<div class="sub">Sounds</div>
+<div class="ln"><b class="n">O1</b><div><div class="w">happy barks</div><div class="h">a few</div><div class="m">Catching up with Matilda, happy spins</div></div></div>
+<div class="ln"><b class="n">O2</b><div><div class="w">an alert bark</div><div class="h">two or three</div><div class="m">Found something hidden</div></div></div>
+<div class="ln"><b class="n">O3</b><div><div class="w">a cheeky bark</div><div class="h">one or two</div><div class="m">At Snuffles</div></div></div>
+<div class="ln"><b class="n">O4</b><div><div class="w">a whine or a yip, and panting</div><div class="h">whatever she does</div><div class="m">Excited, at the party</div></div></div>
+</main>
+</body>
+</html>

@@ -25,32 +25,35 @@
   .beat { font-weight: 800; }
   .say { font-weight: 700; }
   .dir { font-size: 13px; color: var(--soft); }
+  .olive { align-self: flex-start; background: #8b5a2b; color: #fff; font: 800 12px system-ui, sans-serif; padding: 2px 9px; border-radius: 999px; }
   .aud { margin-top: auto; align-self: flex-start; border: 2px solid var(--line); background: transparent; color: var(--ink); border-radius: 10px; padding: 7px 12px; font: 800 14px system-ui, sans-serif; cursor: pointer; }
 </style>
 </head>
 <body>
 <main>
 <h1>Opening storyboard</h1>
-<p>Built in the game itself from the existing art, with scratch voices. The timecodes are measured from the tap on PLAY. Tap anywhere in the opening to skip it.</p>
-<a class="play" href="game-next.html?board=1">▶ Play the animatic (with timecode)</a>
-<div class="facts"><div class="fact">In play at <b>19.6 s</b> (target under 20)</div><div class="fact">Goal heard at <b>0.8 s</b>: "Party's at three"</div><div class="fact">Tap skips straight to the dojo</div></div>
+<p>Second pass, with Olive and the everyday script. The timecodes are the plan, measured from the tap on PLAY. The pictures are from the current animatic, which has no Olive yet (no Olive art until her photos are in), so the panels marked <b>Olive</b> describe what she adds.</p>
+<a class="play" href="game-next.html?board=1">▶ Current animatic (old cut, no Olive, 19.6 s)</a>
+<div class="facts"><div class="fact">Planned in play at <b>15.8 s</b> (was 19.6, target under 20)</div><div class="fact">Goal heard at <b>0.8 s</b>: "Party's at three"</div><div class="fact">Tap skips straight to the dojo</div></div>
 <div class="grid" id="g"></div>
 </main>
 <script>
   var P = [
-    ["b_00", "0.6", "Party house, party day. Mummy and Leo wave at a video call; Matilda is on the screen at the dojo.", "", "", "Bright, happy music; a phone chime as the call opens."],
-    ["b_01", "1.7", "Mummy on the call.", "Mummy", "Party's at three, birthday girl!", "Warm, smiling, proud. About 2 s.", "cast_mum_three"],
-    ["b_02", "3.7", "Leo on the call, bouncing.", "Leo", "Don't be late!", "Cheeky little brother, teasing. About 1.5 s.", "cast_leo_late"],
-    ["b_03", "5.7", "Matilda on the screen, hopping with excitement.", "Matilda", "I'll be there!", "Excited, quick, giggly. About 1 s. (Recorded once her voice is chosen.)"],
-    ["b_04", "7.4", "The call closes. Thump, thump: Snuffles stomps in behind them.", "", "", "Two big footsteps, the music dips."],
-    ["b_05", "8.9", "Snuffles grabs the cake off the table.", "Snuffles", "Ooh, cake! MINE!", "Grumpy, blocked nose, more sulky than scary. About 2 s.", "cast_snf_mine"],
-    ["b_06", "10.5", "A huff of breath shoos Mummy and Leo inside.", "", "", "A whoosh. Comic, not frightening."],
-    ["b_07", "11.7", "Click: a padlock on the door. Snuffles steps aside with the cake.", "", "", "A lock click."],
-    ["b_08", "12.3", "The curtains swish shut on the top windows.", "", "", "A curtain swish."],
-    ["b_09", "13.5", "Leo's face and hands pressed to the downstairs window glass, laughing and waving. Mummy at the other window.", "Leo", "Hee hee! Hurry up, Matilda!", "Laughing, cheeky, not worried. About 2 s.", "cast_leo_hurry"],
-    ["b_10", "15.7", "Mummy waves from her window.", "Mummy", "Hurry up, birthday girl!", "Warm and laughing. About 1.5 s.", "cast_mum_hurry"],
-    ["b_11", "18.7", "Cut to the dojo. Sensei sends her off.", "Sensei", "Go! Your party's waiting!", "Proud, brisk. Bubble now, voice in Phase B."],
-    ["b_12", "19.6", "GET TO YOUR PARTY! She runs out of the dojo gate into play.", "Matilda", "Party, here I come!", "Bursting with excitement. About 1.2 s."]
+    ["b_00", "0.3", "Party day. Mummy, Leo and Olive on a video call to Matilda at the dojo. Olive's tail going.", "", "", "Bright music, a call chime.", 1],
+    ["b_01", "0.8", "Mummy on the call.", "Mummy (MU1)", "Party's at three, sweetheart!", "Warm, smiling."],
+    ["b_02", "2.5", "Leo pops into the call.", "Leo (L1)", "Don't be late!", "Cheeky, teasing."],
+    ["b_03", "3.5", "Matilda on the screen, hopping.", "Matilda (M1)", "I won't!", "Excited, quick."],
+    ["b_04", "4.3", "The call closes. Thump, thump: Snuffles stomps in.", "", "", "Two big footsteps, music dips."],
+    ["b_04", "5.2", "Olive barks at him, cheeky not scary. He jumps, then scowls.", "Olive", "Woof! Woof!", "Bark and a little bounce.", 1],
+    ["b_05", "6.2", "Snuffles grabs the cake.", "Snuffles (SN1)", "Ooh, cake. Mine.", "Grumpy, blocked nose, pleased with himself."],
+    ["b_06", "7.7", "A huff shoos Mummy, Leo and Olive inside.", "", "", "A whoosh. Comic.", 1],
+    ["b_07", "8.6", "Click: padlock on the front door.", "", "", "A lock click."],
+    ["b_07", "9.2", "The dog flap swings. Olive's nose pokes out. Snuffles doesn't notice.", "", "", "A soft flap creak, a sniff.", 1],
+    ["b_08", "10.2", "Curtains swish shut upstairs.", "", "", "A curtain swish."],
+    ["b_09", "10.8", "Leo's face pressed to the window, laughing. Mummy at the other window.", "Leo (L2)", "Hurry up, Matilda!", "Laughing, not worried."],
+    ["b_10", "12.3", "Mummy waves. Olive's nose at the flap again.", "", "", "No line (cut to make room for Olive).", 1],
+    ["b_11", "13.3", "Cut to the dojo. Sensei sends her off.", "Sensei (SE1)", "Go on, off you go!", "Brisk, smiling."],
+    ["b_12", "15.0", "GET TO YOUR PARTY! She runs out of the dojo gate into play at 15.8 s.", "Matilda (M2)", "Let's go!", "Bursting to go."]
   ];
   var cur = null; var g = document.getElementById("g");
   P.forEach(function (x) { var d = document.createElement("div"); d.className = "panel";
@@ -60,7 +63,7 @@
     var be = document.createElement("div"); be.className = "beat"; be.textContent = x[2]; b.appendChild(be);
     if (x[3]) { var s = document.createElement("div"); s.className = "say"; s.textContent = x[3] + ': "' + x[4] + '"'; b.appendChild(s); }
     var di = document.createElement("div"); di.className = "dir"; di.textContent = x[5]; b.appendChild(di);
-    if (x[6]) { var a = document.createElement("button"); a.className = "aud"; a.textContent = "▶ Scratch voice"; a.onclick = function () { if (cur) cur.pause(); cur = new Audio("audition/" + x[6] + ".mp3"); cur.play(); }; b.appendChild(a); }
+    if (x[6]) { var o = document.createElement("div"); o.className = "olive"; o.textContent = "Olive"; b.insertBefore(o, b.firstChild); }
     d.appendChild(b); g.appendChild(d); });
 </script>
 </body>

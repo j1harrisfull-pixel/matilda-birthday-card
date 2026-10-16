@@ -9,18 +9,18 @@
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #1d1826; --ink: #f4eefc; --card: #29233a; --soft: #b8aec8; --line: rgba(255,255,255,.12); --flag: #ff7b6b; --ok: #6fd39a; --chip: #3a2f52; } }
   :root[data-theme="dark"] { --bg: #1d1826; --ink: #f4eefc; --card: #29233a; --soft: #b8aec8; --line: rgba(255,255,255,.12); --flag: #ff7b6b; --ok: #6fd39a; --chip: #3a2f52; }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 15.5px/1.5 -apple-system, system-ui, sans-serif; padding: 20px 16px 60px; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.5 -apple-system, system-ui, sans-serif; padding: 20px 16px 60px; }
   main { max-width: 1120px; margin: 0 auto; }
-  h1 { font-size: 28px; margin: 0 0 4px; }
-  h2 { font-size: 21px; margin: 38px 0 6px; padding-top: 10px; border-top: 2px solid var(--line); }
+  h1 { font-size: 27px; margin: 0 0 4px; line-height: 1.2; }
+  h2 { font-size: 21px; margin: 36px 0 6px; padding-top: 10px; border-top: 2px solid var(--line); }
   h3 { font-size: 16px; margin: 18px 0 6px; }
   p, li { color: var(--soft); }
+  a { color: var(--pink); font-weight: 700; }
   nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 6px; }
-  nav a { background: var(--chip); color: var(--ink); text-decoration: none; padding: 6px 12px; border-radius: 999px; font-weight: 700; font-size: 14px; }
-  .links a { color: var(--pink); font-weight: 800; }
+  nav a { background: var(--chip); color: var(--ink); text-decoration: none; padding: 6px 12px; border-radius: 999px; font-size: 14px; }
   .wrap { overflow-x: auto; background: var(--card); border-radius: 14px; box-shadow: 0 3px 12px rgba(0,0,0,.06); }
   table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 720px; }
-  th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--soft); padding: 10px; border-bottom: 2px solid var(--line); position: sticky; top: 0; background: var(--card); }
+  th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--soft); padding: 10px; border-bottom: 2px solid var(--line); }
   td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
   td.l { font-weight: 700; color: var(--ink); }
   .flag { color: var(--flag); font-weight: 800; }
@@ -33,178 +33,137 @@
 <body>
 <main>
 <h1>Matilda's Black Belt Birthday: beats, script and reasons</h1>
-<p>Phase A, pre production. Nothing here is built into the game yet beyond the opening timing; this is for James to approve or change before Phase B.</p>
-<p class="links">Also: <a href="opening-board.html">opening storyboard</a> · <a href="voice-audition.html">voice audition</a> · <a href="game-next.html">current test build</a></p>
-<nav><a href="#raw">Raw material</a><a href="#beats">Beat sheet</a><a href="#script">Script</a><a href="#replaced">Lines replaced</a><a href="#reasons">Reason table</a><a href="#timings">Reference timings</a><a href="#voices">Voices and loudness</a><a href="#decide">Decisions for James</a></nav>
-
-<h2 id="raw">Raw material</h2>
-<div class="card"><p>The folder <b>raw/</b> exists with <b>matilda_now/</b>, <b>voice/</b>, <b>footage/</b> and <b>telemetry/</b>. All four are empty today, so nothing below uses Matilda's real interests or phrases yet, and the voices are AI auditions. Anything Matilda's mum adds to <b>raw/matilda_now/</b> (what she loves, things she says) will go into the lines and small details first.</p></div>
-
-<h2 id="beats">Beat sheet</h2>
-<p>The whole run, about 2 to 3.5 minutes of play. The party thing at stake is what the player is getting back in that stretch.</p>
-<div class="wrap"><table>
-<tr><th>#</th><th>Beat</th><th>Player's goal</th><th>Emotion</th><th>Party thing at stake</th></tr>
-<tr><td>1</td><td class="l">Opening: party house</td><td>Watch: it is party day, Mummy and Leo are on a video call with Matilda at the dojo</td><td>Happy, excited, cosy</td><td>The whole party is ready</td></tr>
-<tr><td>2</td><td class="l">Opening: Snuffles crashes it</td><td>Watch: Snuffles takes the cake, locks the door, pulls the curtains</td><td>Cheeky surprise, laughing (Leo and Mummy laugh at the window)</td><td>Cake taken, door locked</td></tr>
-<tr><td>3</td><td class="l">Dojo send off</td><td>Run out of the dojo gate</td><td>Get up and go</td><td>"Get to your party!"</td></tr>
-<tr><td>4</td><td class="l">The Street, first steps</td><td>Run, jump, pick up dahlias, punch the first gull, smash the first gift box and grow big</td><td>Speed, discovery</td><td>Dahlias for Mummy's bouquet</td></tr>
-<tr><td>5</td><td class="l">The Street, the car and crates</td><td>Jump the car, smash the crate alley</td><td>Show off</td><td>Dahlias</td></tr>
-<tr><td>6</td><td class="l">Runaway wheelie bin</td><td>Ride the bin down the hill through the crates</td><td>Whee, silly</td><td>Speed to the party</td></tr>
-<tr><td>7</td><td class="l">Crumbs flies over</td><td>Spot Crumbs with the party balloons</td><td>"Hey, those are mine!"</td><td>The balloons</td></tr>
-<tr><td>8</td><td class="l">Boss: Captain Crumbs</td><td>Pop his hold on the balloons, finishing uppercut</td><td>Brave, then triumphant</td><td><b>Balloons back</b> (first party icon lights)</td></tr>
-<tr><td>9</td><td class="l">The Park, presents hunt</td><td>Punch bushes, find presents, meet the bunnies</td><td>Curious, playful</td><td>Presents</td></tr>
-<tr><td>10</td><td class="l">Bunny gang</td><td>A short fight in a clearing</td><td>Busy, fun</td><td>Dahlias</td></tr>
-<tr><td>11</td><td class="l">Leo's skateboard run</td><td>Ride, jump the bumps, kickflip off the kicker</td><td>Cool, fast</td><td>The board bonks Fluffini awake</td></tr>
-<tr><td>12</td><td class="l">Boss: The Great Fluffini</td><td>Hit back his thrown presents, catch him when he reappears</td><td>Clever, then triumphant</td><td><b>Presents back</b> (second icon)</td></tr>
-<tr><td>13</td><td class="l">Party Road at dusk, the bats</td><td>Beat Snuffles' lookout bats</td><td>Nearly there</td><td>Blue belt</td></tr>
-<tr><td>14</td><td class="l">The rooftops and the washing line zip</td><td>Jump the roofs, zip across</td><td>Thrill</td><td>The party house in sight</td></tr>
-<tr><td>15</td><td class="l">Stunt Day: the black belt test</td><td>Nothing to press: the high fall into the bouncy castle, replay, judges' 10s</td><td>Pride, wow</td><td>Black belt</td></tr>
-<tr><td>16</td><td class="l">Boss: Snuffles at the house</td><td>Win back the cake</td><td>Determined, then kind</td><td><b>Cake back</b> (third icon)</td></tr>
-<tr><td>17</td><td class="l">The party</td><td>Invite Snuffles; the dahlia for Mummy</td><td>Warm, happy</td><td>Everything is at the party; Snuffles lights the candles</td></tr>
-<tr><td>18</td><td class="l">The card</td><td>Blow out the candles</td><td>Birthday joy</td><td>"Happy Birthday Matilda, love from James and Autumn", fireworks</td></tr>
+<p>Phase A, second pass. Everyday English script, Olive added, voices to be real recordings. Nothing here is built into the game yet; Phase B starts when James says go.</p>
+<p>Also: <a href="opening-board.html">opening storyboard</a> · <a href="recording-script.html">recording script</a> · <a href="game-next.html">current test build</a> (still the old voices and no Olive)</p>
+<nav><a href="#raw">Raw material</a><a href="#beats">Beat sheet</a><a href="#script">Script</a><a href="#changes">What changed</a><a href="#olive">Olive</a><a href="#reasons">Reason table</a><a href="#timings">Timings</a><a href="#voices">Voices</a></nav>
+<h2 id="raw">Raw material</h2><div class="card"><p><b>raw/</b> has <b>matilda_now/</b>, <b>voice/</b> (with <b>matilda, leo, mummy, sensei, snuffles, olive</b>), <b>olive/</b> for photos of the real Olive, <b>footage/</b> and <b>telemetry/</b>. All are empty today. Nothing uses Matilda's own sayings yet; when her mum's notes land in matilda_now/ I'll propose small line swaps. No Olive art is made until photos land in olive/.</p></div>
+<h2 id="beats">Beat sheet</h2><div class="wrap"><table><tr><th>#</th><th>Beat</th><th>Player's goal</th><th>Emotion</th><th>Party thing at stake</th></tr>
+<tr><td>1</td><td class="l">Opening: party house</td><td>Watch: party day; Mummy, Leo and Olive on a video call to Matilda at the dojo</td><td>Happy, cosy</td><td>The whole party is ready</td></tr>
+<tr><td>2</td><td class="l">Opening: Snuffles crashes it</td><td>Watch: Olive barks at him, he takes the cake, locks the door, shuts the curtains, but forgets the dog flap</td><td>Cheeky surprise, laughing</td><td>Cake taken</td></tr>
+<tr><td>3</td><td class="l">Dojo send off</td><td>Run out of the dojo gate</td><td>Get up and go</td><td>Get to the party</td></tr>
+<tr><td>4</td><td class="l">Olive catches up</td><td>Olive squeezes out of the dog flap and runs to Matilda with a happy bark</td><td>Joy</td><td>Her dog is coming too</td></tr>
+<tr><td>5</td><td class="l">The Street, first steps</td><td>Run, jump, dahlias; the sleeping first gull; Olive finds the first golden dahlia and Matilda grows big</td><td>Discovery</td><td>Dahlias for Mummy's bouquet</td></tr>
+<tr><td>6</td><td class="l">The Street, car and party boxes</td><td>Jump the car, smash the party supply boxes</td><td>Show off</td><td>Dahlias</td></tr>
+<tr><td>7</td><td class="l">Runaway wheelie bin</td><td>Ride the bin down the hill; Olive runs alongside</td><td>Whee, silly</td><td>Speed to the party</td></tr>
+<tr><td>8</td><td class="l">Crumbs flies over</td><td>Spot Crumbs with the balloons</td><td>Oi, those are mine</td><td>The balloons</td></tr>
+<tr><td>9</td><td class="l">Boss: Captain Crumbs</td><td>Win the balloons back; Olive barks from the edge</td><td>Brave, then triumphant</td><td><b>Balloons back</b>, Olive spins</td></tr>
+<tr><td>10</td><td class="l">The Park, presents hunt</td><td>Punch bushes; Olive sniffs out the hidden gift boxes</td><td>Curious, playful</td><td>Presents</td></tr>
+<tr><td>11</td><td class="l">Bunny gang</td><td>Short fight; the first bunny is the tiny one that faints</td><td>Busy, fun</td><td>Dahlias</td></tr>
+<tr><td>12</td><td class="l">Leo's skateboard</td><td>Ride, jump, kickflip; Olive waits at the far end</td><td>Cool, fast</td><td>Wakes Fluffini</td></tr>
+<tr><td>13</td><td class="l">Boss: The Great Fluffini</td><td>Hit back his thrown presents</td><td>Clever, then triumphant</td><td><b>Presents back</b>, Olive spins</td></tr>
+<tr><td>14</td><td class="l">Party Road at dusk</td><td>Snuffles' lookout bats (the first is asleep)</td><td>Nearly there</td><td>Blue belt</td></tr>
+<tr><td>15</td><td class="l">Rooftops and washing line</td><td>Jump the roofs, zip across; Olive runs below</td><td>Thrill</td><td>The house in sight</td></tr>
+<tr><td>16</td><td class="l">Stunt Day</td><td>Nothing to press: the fall into the bouncy castle, replay, judges</td><td>Pride, wow</td><td>Black belt</td></tr>
+<tr><td>17</td><td class="l">Boss: Snuffles</td><td>Win the cake back, then invite him</td><td>Determined, then kind</td><td><b>Cake back</b>, Olive spins</td></tr>
+<tr><td>18</td><td class="l">The party</td><td>Dahlias for Mummy; Snuffles gives Olive her own slice</td><td>Warm, happy</td><td>Everything and everyone is at the party</td></tr>
+<tr><td>19</td><td class="l">The card</td><td>Blow out the candles</td><td>Birthday joy</td><td>Happy Birthday Matilda, love from James and Autumn</td></tr>
 </table></div>
-
-<h2 id="script">Script</h2>
-<p>Every spoken line, one per row. Matilda is an excitable 8 year old British girl: bright, fast, giggly. In play she says one line at most every 10 to 15 seconds, tied to what just happened, never the same line within 60 seconds, never over a finishing blow or a boss speaking. Status: <span class="tag">keep</span> as now, <span class="tag">new</span> new words, <span class="tag">changed</span> rewritten this round.</p>
-<div class="wrap"><table>
-<tr><th>Character</th><th>Moment</th><th>Line</th><th>Direction</th><th>Length</th><th>Status</th></tr>
-<tr><td>Mummy</td><td>Opening, video call</td><td class="l">Party's at three, birthday girl!</td><td>Warm, smiling, proud</td><td class="num">≤ 2.0 s</td><td><span class="tag">new</span></td></tr>
-<tr><td>Leo</td><td>Opening, video call</td><td class="l">Don't be late!</td><td>Cheeky little brother, teasing</td><td class="num">≤ 1.5 s</td><td><span class="tag">new</span></td></tr>
-<tr><td>Matilda</td><td>Opening, on the call screen</td><td class="l">I'll be there!</td><td>Excited, quick, giggly</td><td class="num">≤ 1.0 s</td><td><span class="tag">new</span></td></tr>
-<tr><td>Snuffles</td><td>Opening, grabs the cake</td><td class="l">Ooh, cake! MINE!</td><td>Grumpy, blocked nose, sulky not scary</td><td class="num">≤ 2.0 s</td><td><span class="tag">new</span></td></tr>
-<tr><td>Leo</td><td>Opening, face at the window</td><td class="l">Hee hee! Hurry up, Matilda!</td><td>Laughing, not worried</td><td class="num">≤ 2.0 s</td><td><span class="tag">new</span></td></tr>
-<tr><td>Mummy</td><td>Opening, at the window</td><td class="l">Hurry up, birthday girl!</td><td>Warm, laughing</td><td class="num">≤ 1.5 s</td><td><span class="tag">new</span></td></tr>
-<tr><td>Sensei</td><td>Dojo send off</td><td class="l">Go! Your party's waiting!</td><td>Proud, brisk</td><td class="num">≤ 1.5 s</td><td><span class="tag">changed</span></td></tr>
-<tr><td>Matilda</td><td>Runs out of the dojo; also on the way</td><td class="l">Party, here I come!</td><td>Bursting with excitement</td><td class="num">≤ 1.2 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>On the way (checkpoint flag)</td><td class="l">Coming through!</td><td>Zooming past</td><td class="num">≤ 0.8 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>On the way (checkpoint flag)</td><td class="l">Save me some cake, Leo!</td><td>Cheeky, laughing</td><td class="num">≤ 1.5 s</td><td><span class="tag">changed</span></td></tr>
-<tr><td>Matilda</td><td>On the way, after a full trail of dahlias</td><td class="l">Dahlias for Mummy!</td><td>Happy, proud</td><td class="num">≤ 1.2 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Party Road, checkpoint flag</td><td class="l">Nearly there!</td><td>Excited, breathless</td><td class="num">≤ 1.0 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Any knockout (punch)</td><td class="l">Hi-YA!</td><td>Sharp karate shout</td><td class="num">≤ 0.7 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Any knockout</td><td class="l">Take that!</td><td>Proud, playful</td><td class="num">≤ 0.8 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Any knockout</td><td class="l">Got you!</td><td>Quick, pleased</td><td class="num">≤ 0.6 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Knocks out a gull</td><td class="l">Back off, birdie!</td><td>Giggly telling off</td><td class="num">≤ 1.0 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Knocks out a gull</td><td class="l">Shoo! Shoo!</td><td>Flapping her hands, laughing</td><td class="num">≤ 0.8 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Knocks out a bunny</td><td class="l">Hop it, bunny!</td><td>Cheeky</td><td class="num">≤ 0.8 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Knocks out a bat</td><td class="l">Night night, batty!</td><td>Sing song</td><td class="num">≤ 1.0 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Smashes a gift box</td><td class="l">Yeah!</td><td>Delighted</td><td class="num">≤ 0.5 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Finds a present in a bush</td><td class="l">Ooh, a present!</td><td>Delighted surprise</td><td class="num">≤ 1.0 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>A fight cleared</td><td class="l">Too easy!</td><td>Cheeky, giggly</td><td class="num">≤ 0.8 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>A fight cleared</td><td class="l">Is that all you've got?</td><td>Playful swagger</td><td class="num">≤ 1.2 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>She gets hit</td><td class="l">Ow! Right, that's it!</td><td>Cross but funny</td><td class="num">≤ 1.2 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>She gets hit</td><td class="l">...Oops.</td><td>Sheepish giggle</td><td class="num">≤ 0.8 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Double jump</td><td class="l">Big jump!</td><td>Excited</td><td class="num">≤ 0.6 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Double jump</td><td class="l">Up we go!</td><td>Sing song</td><td class="num">≤ 0.8 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Perfect dahlia trail</td><td class="l">Did you SEE that?!</td><td>Thrilled</td><td class="num">≤ 1.0 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Storm charged</td><td class="l">My Dahlia Storm is ready!</td><td>Thrilled, a little breathless</td><td class="num">≤ 1.4 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Storm pressed</td><td class="l">Yes! Storm time!</td><td>Big energy</td><td class="num">≤ 1.2 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Crumbs flies over with the balloons</td><td class="l">My balloons!</td><td>Indignant, funny</td><td class="num">≤ 0.8 s</td><td><span class="tag">changed</span></td></tr>
-<tr><td>Captain Crumbs</td><td>Lands for his duel</td><td class="l">MINE!</td><td>Squawk (bubble and seagull squawk)</td><td class="num">≤ 0.6 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Crumbs duel starts</td><td class="l">Give back my balloons, Crumbs!</td><td>Determined, playful</td><td class="num">≤ 1.6 s</td><td><span class="tag">changed</span></td></tr>
-<tr><td>Matilda</td><td>A boss down to one hit</td><td class="l">One more!</td><td>Fired up</td><td class="num">≤ 0.8 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>A boss half way</td><td class="l">Nobody spoils my party!</td><td>Defiant, cheerful</td><td class="num">≤ 1.4 s</td><td><span class="tag">changed</span> (was "ruins")</td></tr>
-<tr><td>Matilda</td><td>Hops on Leo's skateboard</td><td class="l">Skateboard!</td><td>Whoop</td><td class="num">≤ 0.8 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Lands the kickflip</td><td class="l">Did you SEE that?!</td><td>Thrilled</td><td class="num">≤ 1.0 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>The Great Fluffini</td><td>Each trick</td><td class="l">Ta-daaa!</td><td>Showman (bubble)</td><td class="num">≤ 0.8 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Fluffini duel starts</td><td class="l">Those are MY presents!</td><td>Indignant, giggly</td><td class="num">≤ 1.4 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>The Great Fluffini</td><td>Beaten, hands back the presents</td><td class="l">Fine. Have them.</td><td>Sulky (bubble)</td><td class="num">≤ 1.2 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Jumps in the wheelie bin</td><td class="l">Wheeee!</td><td>Giggle</td><td class="num">≤ 1.5 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Grabs the washing line</td><td class="l">Zip line! Wheeee!</td><td>Thrill</td><td class="num">≤ 1.5 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Sensei</td><td>On the tower roof</td><td class="l">One last test.</td><td>Calm, proud</td><td class="num">≤ 1.2 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Stunt Day, at the edge</td><td class="l">Ready, Sensei!</td><td>Brave, excited</td><td class="num">≤ 1.0 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Stunt Day countdown</td><td class="l">Three... two... one...</td><td>Slow, big breaths, grinning</td><td class="num">≈ 2.1 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Sticks the landing</td><td class="l">NAILED IT!</td><td>Explosive joy</td><td class="num">≤ 0.9 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Matilda</td><td>Judges hold up 10, 10, 10</td><td class="l">Ten out of ten!</td><td>Proud, bouncing</td><td class="num">≤ 1.0 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Sensei</td><td>Ties the black belt</td><td class="l">Black belt, Matilda. You earned it.</td><td>Warm, proud</td><td class="num">≈ 2.9 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Sensei</td><td>Belt banners</td><td class="l">Jump, then jump again. / Hold kick to block. / Your storm grows.</td><td>Calm teacher (bubbles)</td><td class="num">≤ 1.5 s each</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Snuffles</td><td>Duel starts</td><td class="l">Nobody invited ME. So, no party! Hmph!</td><td>Sulky, blocked nose</td><td class="num">≤ 3.0 s</td><td><span class="tag">new</span></td></tr>
-<tr><td>Matilda</td><td>Snuffles duel starts</td><td class="l">Snuffles! It's MY party!</td><td>Cheerful, firm</td><td class="num">≤ 1.4 s</td><td><span class="tag">changed</span></td></tr>
-<tr><td>Snuffles</td><td>Half way</td><td class="l">Mine! My cake!</td><td>Stroppy</td><td class="num">≤ 1.2 s</td><td><span class="tag">changed</span></td></tr>
-<tr><td>Matilda</td><td>Snuffles sits down, beaten</td><td class="l">You're invited, Snuffles!</td><td>Kind, beaming</td><td class="num">≤ 1.5 s</td><td><span class="tag">new</span></td></tr>
-<tr><td>Snuffles</td><td>Invited</td><td class="l">Really? ...Want some cake?</td><td>Shy, then hopeful</td><td class="num">≤ 2.5 s</td><td><span class="tag">new</span></td></tr>
-<tr><td>Leo</td><td>The party</td><td class="l">You were AMAZING!</td><td>Bouncing</td><td class="num">≤ 1.4 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Sensei</td><td>The party</td><td class="l">A black belt AND a birthday!</td><td>Proud, warm</td><td class="num">≤ 1.8 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Mummy</td><td>Gets the dahlia</td><td class="l">That's my girl!</td><td>Proud, a bit teary</td><td class="num">≤ 1.2 s</td><td><span class="tag">keep</span></td></tr>
-<tr><td>Card</td><td>After the candles</td><td class="l">Happy Birthday Matilda, love from James and Autumn</td><td>Written on screen, not spoken</td><td>·</td><td><span class="tag">keep</span></td></tr>
+<h2 id="script">Script</h2><p>36 spoken lines and 16 short sounds (giggles, "Yes!", "Hi-yah!", barks). Plain everyday English, southern English family voices. The numbers match the <a href="recording-script.html">recording script</a>. In play, one voice at most every 10 to 15 seconds, tied to what just happened, never the same within 60 seconds, never over a finishing blow. Crumbs and Fluffini stay as speech bubbles and animal sounds.</p>
+<div class="wrap"><table><tr><th>#</th><th>Character</th><th>Moment</th><th>Line</th><th>How</th><th>Length</th></tr>
+<tr><td>M1</td><td>Matilda</td><td>Opening, on the video call</td><td class="l">I won&#x27;t!</td><td>excited, quick</td><td class="num">0.6 s</td></tr>
+<tr><td>M2</td><td>Matilda</td><td>Running out of the dojo</td><td class="l">Let&#x27;s go!</td><td>bursting to get going</td><td class="num">0.6 s</td></tr>
+<tr><td>M3</td><td>Matilda</td><td>Olive catches up on the street</td><td class="l">Olive! Come on, girl!</td><td>delighted, calling her dog</td><td class="num">1.3 s</td></tr>
+<tr><td>M4</td><td>Matilda</td><td>Olive stops and points at something hidden</td><td class="l">Ooh! What&#x27;s that?</td><td>curious</td><td class="num">0.9 s</td></tr>
+<tr><td>M5</td><td>Matilda</td><td>Her Storm is full</td><td class="l">Ooh, Storm&#x27;s ready!</td><td>excited, a bit out of breath</td><td class="num">1.0 s</td></tr>
+<tr><td>M6</td><td>Matilda</td><td>Crumbs flies over with her balloons</td><td class="l">Oi! My balloons!</td><td>cross but funny</td><td class="num">1.0 s</td></tr>
+<tr><td>M7</td><td>Matilda</td><td>Start of the Crumbs fight</td><td class="l">Give them back, Crumbs!</td><td>determined</td><td class="num">1.2 s</td></tr>
+<tr><td>M8</td><td>Matilda</td><td>A boss has one hit left</td><td class="l">One more!</td><td>fired up</td><td class="num">0.6 s</td></tr>
+<tr><td>M9</td><td>Matilda</td><td>Crumbs gives the balloons back</td><td class="l">Yay, my balloons!</td><td>happy</td><td class="num">0.9 s</td></tr>
+<tr><td>M10</td><td>Matilda</td><td>Start of the Fluffini fight</td><td class="l">Hey! Those are my presents!</td><td>cross but giggly</td><td class="num">1.2 s</td></tr>
+<tr><td>M11</td><td>Matilda</td><td>Fluffini gives the presents back</td><td class="l">Yay, my presents!</td><td>happy</td><td class="num">0.9 s</td></tr>
+<tr><td>M12</td><td>Matilda</td><td>Start of the Snuffles fight</td><td class="l">Snuffles! It&#x27;s my party!</td><td>firm, not scared</td><td class="num">1.2 s</td></tr>
+<tr><td>M13</td><td>Matilda</td><td>Snuffles fight, half way</td><td class="l">Give it back!</td><td>stroppy</td><td class="num">0.7 s</td></tr>
+<tr><td>M14</td><td>Matilda</td><td>Snuffles sits down, sad</td><td class="l">Do you want to come to my party?</td><td>kind, gentle</td><td class="num">1.5 s</td></tr>
+<tr><td>M15</td><td>Matilda</td><td>Snuffles asks for cake</td><td class="l">Course you can!</td><td>big smile</td><td class="num">0.7 s</td></tr>
+<tr><td>M16</td><td>Matilda</td><td>Stunt Day, at the edge of the roof</td><td class="l">Ready!</td><td>brave, excited</td><td class="num">0.5 s</td></tr>
+<tr><td>M17</td><td>Matilda</td><td>Stunt Day countdown</td><td class="l">Three... two... one...</td><td>slow, grinning</td><td class="num">2.0 s</td></tr>
+<tr><td>M18</td><td>Matilda</td><td>She lands in the bouncy castle</td><td class="l">I did it!</td><td>huge joy</td><td class="num">0.7 s</td></tr>
+<tr><td>M19</td><td>Matilda</td><td>Gives Mummy the dahlias</td><td class="l">These are for you, Mummy.</td><td>shy, proud</td><td class="num">1.3 s</td></tr>
+<tr><td>M20</td><td>Matilda</td><td>Blowing out the candles</td><td class="l">Happy birthday to me!</td><td>sing song</td><td class="num">1.5 s</td></tr>
+<tr><td>MS1</td><td>Matilda</td><td>Riding, smashing, zipping</td><td class="l">a giggle <span class="tag">sound</span></td><td>three different real giggles</td><td class="num">≤ 1 s</td></tr>
+<tr><td>MS2</td><td>Matilda</td><td>A good moment</td><td class="l">Yes! <span class="tag">sound</span></td><td>pleased</td><td class="num">≤ 1 s</td></tr>
+<tr><td>MS3</td><td>Matilda</td><td>Punch or kick, and a long one for the Storm</td><td class="l">Hi-yah! <span class="tag">sound</span></td><td>short and sharp twice, then one long Hi-yaaah!</td><td class="num">≤ 1 s</td></tr>
+<tr><td>MS4</td><td>Matilda</td><td>Finds a present in a bush</td><td class="l">Ooh! <span class="tag">sound</span></td><td>surprised</td><td class="num">≤ 1 s</td></tr>
+<tr><td>MS5</td><td>Matilda</td><td>Skateboard, big jump, the Stunt Day fall</td><td class="l">Whoa! <span class="tag">sound</span></td><td>thrilled</td><td class="num">≤ 1 s</td></tr>
+<tr><td>MS6</td><td>Matilda</td><td>Picks up a golden dahlia or opens a gift box</td><td class="l">Got it! <span class="tag">sound</span></td><td>quick, pleased</td><td class="num">≤ 1 s</td></tr>
+<tr><td>MS7</td><td>Matilda</td><td>Wheelie bin and washing line</td><td class="l">Wheee! <span class="tag">sound</span></td><td>laughing</td><td class="num">≤ 1 s</td></tr>
+<tr><td>MS8</td><td>Matilda</td><td>Bumped by a gull or a bunny</td><td class="l">Ow! <span class="tag">sound</span></td><td>more surprised than hurt</td><td class="num">≤ 1 s</td></tr>
+<tr><td>MS9</td><td>Matilda</td><td>Back to the last flag</td><td class="l">Oops! <span class="tag">sound</span></td><td>sheepish</td><td class="num">≤ 1 s</td></tr>
+<tr><td>MS10</td><td>Matilda</td><td>Jumping</td><td class="l">Hup! <span class="tag">sound</span></td><td>a little effort sound</td><td class="num">≤ 1 s</td></tr>
+<tr><td>L1</td><td>Leo</td><td>Opening, video call</td><td class="l">Don&#x27;t be late!</td><td>cheeky, teasing</td><td class="num">0.8 s</td></tr>
+<tr><td>L2</td><td>Leo</td><td>Opening, face pressed to the window</td><td class="l">Hurry up, Matilda!</td><td>laughing</td><td class="num">1.0 s</td></tr>
+<tr><td>L3</td><td>Leo</td><td>At the party</td><td class="l">That was amazing!</td><td>bouncing</td><td class="num">1.0 s</td></tr>
+<tr><td>LS1</td><td>Leo</td><td>At the window and the party</td><td class="l">a giggle <span class="tag">sound</span></td><td>two different giggles</td><td class="num">≤ 1 s</td></tr>
+<tr><td>MU1</td><td>Mummy</td><td>Opening, video call</td><td class="l">Party&#x27;s at three, sweetheart!</td><td>warm, smiling</td><td class="num">1.5 s</td></tr>
+<tr><td>MU2</td><td>Mummy</td><td>Gets the dahlias</td><td class="l">Oh, they&#x27;re lovely! Thank you, darling.</td><td>touched</td><td class="num">2.0 s</td></tr>
+<tr><td>MU3</td><td>Mummy</td><td>The birthday card</td><td class="l">Happy birthday, Matilda!</td><td>warm, proud</td><td class="num">1.3 s</td></tr>
+<tr><td>SE1</td><td>Sensei</td><td>Sends her off from the dojo</td><td class="l">Go on, off you go!</td><td>brisk, smiling</td><td class="num">1.0 s</td></tr>
+<tr><td>SE2</td><td>Sensei</td><td>On the roof at Stunt Day</td><td class="l">One last test.</td><td>calm</td><td class="num">1.0 s</td></tr>
+<tr><td>SE3</td><td>Sensei</td><td>Ties the black belt</td><td class="l">That&#x27;s your black belt. Well done, Matilda.</td><td>proud, quiet</td><td class="num">2.3 s</td></tr>
+<tr><td>SE4</td><td>Sensei</td><td>At the party</td><td class="l">Black belt and a birthday. Not bad!</td><td>dry, warm</td><td class="num">1.8 s</td></tr>
+<tr><td>SN1</td><td>Snuffles</td><td>Opening, grabs the cake</td><td class="l">Ooh, cake. Mine.</td><td>grumpy, pleased with himself</td><td class="num">1.3 s</td></tr>
+<tr><td>SN2</td><td>Snuffles</td><td>Start of his fight</td><td class="l">Nobody invited me. So no party.</td><td>sulky</td><td class="num">2.2 s</td></tr>
+<tr><td>SN3</td><td>Snuffles</td><td>His fight, half way</td><td class="l">No! My cake!</td><td>stroppy</td><td class="num">0.9 s</td></tr>
+<tr><td>SN4</td><td>Snuffles</td><td>Matilda invites him</td><td class="l">...Really?</td><td>shy, surprised</td><td class="num">0.8 s</td></tr>
+<tr><td>SN5</td><td>Snuffles</td><td>Straight after</td><td class="l">Can I have some cake?</td><td>hopeful</td><td class="num">1.0 s</td></tr>
+<tr><td>SN6</td><td>Snuffles</td><td>Gives Olive a slice</td><td class="l">Here you go, Olive.</td><td>gentle</td><td class="num">1.0 s</td></tr>
+<tr><td>SNS1</td><td>Snuffles</td><td>Before his attacks and when he sits down</td><td class="l">sniff, hmph, a big huff <span class="tag">sound</span></td><td>one of each</td><td class="num">≤ 1 s</td></tr>
+<tr><td>O1</td><td>Olive</td><td>Catching up with Matilda, happy spins</td><td class="l">happy barks <span class="tag">sound</span></td><td>a few</td><td class="num">≤ 1 s</td></tr>
+<tr><td>O2</td><td>Olive</td><td>Found something hidden</td><td class="l">an alert bark <span class="tag">sound</span></td><td>two or three</td><td class="num">≤ 1 s</td></tr>
+<tr><td>O3</td><td>Olive</td><td>At Snuffles</td><td class="l">a cheeky bark <span class="tag">sound</span></td><td>one or two</td><td class="num">≤ 1 s</td></tr>
+<tr><td>O4</td><td>Olive</td><td>Excited, at the party</td><td class="l">a whine or a yip, and panting <span class="tag">sound</span></td><td>whatever she does</td><td class="num">≤ 1 s</td></tr>
 </table></div>
-
-<h2 id="replaced">Lines replaced: the search for save, help and rescue</h2>
-<p>Searched every game file. These are all the lines that implied trouble or rescue, and what replaced them. "Hold on" and "I'm coming, Leo" were included because they suggest Leo needs saving.</p>
-<div class="wrap"><table>
-<tr><th>Where</th><th>Old</th><th>New</th></tr>
-<tr><td>Leo, call for help panel</td><td class="l">Matilda! HELP! Snuffles took over the party!</td><td>Removed; the opening shows the party instead</td></tr>
-<tr><td>Leo, at the window (old opening)</td><td class="l">Matilda! HELP!</td><td>Hee hee! Hurry up, Matilda!</td></tr>
-<tr><td>Big word in the dojo</td><td class="l">SAVE LEO!</td><td>GET TO YOUR PARTY!</td></tr>
-<tr><td>Matilda, on the way</td><td class="l">Hold on, Leo!</td><td>Save me some cake, Leo!</td></tr>
-<tr><td>Matilda, leaving the dojo</td><td class="l">I'm coming, Leo!</td><td>Party, here I come!</td></tr>
-<tr><td>Sensei</td><td class="l">Go! Get to the party!</td><td>Go! Your party's waiting!</td></tr>
-<tr><td>Matilda vs Crumbs</td><td class="l">Give back the cake, Crumbs!</td><td>Give back my balloons, Crumbs!</td></tr>
-<tr><td>Matilda, Crumbs flies over</td><td class="l">Not my cake!</td><td>My balloons!</td></tr>
-<tr><td>Snuffles</td><td class="l">Nobody ever invites ME!</td><td>Nobody invited ME. So, no party! Hmph!</td></tr>
-<tr><td>End of the duel</td><td class="l">Want some cake? / ...Is that cake for me?</td><td>You're invited, Snuffles! / Really? ...Want some cake?</td></tr>
-<tr><td>Proposed for Phase B</td><td class="l">Nobody ruins my party!</td><td>Nobody spoils my party! (softer)</td></tr>
+<h2 id="changes">What changed</h2><p>Before: 53 spoken lines. Now: 36 lines plus 16 short sounds. Every line was read aloud; anything a real child wouldn't say went.</p>
+<div class="wrap"><table><tr><th>Old</th><th>New</th></tr><tr><td>My Dahlia Storm is ready!</td><td class="l">Ooh, Storm&#x27;s ready!</td></tr><tr><td>Party, here I come!</td><td class="l">Let&#x27;s go!</td></tr><tr><td>NAILED IT!</td><td class="l">I did it!</td></tr><tr><td>Give back my balloons, Crumbs!</td><td class="l">Give them back, Crumbs!</td></tr><tr><td>You&#x27;re invited, Snuffles!</td><td class="l">Do you want to come to my party?</td></tr><tr><td>Go! Your party&#x27;s waiting!</td><td class="l">Go on, off you go!</td></tr><tr><td>Black belt, Matilda. You earned it.</td><td class="l">That&#x27;s your black belt. Well done, Matilda.</td></tr><tr><td>Nobody invited ME. So, no party! Hmph!</td><td class="l">Nobody invited me. So no party.</td></tr><tr><td>Back off, birdie! / Hop it, bunny! / Night night, batty!</td><td class="l">Hi-yah! or a giggle</td></tr></table></div>
+<h3>Cut</h3><p>Coming through! · Save me some cake, Leo! · Dahlias for Mummy! · Nearly there! · Take that! · Got you! · Back off, birdie! · Shoo! Shoo! · Hop it, bunny! · Night night, batty! · Too easy! · Is that all you&#x27;ve got? · Ow! Right, that&#x27;s it! · Big jump! · Up we go! · Did you SEE that?! · Yes! Storm time! · Nobody spoils my party! · Skateboard! · Zip line! Wheeee! · Ten out of ten! · Hurry up, birthday girl! (Mummy, to make room for Olive)</p>
+<h3>Earlier rescue lines (all gone)</h3><p>"Matilda! HELP!", "SAVE LEO!", "Hold on, Leo!", "I'm coming, Leo!", "Give back the cake", "Nobody ever invites ME!". The big word in the dojo stays "GET TO YOUR PARTY!".</p>
+<h2 id="olive">Olive</h2><div class="card"><p>The family's brown Staffordshire Bull Terrier. She follows Matilda, can't be hurt, never blocks or fights, and runs alongside or waits at the far end of rides.</p><ul>
+<li><b>Opening:</b> at the party with Mummy and Leo, tail going; barks at Snuffles when he stomps in. He locks the front door and forgets the dog flap.</li>
+<li><b>Early Street:</b> squeezes out of the flap and catches up with a happy bark. Matilda: "Olive! Come on, girl!"</li>
+<li><b>Her job:</b> sniffing out hidden things. Near a hidden gift box or golden dahlia she stops, points, barks and digs at the spot. The first golden dahlia is taught this way, with no text.</li>
+<li><b>Bosses:</b> waits at the edge barking; a happy spin when each party thing comes back.</li>
+<li><b>Ending:</b> Snuffles gives her her own small slice of cake.</li>
+<li><b>Art:</b> none made yet. Once photos are in raw/olive/, I match her coat, white markings, ears, face and build, and show James the photo next to the game Olive before any animation. Up to 80 credits, listed per generation.</li></ul></div>
+<h2 id="reasons">Reason table</h2><p>All five fixes approved by James and marked. Olive added.</p><div class="wrap"><table><tr><th>Thing</th><th>Story reason</th><th>In play</th><th>Sees and hears</th><th>First taught safely</th></tr>
+<tr><td class="l">Olive <span class="tag">new</span></td><td>The family dog, coming to the party</td><td>Follows; sniffs out hidden gift boxes and golden dahlias; cheers at bosses</td><td>Brown Staffie, tail going, stops and points, barks, digs</td><td>Catches up early on the Street; her first find is the first golden dahlia</td></tr>
+<tr><td class="l">Dahlias</td><td>Matilda picks a bouquet for Mummy on the way</td><td>Collect; fill the bouquet; charge growing big and Storm</td><td>Pop, climbing chime, 0.4 s sparkle, flower flies to the bouquet</td><td>A row right outside the dojo gate</td></tr>
+<tr><td class="l">Bouquet (top left)</td><td>The bouquet she gives Mummy at the end</td><td>Shows the total</td><td>Paper cone filling flower by flower, glows when full</td><td>Fills from the first dahlias</td></tr>
+<tr><td class="l">Gift boxes <span class="tag">changed</span></td><td>Party presents dropped on the way; some hidden</td><td>Smash for a golden dahlia</td><td>Confetti, bell, golden dahlia bounces out</td><td>Olive points and digs at the first hidden one</td></tr>
+<tr><td class="l">Golden dahlia <span class="tag">changed</span></td><td>A special flower for Mummy</td><td>Makes her grow big at once</td><td>Glow, then the grow moment</td><td>Olive finds the first one</td></tr>
+<tr><td class="l">Growing big</td><td>The dahlias&#x27; magic</td><td>A spare hit, longer reach, double damage</td><td>World freezes 0.78 s, small/mid/big flashes, power up sound</td><td>Guaranteed early from Olive&#x27;s first find</td></tr>
+<tr><td class="l">Dahlia Storm <span class="ok">fix approved</span></td><td>The dahlias&#x27; big magic</td><td>A few seconds of flowers that knock everything over</td><td>Ring round STORM fills, glows, pulses, sparkles; &quot;Ooh, Storm&#x27;s ready!&quot;</td><td>A tapping hand pulses over STORM the first time until pressed</td></tr>
+<tr><td class="l">Goal line</td><td>Her plan for the dahlias</td><td>Shows what the next dahlias will do</td><td>Bar and count under the bouquet</td><td>Visible from the start</td></tr>
+<tr><td class="l">Hearts</td><td>Her energy</td><td>Three bumps and back to the last flag; 2.8 s safe after each</td><td>Hearts top left, flicker while safe</td><td>The first gull is asleep, so nothing hurts her first</td></tr>
+<tr><td class="l">Checkpoint flags</td><td>Party bunting marking the way</td><td>Restart point</td><td>Flag up, confetti, chimes</td><td>First one on open ground</td></tr>
+<tr><td class="l">Party icons</td><td>The three things Snuffles&#x27; gang took</td><td>Progress to the party</td><td>Grey until each comes back, then it flies in and lights; Olive spins</td><td>First lights after Crumbs</td></tr>
+<tr><td class="l">Route bar</td><td>The way from the dojo to the party</td><td>How far to go</td><td>Dot moving to CRUMBS, FLUFFINI, PARTY</td><td>Appears leaving the dojo</td></tr>
+<tr><td class="l">Belts and Sensei</td><td>Her karate training on the way</td><td>Each belt unlocks a move</td><td>Belt colour changes, Sensei pops in</td><td>Never pauses play</td></tr>
+<tr><td class="l">Gulls <span class="ok">fix approved</span></td><td>Captain Crumbs&#x27; crew</td><td>Peck, dive; one hit</td><td>Squawk, wind up, dive</td><td>The first is asleep (Zzz), wakes slowly; PUNCH pulses once when she&#x27;s close</td></tr>
+<tr><td class="l">Captain Crumbs</td><td>Took the party balloons</td><td>Duel: dives at a target ring, gets stuck, hit him</td><td>Ring locks red, squawks; a balloon floats off per hit</td><td>Every dive is told; the first is slow</td></tr>
+<tr><td class="l">Party supply boxes (were crates) <span class="ok">fix approved</span></td><td>Boxes Crumbs&#x27; gulls knocked off the party van, full of dahlias</td><td>Smash at a run or punch</td><td>Party box art, streamers, dahlias</td><td>A single box in her path</td></tr>
+<tr><td class="l">Runaway wheelie bin</td><td>A shortcut down the hill</td><td>Ride, smash, jump</td><td>Rumble, crash, giggle; Olive runs alongside</td><td>Starts itself; cannot fail</td></tr>
+<tr><td class="l">Bushes</td><td>Fluffini hid presents in them</td><td>Punch to open</td><td>Sparkles; Olive sniffs at the right ones</td><td>First one is in her path</td></tr>
+<tr><td class="l">Bunnies <span class="ok">fix approved</span></td><td>Fluffini&#x27;s stage assistants</td><td>Dash, belly bump; tiny ones faint</td><td>Red ! before an attack, squeak</td><td>The first is the tiny one that faints at any move</td></tr>
+<tr><td class="l">Leo&#x27;s skateboard</td><td>Leo left it in the park</td><td>Ride, kickflip</td><td>Roll sound; Olive waits at the end</td><td>Picks itself up; cannot fail</td></tr>
+<tr><td class="l">The Great Fluffini</td><td>Magicked away the presents</td><td>Hit back thrown presents</td><td>Ta-da! bubble, sparkle ring where he&#x27;ll appear</td><td>First throw is slow</td></tr>
+<tr><td class="l">Bats</td><td>Snuffles&#x27; lookouts</td><td>Swoop, dive in pairs</td><td>Glow, squeak, flash before a dive</td><td>The first hangs asleep</td></tr>
+<tr><td class="l">Washing line zip</td><td>The neighbours&#x27; washing line, a shortcut</td><td>Automatic ride</td><td>Washing, whoosh; Olive runs below</td><td>Starts itself</td></tr>
+<tr><td class="l">Stunt Day</td><td>Sensei&#x27;s black belt test</td><td>Automatic, cannot fail</td><td>Countdown, slow motion, &quot;I did it!&quot;, replay, judges</td><td>Nothing to learn</td></tr>
+<tr><td class="l">Snuffles</td><td>Not invited, took the cake</td><td>Duel: huff (block), smoke ring (jump), eats balloons to heal</td><td>Big tells, sniffles, sulky</td><td>Every attack told twice first</td></tr>
+<tr><td class="l">Combo counter <span class="ok">fix approved</span></td><td>A reward for a long string of hits</td><td>Shows hits</td><td>Only from 5 hits up</td><td>·</td></tr>
+<tr><td class="l">Floating words (K.O., BONK!)</td><td>Comic book karate</td><td>Feedback</td><td>Two at most at once</td><td>From the first knockout</td></tr>
+<tr><td class="l">Music and sound</td><td>Retro game music (Juhani Junkala, free to use), karate and party sounds</td><td>One loop per area</td><td>No sound repeats exactly twice in a row</td><td>·</td></tr>
 </table></div>
-
-<h2 id="reasons">Reason table</h2>
-<p>Everything on screen or in the speakers, why it is in the story, what it does, what the player sees and hears, and how it is first taught with no text and no danger. <span class="flag">Flag</span> marks a weak or missing reason with a proposed fix.</p>
-<div class="wrap"><table>
-<tr><th>Thing</th><th>Story reason</th><th>In play</th><th>Sees and hears</th><th>First taught safely</th></tr>
-<tr><td class="l">Dahlias</td><td>Matilda is picking a bouquet for Mummy on the way</td><td>Collect; fill the bouquet; charge growing big and Storm</td><td>Pop, chime that climbs, flower flies into the bouquet</td><td>A row of them on the floor right outside the dojo gate: she runs through them without trying</td></tr>
-<tr><td class="l">Bouquet (top left)</td><td>The bouquet she will give Mummy</td><td>Shows the total; a flower head for every 15</td><td>Paper cone filling with dahlia heads, glows when full</td><td>Fills from the first dahlias</td></tr>
-<tr><td class="l">Gift boxes</td><td>Party presents dropped on the way</td><td>Smash for a golden dahlia</td><td>Confetti, bell, a golden dahlia that bounces</td><td>The first one sits in her path just after the first dahlias</td></tr>
-<tr><td class="l">Golden dahlia</td><td>A special flower for Mummy</td><td>Makes her grow big at once</td><td>Glow, the grow moment</td><td>Comes out of the first gift box</td></tr>
-<tr><td class="l">Growing big (Bloom)</td><td>The dahlias' magic</td><td>A spare hit, longer reach, double damage</td><td>Freeze, small/big flashes, rising power up sound, petals</td><td>Guaranteed early from the first gift box</td></tr>
-<tr><td class="l">Dahlia Storm</td><td>The dahlias' big magic</td><td>A few seconds of flowers that knock everything over</td><td>Ring round STORM fills, glows, pulses and sparkles; her line</td><td><span class="flag">Flag:</span> nothing shows how the first time. Fix: the first time it is ready, a little tapping hand pulses over STORM until it is pressed</td></tr>
-<tr><td class="l">Goal line (Grow big N more, Storm N more)</td><td>Her plan for the dahlias</td><td>Shows what the next dahlias will do</td><td>A bar and a count under the bouquet</td><td>Visible from the start</td></tr>
-<tr><td class="l">Hearts</td><td>Her energy</td><td>Three hits and back to the last flag</td><td>Hearts top left</td><td>The first gull's peck is slow and easy to see</td></tr>
-<tr><td class="l">Checkpoint flags</td><td>Party bunting marking the way to the house</td><td>Restart point</td><td>Flag goes up, confetti, three chimes; a line about the party</td><td>The first one is on open ground</td></tr>
-<tr><td class="l">Party icons (balloons, presents, cake)</td><td>The three things Snuffles' gang took</td><td>Show progress to the party</td><td>Grey until each boss hands its thing back; it flies in and lights</td><td>The first lights after Crumbs</td></tr>
-<tr><td class="l">Route bar</td><td>The way from the dojo to the party</td><td>Shows how far to go</td><td>Dot moving to CRUMBS, FLUFFINI, PARTY</td><td>Appears as she leaves the dojo</td></tr>
-<tr><td class="l">Belts and Sensei's banners</td><td>Her karate training on the way</td><td>Each belt unlocks a move</td><td>Banner, belt colour changes, Sensei pops in</td><td>Never pauses play</td></tr>
-<tr><td class="l">Gulls (Street)</td><td>Captain Crumbs' crew</td><td>Peck, dive from above; one hit</td><td>Squawk, wind up, dive</td><td><span class="flag">Flag:</span> the first one can hurt her. Fix: the first gull is asleep (Zzz), wakes slowly, and PUNCH pulses once when she is close</td></tr>
-<tr><td class="l">Captain Crumbs</td><td>Nicked the party balloons</td><td>Duel: dives at a target ring, gets stuck, hit him</td><td>Ring follows her then locks red, squawks; a balloon floats off per hit</td><td>He tells every dive; the first dive is slow</td></tr>
-<tr><td class="l">Crates and bins</td><td><span class="flag">Flag:</span> no reason today. Fix: party supply boxes Crumbs' gulls knocked off a van, full of dahlias</td><td>Smash at a run or punch</td><td>Planks, dahlias</td><td>A single crate in her path</td></tr>
-<tr><td class="l">Car, postbox, walls, pits, ponds</td><td>The street and the park</td><td>Jump over</td><td>Painted scenery</td><td>Low first, higher later</td></tr>
-<tr><td class="l">Runaway wheelie bin</td><td>A shortcut down the hill to the party</td><td>Ride, smash the crate alley, jump the gap</td><td>Rumble, crash, her giggle</td><td>Starts itself when she reaches it; cannot fail</td></tr>
-<tr><td class="l">Bushes</td><td>Fluffini hid presents in them</td><td>Punch to open</td><td>Sparkles on the ones with presents</td><td>The first is in her path and sparkles</td></tr>
-<tr><td class="l">Bunnies</td><td>Fluffini's stage assistants</td><td>Dash, belly bump, hop back from a punch; tiny ones faint</td><td>Red ! before an attack, squeak</td><td><span class="flag">Flag:</span> the first is a fast one. Fix: the first bunny is the tiny one that faints at any move</td></tr>
-<tr><td class="l">Leo's skateboard</td><td>Leo left it in the park</td><td>Ride, faster, bonk bunnies, kickflip</td><td>A bobbing dahlia marks it; roll sound</td><td>Picks itself up; cannot fail</td></tr>
-<tr><td class="l">The Great Fluffini</td><td>Magicked away the presents for his hat trick</td><td>Duel: hit back his thrown presents, catch him when he reappears</td><td>Ta-daaa!, tail twitch, sparkle ring where he will appear</td><td>The first throw is slow and lands right in front of her</td></tr>
-<tr><td class="l">Bats (Party Road)</td><td>Snuffles' lookouts</td><td>Swoop, dive in pairs; one hit</td><td>Glow, squeak, flash before a dive</td><td>The first is hanging asleep and wakes slowly</td></tr>
-<tr><td class="l">Washing line zip</td><td>The neighbours' washing line, a shortcut to the house</td><td>Automatic ride, dahlias along it</td><td>Washing, whoosh, her line</td><td>Starts itself</td></tr>
-<tr><td class="l">Stunt Day</td><td>Sensei's black belt test, the neighbours watching</td><td>Automatic, cannot fail</td><td>Countdown, slow motion, NAILED IT!, replay, judges' 10s</td><td>Nothing to learn</td></tr>
-<tr><td class="l">Bouncy castle</td><td>The party's castle in the garden</td><td>Catches the fall</td><td>Boing</td><td>Part of the stunt</td></tr>
-<tr><td class="l">Snuffles</td><td>Not invited, took the cake</td><td>Duel: huff (block it), smoke ring (jump it), eats party balloons to heal</td><td>Big tells, sniffles, sulky</td><td>Every attack is told twice first</td></tr>
-<tr><td class="l">Combo counter (N HITS!)</td><td><span class="flag">Flag:</span> no story reason</td><td>Shows a string of hits</td><td>Yellow text at the right</td><td>Fix: keep only from 5 hits up, so it is a reward, not clutter</td></tr>
-<tr><td class="l">K.O., BONK!, floating words</td><td>Comic book karate</td><td>Feedback</td><td>Pop up words, two at most at once</td><td>Seen from the first knockout</td></tr>
-<tr><td class="l">GO arrow</td><td>Sensei's "keep going"</td><td>After a fight, points the way</td><td>Yellow arrow</td><td>After the first fight</td></tr>
-<tr><td class="l">Music</td><td>Retro game music (Juhani Junkala, free to use); a chiptune Happy Birthday for the card</td><td>One loop per area, boss and Storm tracks</td><td>Changes as she moves through the areas</td><td>·</td></tr>
-<tr><td class="l">Sound effects</td><td>Karate, cartoon, party</td><td>Feedback for every hit, pickup and move</td><td>No sound repeats exactly twice in a row</td><td>·</td></tr>
-</table></div>
-
-<h2 id="timings">Reference timings</h2>
-<p>Taken from the games' own code rather than counted by eye: the annotated Super Mario Bros. disassembly (<a href="https://gist.github.com/1wErt3r/4048722">source</a>) and the Sonic 1 disassembly and Sonic Physics Guide (<a href="https://github.com/sonicretro/s1disasm">source</a>, <a href="https://github.com/trentbrew/sonic-physics-guide">source</a>). Frames are at 60 per second. I could not watch footage here, so these are the exact values the games run on, which is what footage would show.</p>
-<div class="wrap"><table>
-<tr><th>Moment</th><th>Reference</th><th>Ours now</th><th>Phase B proposal</th></tr>
-<tr><td class="l">Grow from a mushroom (Mario)</td><td class="num">Everything freezes. 7 frames, then 10 steps of 4 frames (40 frames, 0.67 s): small, mid, small, mid, small, mid, big, small, mid, big. About 0.78 s in all.</td><td class="num">0.6 s freeze, 6 steps of 0.1 s between small and big</td><td class="num">0.78 s freeze; the same 10 step pattern at 67 ms a step, using a middle size (scale only)</td></tr>
-<tr><td class="l">Shrink after a hit (Mario)</td><td class="num">Freeze; 10 steps of 4 frames alternating big and small (0.67 s); then 168 frames (2.8 s) where he cannot be hurt, drawn only every other frame</td><td class="num">0.48 s freeze, then 2.1 s safe, flickering</td><td class="num">0.78 s freeze with 5 big/small swaps, then 2.8 s safe with the every other frame flicker</td></tr>
-<tr><td class="l">Hurt without a power up (Sonic)</td><td class="num">120 frames (2.0 s) safe after landing, flashing 4 frames on, 4 off</td><td class="num">1.6 s safe, flickering</td><td class="num">2.0 s, 4 on 4 off</td></tr>
-<tr><td class="l">Ring pickup sparkle (Sonic)</td><td class="num">4 sparkle frames of 6 game frames each: 24 frames (0.4 s), with a chime</td><td class="num">Petals plus a flower flying to the counter (about 0.5 s)</td><td class="num">A 0.4 s sparkle where it was picked, then the flower flies into the bouquet</td></tr>
-</table></div>
-
-<h2 id="voices">Voices and loudness</h2>
-<div class="card"><p>raw/voice/ is empty, so Matilda's voice is an audition of three AI voices (A, B, C), the same three lines each, two takes per line, on the <a href="voice-audition.html">audition page</a>. Every clip is levelled to −16 LUFS with peaks under −1 dB: the 18 Matilda clips measure −15.9 to −17.0 LUFS with peaks −1.6 to −5.9 dB; the 7 cast clips −16.4 to −17.8 LUFS (Snuffles' long line is quieter because its peaks hit the limit) with peaks −1.7 to −2.9 dB. Once a voice is chosen, every Matilda line in the script gets two takes, the best is kept by energy and clarity, and all are levelled the same way.</p>
-<p>Credits this phase: 1.5 (9 second takes). Last round: 3.0. Total of the 40 allowed: 4.5.</p></div>
-
-<h2 id="decide">Decisions for James</h2>
-<div class="card"><ol>
-<li>Matilda's voice: A, B or C, and take 1 (bright) or take 2 (faster, higher).</li>
-<li>Mummy, Leo and Snuffles: keep these voices or try others.</li>
-<li>The opening storyboard: approve, or change any beat or line.</li>
-<li>The script: approve, or change any line. Proposed change: "Nobody ruins my party!" to "Nobody spoils my party!".</li>
-<li>The flagged fixes in the reason table: the sleeping first gull, the tiny first bunny, the tapping hand on STORM the first time, crates as party supply boxes, the combo counter only from 5 hits.</li>
-<li>Reference timings: match Mario for grow and shrink (2.8 s safe after a hit) as proposed, or keep a shorter safe time.</li>
-</ol></div>
+<h2 id="timings">Timings (approved)</h2><p>From the games' own code: the Super Mario Bros. disassembly and the Sonic 1 disassembly and Physics Guide. 60 frames a second. Scale and flicker only, never stretch or squash.</p><div class="wrap"><table><tr><th>Moment</th><th>Reference</th><th>Ours now</th><th>Phase B</th></tr>
+<tr><td class="l">Grow</td><td>Freeze; 7 frames then 10 steps of 4 frames: small, mid, small, mid, small, mid, big, small, mid, big (0.78 s)</td><td>0.6 s, 6 steps</td><td class="ok">0.78 s, same 10 steps</td></tr>
+<tr><td class="l">Shrink after a hit</td><td>Freeze, 10 steps alternating (0.67 s), then 2.8 s safe, drawn every other frame</td><td>0.48 s, then 2.1 s safe</td><td class="ok">0.78 s, then 2.8 s safe, every other frame</td></tr>
+<tr><td class="l">Hurt when small (Sonic)</td><td>2.0 s safe, 4 frames on, 4 off</td><td>1.6 s</td><td class="ok">2.0 s, 4 on 4 off</td></tr>
+<tr><td class="l">Pickup sparkle (Sonic ring)</td><td>4 frames of 6: 0.4 s, with a chime</td><td>petals, 0.5 s fly</td><td class="ok">0.4 s sparkle, then the fly</td></tr></table></div>
+<h2 id="voices">Voices</h2><div class="card"><p>The AI audition is dropped; no more AI voices until James approves a new approach. Plan, in order:</p><ol>
+<li><b>Real recordings</b> with Voice Memos: James (Sensei, Snuffles), Autumn (Mummy, maybe Matilda), real children if possible (Matilda, Leo). Files into raw/voice/&lt;character&gt;/.</li>
+<li>If no child recording arrives for Matilda or Leo: Autumn's natural recording turned into a child's voice with the Higgsfield voice changer, keeping her timing. An audition of 3 conversions for James first. Up to 15 credits.</li>
+<li>Fewer words: Matilda speaks full lines only in the opening, at bosses, at Stunt Day and at the end; everywhere else short real sounds.</li></ol>
+<p>When files land: split the takes, keep the best by energy and clarity, gentle noise reduction, trim, level to −16 LUFS with peaks under −1 dB, wire in, and report the measured values. Credits so far: 4.5 (all on the dropped audition).</p></div>
 </main>
 </body>
 </html>
