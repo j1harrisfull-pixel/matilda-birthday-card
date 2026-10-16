@@ -5,39 +5,72 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Matilda's Voice</title>
 <style>
-  :root { --bg: #fff6ea; --ink: #2b2438; --card: #ffffff; --a: #ff5fa2; --b: #3a8cff; --c: #3fc75a; --soft: #6b6278; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #1f1a29; --ink: #f4eefc; --card: #2b2438; --soft: #b8aec8; } }
-  :root[data-theme="dark"] { --bg: #1f1a29; --ink: #f4eefc; --card: #2b2438; --soft: #b8aec8; }
+  :root { --bg: #fff6ea; --ink: #2b2438; --card: #ffffff; --soft: #6b6278; --line: rgba(43,36,56,.14); --a: #e8478f; --b: #2f7fe0; --c: #2fa64f; --cast: #8a4fd8; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #1f1a29; --ink: #f4eefc; --card: #2b2438; --soft: #b8aec8; --line: rgba(255,255,255,.14); } }
+  :root[data-theme="dark"] { --bg: #1f1a29; --ink: #f4eefc; --card: #2b2438; --soft: #b8aec8; --line: rgba(255,255,255,.14); }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font: 600 17px/1.4 -apple-system, system-ui, sans-serif; padding: 20px 16px 40px; }
-  h1 { font-size: 26px; margin: 0 0 4px; }
-  p { margin: 0 0 18px; color: var(--soft); }
-  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); max-width: 900px; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 500 16px/1.45 -apple-system, system-ui, sans-serif; padding: 20px 16px 48px; }
+  main { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: 26px; margin: 0 0 6px; }
+  h2 { font-size: 19px; margin: 30px 0 8px; }
+  p { margin: 0 0 14px; color: var(--soft); }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
   .card { background: var(--card); border-radius: 18px; padding: 14px; box-shadow: 0 4px 16px rgba(0,0,0,.08); }
-  .big { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; border: 0; border-radius: 14px; padding: 18px; font: 900 34px/1 system-ui, sans-serif; color: #fff; cursor: pointer; }
-  .big span { font-size: 18px; font-weight: 800; }
+  .big { width: 100%; border: 0; border-radius: 14px; padding: 16px; font: 900 34px/1 system-ui, sans-serif; color: #fff; cursor: pointer; display: flex; gap: 12px; align-items: center; justify-content: center; }
+  .big span { font-size: 17px; font-weight: 800; }
   .A .big { background: var(--a); } .B .big { background: var(--b); } .C .big { background: var(--c); }
-  .line { display: block; width: 100%; margin-top: 8px; padding: 12px; border-radius: 12px; border: 2px solid rgba(127,127,127,.25); background: transparent; color: var(--ink); font: 700 16px system-ui, sans-serif; text-align: left; cursor: pointer; }
-  .line:active, .big:active { transform: scale(.98); }
+  .row { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .line { font-weight: 800; }
+  .dir { font-size: 13px; color: var(--soft); margin: 2px 0 6px; }
+  .takes { display: flex; gap: 8px; }
+  .take { flex: 1; padding: 11px 8px; border-radius: 12px; border: 2px solid var(--line); background: transparent; color: var(--ink); font: 800 15px system-ui, sans-serif; cursor: pointer; }
+  .take small { display: block; font-weight: 600; color: var(--soft); font-size: 11px; margin-top: 2px; }
+  .take:active, .big:active { transform: scale(.98); }
+  .take.playing { border-color: var(--ink); }
+  .cast .take { border-color: color-mix(in srgb, var(--cast) 40%, transparent); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  td, th { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
 </style>
 </head>
 <body>
+<main>
 <h1>Matilda's voice: A, B or C?</h1>
-<p>Each voice says the same three lines. Tap the big button to hear all three, or tap a line.</p>
-<div class="grid">
-  <div class="card A"><button class="big" data-v="A">A <span>▶ play all</span></button>
-    <button class="line" data-s="A1">"Party, here I come!"</button><button class="line" data-s="A2">"Hi-yah!"</button><button class="line" data-s="A3">"My Dahlia Storm is ready!"</button></div>
-  <div class="card B"><button class="big" data-v="B">B <span>▶ play all</span></button>
-    <button class="line" data-s="B1">"Party, here I come!"</button><button class="line" data-s="B2">"Hi-yah!"</button><button class="line" data-s="B3">"My Dahlia Storm is ready!"</button></div>
-  <div class="card C"><button class="big" data-v="C">C <span>▶ play all</span></button>
-    <button class="line" data-s="C1">"Party, here I come!"</button><button class="line" data-s="C2">"Hi-yah!"</button><button class="line" data-s="C3">"My Dahlia Storm is ready!"</button></div>
-</div>
+<p>Same three lines in each voice, two takes per line. Take 1 is bright and quick; take 2 is faster and higher, more giggly. Tap the big letter to hear take 1 of all three lines, or tap any take. Every clip is levelled to the same loudness, so you are comparing voices, not volume.</p>
+
+<div class="grid" id="voices"></div>
+
+<h2>The rest of the cast (scratch, one take each so far)</h2>
+<p>Mummy warm and happy, Leo a cheeky little brother, Snuffles grumpy with a blocked nose. These play in the opening and at the end. Two takes of each come once you approve the cast.</p>
+<div class="card cast" id="cast"></div>
+
+<h2>Loudness of every clip</h2>
+<p>Target −16 LUFS with peaks under −1 dB. Measured on the files on this page.</p>
+<div class="card"><table id="loud"><tr><th>Clip</th><th>Loudness</th><th>Peak</th></tr></table></div>
+</main>
 <script>
-  var cur = null, queue = [];
-  function play(k, next) { if (cur) { cur.pause(); cur.onended = null; } cur = new Audio("audition/" + k + ".mp3"); cur.onended = next || null; cur.play(); }
-  function playAll(v) { var ks = [v + "1", v + "2", v + "3"], i = 0; var go = function () { if (i < ks.length) { var k = ks[i++]; play(k, function () { setTimeout(go, 400); }); } }; go(); }
-  document.querySelectorAll(".big").forEach(function (b) { b.addEventListener("click", function () { playAll(b.dataset.v); }); });
-  document.querySelectorAll(".line").forEach(function (b) { b.addEventListener("click", function () { play(b.dataset.s); }); });
+  var LINES = [
+    { l: "Party, here I come!", d: "Running out of the dojo. Excited, fast, a smile you can hear. About 1.2 s." },
+    { l: "Hi-yah!", d: "A karate kick. Sharp, punchy, proud. Under 0.8 s." },
+    { l: "My Dahlia Storm is ready!", d: "Her power is full. Thrilled, a little breathless. About 1.4 s." }
+  ];
+  var VOICES = { A: "Pixie", B: "Daisy", C: "Evie" };
+  var LOUD = {"A1a":[-16.4,-1.8],"A1b":[-16.4,-1.8],"A2a":[-16.4,-4.1],"A2b":[-15.9,-1.6],"A3a":[-16.5,-2.7],"A3b":[-16.5,-1.8],"B1a":[-16.2,-1.8],"B1b":[-16.4,-1.8],"B2a":[-16.5,-3.5],"B2b":[-16.9,-1.8],"B3a":[-16.4,-1.7],"B3b":[-16.5,-1.7],"C1a":[-17.0,-1.8],"C1b":[-16.5,-1.8],"C2a":[-16.4,-5.9],"C2b":[-16.5,-3.6],"C3a":[-16.5,-2.9],"C3b":[-16.5,-1.8],
+    "cast_mum_three":[-16.6,-1.8],"cast_mum_hurry":[-16.5,-1.8],"cast_leo_late":[-16.4,-1.7],"cast_leo_hurry":[-16.5,-2.9],"cast_snf_mine":[-16.5,-1.9],"cast_snf_noparty":[-17.8,-1.8],"cast_snf_cake":[-16.5,-1.8]};
+  var CAST = [["Mummy", "Party's at three, birthday girl!", "cast_mum_three"], ["Leo", "Don't be late!", "cast_leo_late"], ["Leo", "Hee hee! Hurry up, Matilda!", "cast_leo_hurry"], ["Mummy", "Hurry up, birthday girl!", "cast_mum_hurry"], ["Snuffles", "Ooh, cake! MINE!", "cast_snf_mine"], ["Snuffles", "Nobody invited ME. So, no party! Hmph!", "cast_snf_noparty"], ["Snuffles", "Really? ...Want some cake?", "cast_snf_cake"]];
+  var cur = null, curBtn = null;
+  function play(k, btn, next) { if (cur) { cur.pause(); cur.onended = null; } if (curBtn) curBtn.classList.remove("playing"); cur = new Audio("audition/" + k + ".mp3"); curBtn = btn || null; if (btn) btn.classList.add("playing"); cur.onended = function () { if (btn) btn.classList.remove("playing"); if (next) next(); }; cur.play(); }
+  var g = document.getElementById("voices");
+  Object.keys(VOICES).forEach(function (v) {
+    var c = document.createElement("div"); c.className = "card " + v;
+    var bb = document.createElement("button"); bb.className = "big"; bb.innerHTML = v + " <span>▶ play all</span>"; c.appendChild(bb);
+    LINES.forEach(function (L, i) { var r = document.createElement("div"); r.className = "row"; r.innerHTML = '<div class="line">"' + L.l + '"</div><div class="dir">' + L.d + '</div>';
+      var t = document.createElement("div"); t.className = "takes"; ["a", "b"].forEach(function (k, j) { var b = document.createElement("button"); b.className = "take"; var key = v + (i + 1) + k; b.innerHTML = "Take " + (j + 1) + "<small>" + (j ? "faster, higher" : "bright, quick") + "</small>"; b.onclick = function () { play(key, b); }; t.appendChild(b); }); r.appendChild(t); c.appendChild(r); });
+    bb.onclick = function () { var i = 0; var go = function () { if (i < 3) { var k = v + (++i) + "a"; play(k, null, function () { setTimeout(go, 350); }); } }; go(); };
+    g.appendChild(c);
+  });
+  var cc = document.getElementById("cast");
+  CAST.forEach(function (x, i) { var r = document.createElement("div"); if (i) r.className = "row"; r.innerHTML = '<div class="line">' + x[0] + ': "' + x[1] + '"</div>'; var t = document.createElement("div"); t.className = "takes"; var b = document.createElement("button"); b.className = "take"; b.textContent = "▶ Play"; b.onclick = function () { play(x[2], b); }; t.appendChild(b); r.appendChild(t); cc.appendChild(r); });
+  var tb = document.getElementById("loud"); Object.keys(LOUD).forEach(function (k) { var tr = document.createElement("tr"); tr.innerHTML = "<td>" + k + "</td><td>" + LOUD[k][0].toFixed(1) + " LUFS</td><td>" + LOUD[k][1].toFixed(1) + " dB</td>"; tb.appendChild(tr); });
 </script>
 </body>
 </html>

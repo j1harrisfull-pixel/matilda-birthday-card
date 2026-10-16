@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Opening Storyboard</title>
+<style>
+  :root { --bg: #fff6ea; --ink: #2b2438; --card: #ffffff; --soft: #6b6278; --line: rgba(43,36,56,.14); --pink: #e8478f; --gold: #c98a00; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #1f1a29; --ink: #f4eefc; --card: #2b2438; --soft: #b8aec8; --line: rgba(255,255,255,.14); --gold: #ffd23f; } }
+  :root[data-theme="dark"] { --bg: #1f1a29; --ink: #f4eefc; --card: #2b2438; --soft: #b8aec8; --line: rgba(255,255,255,.14); --gold: #ffd23f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 500 16px/1.45 -apple-system, system-ui, sans-serif; padding: 20px 16px 48px; }
+  main { max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 26px; margin: 0 0 6px; }
+  p { margin: 0 0 14px; color: var(--soft); }
+  .play { display: inline-block; background: var(--pink); color: #fff; font: 900 18px system-ui, sans-serif; padding: 14px 22px; border-radius: 14px; text-decoration: none; margin: 4px 0 18px; }
+  .facts { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+  .fact { background: var(--card); border-radius: 12px; padding: 8px 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); font-weight: 700; }
+  .fact b { color: var(--gold); }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .panel { background: var(--card); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,.08); display: flex; flex-direction: column; }
+  .panel img { width: 100%; display: block; aspect-ratio: 844 / 390; object-fit: cover; background: #ddd; }
+  .body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  .tc { font: 900 13px ui-monospace, monospace; color: var(--gold); }
+  .beat { font-weight: 800; }
+  .say { font-weight: 700; }
+  .dir { font-size: 13px; color: var(--soft); }
+  .aud { margin-top: auto; align-self: flex-start; border: 2px solid var(--line); background: transparent; color: var(--ink); border-radius: 10px; padding: 7px 12px; font: 800 14px system-ui, sans-serif; cursor: pointer; }
+</style>
+</head>
+<body>
+<main>
+<h1>Opening storyboard</h1>
+<p>Built in the game itself from the existing art, with scratch voices. The timecodes are measured from the tap on PLAY. Tap anywhere in the opening to skip it.</p>
+<a class="play" href="game-next.html?board=1">▶ Play the animatic (with timecode)</a>
+<div class="facts"><div class="fact">In play at <b>19.6 s</b> (target under 20)</div><div class="fact">Goal heard at <b>0.8 s</b>: "Party's at three"</div><div class="fact">Tap skips straight to the dojo</div></div>
+<div class="grid" id="g"></div>
+</main>
+<script>
+  var P = [
+    ["b_00", "0.6", "Party house, party day. Mummy and Leo wave at a video call; Matilda is on the screen at the dojo.", "", "", "Bright, happy music; a phone chime as the call opens."],
+    ["b_01", "1.7", "Mummy on the call.", "Mummy", "Party's at three, birthday girl!", "Warm, smiling, proud. About 2 s.", "cast_mum_three"],
+    ["b_02", "3.7", "Leo on the call, bouncing.", "Leo", "Don't be late!", "Cheeky little brother, teasing. About 1.5 s.", "cast_leo_late"],
+    ["b_03", "5.7", "Matilda on the screen, hopping with excitement.", "Matilda", "I'll be there!", "Excited, quick, giggly. About 1 s. (Recorded once her voice is chosen.)"],
+    ["b_04", "7.4", "The call closes. Thump, thump: Snuffles stomps in behind them.", "", "", "Two big footsteps, the music dips."],
+    ["b_05", "8.9", "Snuffles grabs the cake off the table.", "Snuffles", "Ooh, cake! MINE!", "Grumpy, blocked nose, more sulky than scary. About 2 s.", "cast_snf_mine"],
+    ["b_06", "10.5", "A huff of breath shoos Mummy and Leo inside.", "", "", "A whoosh. Comic, not frightening."],
+    ["b_07", "11.7", "Click: a padlock on the door. Snuffles steps aside with the cake.", "", "", "A lock click."],
+    ["b_08", "12.3", "The curtains swish shut on the top windows.", "", "", "A curtain swish."],
+    ["b_09", "13.5", "Leo's face and hands pressed to the downstairs window glass, laughing and waving. Mummy at the other window.", "Leo", "Hee hee! Hurry up, Matilda!", "Laughing, cheeky, not worried. About 2 s.", "cast_leo_hurry"],
+    ["b_10", "15.7", "Mummy waves from her window.", "Mummy", "Hurry up, birthday girl!", "Warm and laughing. About 1.5 s.", "cast_mum_hurry"],
+    ["b_11", "18.7", "Cut to the dojo. Sensei sends her off.", "Sensei", "Go! Your party's waiting!", "Proud, brisk. Bubble now, voice in Phase B."],
+    ["b_12", "19.6", "GET TO YOUR PARTY! She runs out of the dojo gate into play.", "Matilda", "Party, here I come!", "Bursting with excitement. About 1.2 s."]
+  ];
+  var cur = null; var g = document.getElementById("g");
+  P.forEach(function (x) { var d = document.createElement("div"); d.className = "panel";
+    var img = document.createElement("img"); img.src = "board/" + x[0] + ".jpg"; img.alt = x[2]; img.loading = "lazy"; d.appendChild(img);
+    var b = document.createElement("div"); b.className = "body";
+    var tc = document.createElement("div"); tc.className = "tc"; tc.textContent = x[1] + " s"; b.appendChild(tc);
+    var be = document.createElement("div"); be.className = "beat"; be.textContent = x[2]; b.appendChild(be);
+    if (x[3]) { var s = document.createElement("div"); s.className = "say"; s.textContent = x[3] + ': "' + x[4] + '"'; b.appendChild(s); }
+    var di = document.createElement("div"); di.className = "dir"; di.textContent = x[5]; b.appendChild(di);
+    if (x[6]) { var a = document.createElement("button"); a.className = "aud"; a.textContent = "▶ Scratch voice"; a.onclick = function () { if (cur) cur.pause(); cur = new Audio("audition/" + x[6] + ".mp3"); cur.play(); }; b.appendChild(a); }
+    d.appendChild(b); g.appendChild(d); });
+</script>
+</body>
+</html>
