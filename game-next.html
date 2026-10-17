@@ -55,6 +55,12 @@
   #bS.ready{background:radial-gradient(#ffd23f,#ff5fa2);color:#fff;animation:pulse .6s infinite alternate;box-shadow:0 0 0 4px #fff,0 0 24px #ffd23f}
   #bS.storming{background:#ffd23f;color:#2b2438}
   @keyframes pulse{to{transform:scale(1.1)}}
+  /* teaching the first time, no text (17 Oct): a tapping hand on STORM until it is pressed; PUNCH pulses once by the first gull */
+  #tapHand{position:absolute;left:58%;top:52%;font-size:38px;line-height:1;pointer-events:none;animation:tap .55s infinite alternate ease-in-out;filter:drop-shadow(0 2px 2px rgba(0,0,0,.4))}
+  @keyframes tap{from{transform:translate(0,0)}to{transform:translate(-6px,-12px) scale(.92)}}
+  .cb.teach{animation:teach .32s 4 alternate ease-in-out}
+  body.talking .cb{opacity:.15;transition:opacity .2s}   /* a big moment holds for the bubbles: the buttons step back (a tap anywhere moves on) */
+  @keyframes teach{to{transform:scale(1.2);box-shadow:0 0 0 5px #fff,0 0 28px #ffd23f}}
   #muteBtn{position:fixed;top:max(8px,env(safe-area-inset-top));right:max(10px,env(safe-area-inset-right));z-index:12;pointer-events:auto;background:rgba(43,36,56,.45);border:0;border-radius:50%;width:40px;height:40px;font-size:18px}
   #againBtn{position:fixed;bottom:max(14px,env(safe-area-inset-bottom));right:max(14px,env(safe-area-inset-right));z-index:12;font-size:18px;padding:8px 22px}
   /* the wipe between scenes: a quick diagonal sweep in the game's colours, never a hard cut or a blank frame */
@@ -85,7 +91,7 @@
 <div id="controls" hidden>
   <button class="cb" id="bL" aria-label="Left">◀</button><button class="cb" id="bR" aria-label="Right">▶</button>
   <button class="cb" id="bP">PUNCH</button><button class="cb" id="bK">KICK</button><button class="cb" id="bJ">JUMP</button>
-  <button class="cb" id="bS">STORM</button>
+  <button class="cb" id="bS">STORM<span id="tapHand" hidden>👆</span></button>
 </div>
 <button id="muteBtn" aria-label="Sound on or off">🔊</button>
 <button id="pauseBtn" aria-label="Pause" hidden>II</button>
@@ -107,7 +113,7 @@
   var barIn = document.getElementById("barIn"), txt = document.getElementById("loadTxt");
   window.setLoad = function (v, t) { barIn.style.width = Math.round(Math.max(0, Math.min(1, v)) * 100) + "%"; if (t !== undefined) txt.textContent = t; };
   /* the engine (Phaser and the game code) loads first with its own progress, then the art and music */
-  var x = new XMLHttpRequest(); x.open("GET", "game-next/engine.js?v=20261016120121");
+  var x = new XMLHttpRequest(); x.open("GET", "game-next/engine.js?v=20261017165834");
   x.onprogress = function (e) { var tot = e.lengthComputable ? e.total : 1500000; window.setLoad(0.35 * Math.min(1, e.loaded / tot), "Loading the game…"); };
   x.onload = function () { if (x.status !== 200) { txt.textContent = "Could not load. Pull down to try again."; return; } var s = document.createElement("script"); s.text = x.responseText; document.body.appendChild(s); };
   x.onerror = function () { txt.textContent = "No connection. Pull down to try again."; };

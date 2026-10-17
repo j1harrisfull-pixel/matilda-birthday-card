@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Playtest Kit</title>
+<style>
+  :root { --bg: #fffaf3; --ink: #2b2438; --card: #ffffff; --soft: #6b6278; --line: rgba(43,36,56,.12); --pink: #e8478f; --ok: #2e8b57; --chip: #f3e8ff; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #1d1826; --ink: #f4eefc; --card: #29233a; --soft: #b8aec8; --line: rgba(255,255,255,.12); --ok: #6fd39a; --chip: #3a2f52; } }
+  :root[data-theme="dark"] { --bg: #1d1826; --ink: #f4eefc; --card: #29233a; --soft: #b8aec8; --line: rgba(255,255,255,.12); --ok: #6fd39a; --chip: #3a2f52; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 500 16px/1.45 -apple-system, system-ui, sans-serif; padding: 18px 16px 60px; }
+  main { max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 26px; margin: 0 0 4px; } h2 { font-size: 19px; margin: 28px 0 8px; }
+  p, li { color: var(--soft); } b { color: var(--ink); }
+  .card { background: var(--card); border-radius: 14px; padding: 12px 14px; box-shadow: 0 3px 12px rgba(0,0,0,.06); margin: 10px 0; }
+  .beat { display: grid; gap: 6px; }
+  .beat .n { font-weight: 800; color: var(--ink); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips label { display: inline-flex; align-items: center; gap: 6px; background: var(--chip); border-radius: 999px; padding: 7px 12px; font-weight: 700; font-size: 14px; color: var(--ink); cursor: pointer; user-select: none; }
+  .chips input { width: 18px; height: 18px; accent-color: var(--pink); }
+  textarea, input[type=text] { width: 100%; font: inherit; color: var(--ink); background: transparent; border: 2px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+  textarea { min-height: 54px; }
+  .pass { font-size: 13px; color: var(--ok); font-weight: 700; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  button { font: 800 15px system-ui; padding: 10px 16px; border-radius: 12px; border: 0; background: var(--pink); color: #fff; cursor: pointer; }
+  button.alt { background: transparent; color: var(--ink); border: 2px solid var(--line); }
+  .tally { font-weight: 800; color: var(--ink); }
+</style>
+</head>
+<body>
+<main>
+<h1>Playtest kit</h1>
+<p>For watching one child play Matilda's Black Belt Birthday from the start to the birthday card. Everything you tick is kept on this phone only (in this browser), so you can fill it in as you go.</p>
+<div class="row"><span>Tester:</span><input type="text" id="who" placeholder="first name and age" style="max-width:260px"></div>
+
+<h2>Rules for the grown up</h2>
+<div class="card"><ol>
+<li>Open <b>game-next.html?telemetry=1</b> on the phone, sound on, held sideways. Hand it over at the PLAY button.</li>
+<li>Say only: <b>"This is a game. Have a go."</b> Don't explain anything, don't point at the screen, don't touch the phone.</li>
+<li>If they ask for help, say <b>"What do you think?"</b> once. If they are still stuck after that, help, and tick <b>asked for help</b>.</li>
+<li>Watch their face as much as the screen. Tick a box the moment it happens. Write down exact words when they say something.</li>
+<li>Time it from PLAY to the birthday card.</li>
+<li>At the end, tap <b>Save results</b> on the summary and AirDrop the file to James's Mac (raw/telemetry/). Then ask the three questions below, in their words, no hints.</li>
+</ol></div>
+
+<h2>During play: one box per beat</h2>
+<p>Tick what happened in each part. Leave it empty if nothing did.</p>
+<div id="beats"></div>
+
+<h2>Afterwards: three questions</h2>
+<div class="card beat"><div class="n">1. What were you trying to do in the game?</div><textarea id="q1"></textarea><div class="pass">Pass: they say getting to her party (or the party, balloons, presents and cake). Not saving anyone.</div><label class="row"><input type="checkbox" id="q1p"> Passed</label></div>
+<div class="card beat"><div class="n">2. Which button makes all the flowers come out?</div><textarea id="q2"></textarea><div class="pass">Pass: they name or point to STORM.</div><label class="row"><input type="checkbox" id="q2p"> Passed</label></div>
+<div class="card beat"><div class="n">3. What was your favourite bit, and was any bit boring or confusing?</div><textarea id="q3"></textarea></div>
+<div class="card beat"><div class="n">Time from PLAY to the birthday card</div><div class="row"><input type="text" id="time" placeholder="minutes:seconds" style="max-width:160px"><label class="row"><input type="checkbox" id="tp"> Under 6 minutes</label></div><div class="pass">Pass: under 6 minutes.</div></div>
+
+<h2>For James: a Safari timeline from the iPhone (5 steps)</h2>
+<div class="card"><ol>
+<li>On the iPhone: Settings, Apps, Safari, Advanced, turn on <b>Web Inspector</b>.</li>
+<li>On the Mac: Safari, Settings, Advanced, tick <b>Show features for web developers</b> (this adds the Develop menu).</li>
+<li>Plug the iPhone into the Mac with a cable and open <b>game-next.html?telemetry=1</b> in Safari on the phone.</li>
+<li>On the Mac: Develop, your iPhone's name, the game page. In the Web Inspector open <b>Timelines</b>, make sure <b>Rendering Frames</b>, <b>CPU</b> and <b>Memory</b> are on, press the red record button and play on the phone up to the end of the Crumbs fight.</li>
+<li>Stop recording, press <b>Export</b> (the arrow out of a box at the top of Timelines) and save the file into <b>matilda-birthday/raw/telemetry/</b>. Targets: no frame over 33 ms, memory under 200 MB.</li>
+</ol></div>
+
+<h2>Result</h2>
+<div class="card"><p class="tally" id="tally"></p>
+<div class="row"><button id="copy">Copy as text</button><button class="alt" id="clear">Clear for the next child</button></div></div>
+</main>
+<script>
+  var BEATS = ["Opening: the party, Snuffles takes the cake", "Dojo: Sensei sends her off", "Olive catches up, digs up a golden dahlia", "The Street: gulls, party boxes, the car", "Runaway wheelie bin", "Captain Crumbs: balloons back", "The Park: bushes and presents, Olive sniffing", "Bunnies", "Leo's skateboard", "The Great Fluffini: presents back", "Party Road: bats, rooftops, washing line", "Stunt Day: the black belt test", "Snuffles: cake back, the invitation", "The party and the dahlias for Mummy", "The birthday card: blowing out the candles"];
+  var MARKS = ["paused", "laughed", "said \"what?\"", "died", "asked for help"];
+  var KEY = "matilda_playtest_v1", D = {}; try { D = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { D = {}; }
+  var save = function () { try { localStorage.setItem(KEY, JSON.stringify(D)); } catch (e) { } tally(); };
+  var box = document.getElementById("beats");
+  BEATS.forEach(function (b, i) { var c = document.createElement("div"); c.className = "card beat"; var n = document.createElement("div"); n.className = "n"; n.textContent = (i + 1) + ". " + b; c.appendChild(n);
+    var ch = document.createElement("div"); ch.className = "chips"; MARKS.forEach(function (m, j) { var id = "b" + i + "m" + j, l = document.createElement("label"), x = document.createElement("input"); x.type = "checkbox"; x.id = id; x.checked = !!D[id]; x.onchange = function () { D[id] = x.checked; save(); }; l.appendChild(x); l.appendChild(document.createTextNode(m)); ch.appendChild(l); }); c.appendChild(ch);
+    var t = document.createElement("textarea"); t.placeholder = "what they said or did"; t.value = D["n" + i] || ""; t.oninput = function () { D["n" + i] = t.value; save(); }; c.appendChild(t); box.appendChild(c); });
+  ["who", "q1", "q2", "q3", "time"].forEach(function (id) { var el = document.getElementById(id); el.value = D[id] || ""; el.oninput = function () { D[id] = el.value; save(); }; });
+  ["q1p", "q2p", "tp"].forEach(function (id) { var el = document.getElementById(id); el.checked = !!D[id]; el.onchange = function () { D[id] = el.checked; save(); }; });
+  function tally() { var cnt = MARKS.map(function (m, j) { var n = 0; BEATS.forEach(function (b, i) { if (D["b" + i + "m" + j]) n++; }); return m + " " + n; }); var pass = [D.q1p, D.q2p, D.tp].filter(Boolean).length;
+    document.getElementById("tally").textContent = "Pass marks " + pass + " of 3 · " + cnt.join(" · "); }
+  function asText() { var L = ["Playtest: " + (D.who || "?")]; BEATS.forEach(function (b, i) { var m = MARKS.filter(function (x, j) { return D["b" + i + "m" + j]; }); if (m.length || D["n" + i]) L.push((i + 1) + ". " + b + ": " + m.join(", ") + (D["n" + i] ? " (" + D["n" + i] + ")" : "")); });
+    L.push("Q1 " + (D.q1p ? "PASS" : "no") + ": " + (D.q1 || "")); L.push("Q2 " + (D.q2p ? "PASS" : "no") + ": " + (D.q2 || "")); L.push("Q3: " + (D.q3 || "")); L.push("Time " + (D.time || "?") + (D.tp ? " (under 6 min)" : "")); return L.join("\n"); }
+  document.getElementById("copy").onclick = function () { var t = asText(); if (navigator.clipboard) navigator.clipboard.writeText(t).then(function () { document.getElementById("copy").textContent = "Copied"; }); };
+  document.getElementById("clear").onclick = function () { if (!confirm("Clear everything for the next child?")) return; D = {}; save(); location.reload(); };
+  tally();
+</script>
+</body>
+</html>

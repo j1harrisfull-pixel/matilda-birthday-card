@@ -18,53 +18,31 @@
   .fact { background: var(--card); border-radius: 12px; padding: 8px 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); font-weight: 700; }
   .fact b { color: var(--gold); }
   .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
-  .panel { background: var(--card); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,.08); display: flex; flex-direction: column; }
+  .panel { background: var(--card); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,.08); }
   .panel img { width: 100%; display: block; aspect-ratio: 844 / 390; object-fit: cover; background: #ddd; }
-  .body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  .body { padding: 10px 12px 12px; }
   .tc { font: 900 13px ui-monospace, monospace; color: var(--gold); }
   .beat { font-weight: 800; }
-  .say { font-weight: 700; }
-  .dir { font-size: 13px; color: var(--soft); }
-  .olive { align-self: flex-start; background: #8b5a2b; color: #fff; font: 800 12px system-ui, sans-serif; padding: 2px 9px; border-radius: 999px; }
-  .aud { margin-top: auto; align-self: flex-start; border: 2px solid var(--line); background: transparent; color: var(--ink); border-radius: 10px; padding: 7px 12px; font: 800 14px system-ui, sans-serif; cursor: pointer; }
 </style>
 </head>
 <body>
 <main>
 <h1>Opening storyboard</h1>
-<p>Second pass, with Olive and the everyday script. The timecodes are the plan, measured from the tap on PLAY. The pictures are from the current animatic, which has no Olive yet (no Olive art until her photos are in), so the panels marked <b>Olive</b> describe what she adds.</p>
-<a class="play" href="game-next.html?board=1">▶ Current animatic (old cut, no Olive, 19.6 s)</a>
-<div class="facts"><div class="fact">Planned in play at <b>16.4 s</b> (was 19.6, target under 20)</div><div class="fact">Goal heard at <b>0.8 s</b>: "Party's at three"</div><div class="fact">Tap skips straight to the dojo</div></div>
+<p>The opening as built in the test game, with speech bubbles (no voices). Each frame was taken the moment a bubble finished typing, in a run with no taps: every bubble waited its full reading time (1.2 s plus 0.3 s a word), so this is the timing for an average reader. A tap finishes a bubble early; the Skip button skips the whole opening. Olive is a placeholder shape until her photos arrive.</p>
+<a class="play" href="game-next.html?board=1">▶ Play it (with timecode)</a>
+<div class="facts" id="facts"></div>
 <div class="grid" id="g"></div>
 </main>
 <script>
-  var P = [
-    ["b_00", "0.3", "Party day. Mummy, Leo and Olive on a video call to Matilda at the dojo. Olive's tail going.", "", "", "Bright music, a call chime.", 1],
-    ["b_01", "0.8", "Mummy on the call.", "Mummy (MU1)", "Party's at three, sweetheart!", "Warm, smiling."],
-    ["b_02", "2.5", "Leo pops into the call.", "Leo (L1)", "Don't be late!", "Cheeky, teasing."],
-    ["b_03", "3.5", "Matilda on the screen, hopping.", "Matilda (M1)", "I won't!", "Excited, quick."],
-    ["b_04", "4.3", "The call closes. Thump, thump: Snuffles stomps in.", "", "", "Two big footsteps, music dips."],
-    ["b_04", "5.2", "Olive barks at him, cheeky not scary. He jumps, then scowls.", "Olive", "Woof! Woof!", "Bark and a little bounce.", 1],
-    ["b_05", "6.2", "Snuffles grabs the cake.", "Snuffles (SN1)", "Ooh, cake. Mine.", "Grumpy, blocked nose, pleased with himself."],
-    ["b_06", "7.7", "A huff shoos Mummy, Leo and Olive inside.", "", "", "A whoosh. Comic.", 1],
-    ["b_07", "8.6", "Click: padlock on the front door.", "", "", "A lock click."],
-    ["b_07", "9.2", "The dog flap swings. Olive's nose pokes out. Snuffles doesn't notice.", "", "", "A soft flap creak, a sniff.", 1],
-    ["b_08", "10.2", "Curtains swish shut upstairs.", "", "", "A curtain swish."],
-    ["b_09", "10.8", "Leo's face pressed to the window, laughing. Mummy at the other window.", "Leo (L2)", "Hurry up, Matilda!", "Laughing, not worried."],
-    ["b_10", "12.3", "Mummy waves. Olive's nose at the flap again.", "", "", "No line (cut to make room for Olive).", 1],
-    ["b_11", "13.3", "Cut to the dojo. Sensei sends her off.", "Sensei (SE1)", "Go on then, go get your party!", "Brisk, smiling."],
-    ["b_12", "15.6", "GET TO YOUR PARTY! She runs out of the dojo gate into play at 16.4 s.", "Matilda (M2)", "My party! Let's go!", "Bursting to go."]
-  ];
-  var cur = null; var g = document.getElementById("g");
-  P.forEach(function (x) { var d = document.createElement("div"); d.className = "panel";
-    var img = document.createElement("img"); img.src = "board/" + x[0] + ".jpg"; img.alt = x[2]; img.loading = "lazy"; d.appendChild(img);
-    var b = document.createElement("div"); b.className = "body";
-    var tc = document.createElement("div"); tc.className = "tc"; tc.textContent = x[1] + " s"; b.appendChild(tc);
-    var be = document.createElement("div"); be.className = "beat"; be.textContent = x[2]; b.appendChild(be);
-    if (x[3]) { var s = document.createElement("div"); s.className = "say"; s.textContent = x[3] + ': "' + x[4] + '"'; b.appendChild(s); }
-    var di = document.createElement("div"); di.className = "dir"; di.textContent = x[5]; b.appendChild(di);
-    if (x[6]) { var o = document.createElement("div"); o.className = "olive"; o.textContent = "Olive"; b.insertBefore(o, b.firstChild); }
-    d.appendChild(b); g.appendChild(d); });
+  fetch("board/opening.json?v=" + Date.now()).then(function (r) { return r.json(); }).then(function (d) {
+    var f = document.getElementById("facts"), add = function (lead, val, tail) { var e = document.createElement("div"); e.className = "fact"; e.appendChild(document.createTextNode(lead)); var b = document.createElement("b"); b.textContent = val; e.appendChild(b); e.appendChild(document.createTextNode(tail)); f.appendChild(e); };
+    if (d.play) add("In play at ", d.play.toFixed(1) + " s", " from PLAY (target under 25)");
+    if (d.shots[0]) add("Goal shown at ", d.shots[0].t.toFixed(1) + " s", ": \"Party's at three\"");
+    var g = document.getElementById("g");
+    d.shots.forEach(function (s) { var p = document.createElement("div"); p.className = "panel"; var im = document.createElement("img"); im.src = "board/" + s.f; im.alt = s.label; im.loading = "lazy"; p.appendChild(im);
+      var b = document.createElement("div"); b.className = "body"; var tc = document.createElement("div"); tc.className = "tc"; tc.textContent = s.t.toFixed(1) + " s"; var be = document.createElement("div"); be.className = "beat";
+      var m = s.label.match(/^(\w+): (.*)$/); be.textContent = m ? (m[1].charAt(0).toUpperCase() + m[1].slice(1)) + ': "' + m[2] + '"' : s.label; b.appendChild(tc); b.appendChild(be); p.appendChild(b); g.appendChild(p); });
+  });
 </script>
 </body>
 </html>

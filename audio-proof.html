@@ -1,0 +1,55 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Audio Proof</title>
+<style>:root{--bg:#fffaf3;--ink:#2b2438;--card:#fff;--soft:#6b6278;--line:rgba(43,36,56,.12)}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#1d1826;--ink:#f4eefc;--card:#29233a;--soft:#b8aec8;--line:rgba(255,255,255,.12)}}:root[data-theme=dark]{--bg:#1d1826;--ink:#f4eefc;--card:#29233a;--soft:#b8aec8;--line:rgba(255,255,255,.12)}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:500 15px/1.45 system-ui,sans-serif;padding:18px 16px 50px}main{max-width:960px;margin:0 auto}p{color:var(--soft)}.wrap{overflow-x:auto;background:var(--card);border-radius:14px;margin:10px 0}table{border-collapse:collapse;width:100%;min-width:480px}td,th{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line)}img{max-width:100%;border-radius:10px;background:#fff}.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}</style></head><body><main>
+<h1>Audio proof</h1><p>Every sound the test build plays (game-next). There are no voices any more: every line is a speech bubble, and the bubble blips are made in code at play time. Loudness is integrated LUFS (EBU R128), peak is true peak.</p>
+<h2>Music</h2><div class='wrap'><table><tr><th>Track</th><th>LUFS</th><th>True peak dB</th><th>Length s</th></tr>
+<tr><td>boss</td><td>-17.3</td><td>-3.9</td><td>71.7</td></tr>
+<tr><td>card</td><td>-14.6</td><td>-3.9</td><td>14.4</td></tr>
+<tr><td>ending</td><td>-17.3</td><td>-4.0</td><td>44.6</td></tr>
+<tr><td>park</td><td>-17.3</td><td>-6.4</td><td>72.8</td></tr>
+<tr><td>road</td><td>-17.3</td><td>-6.8</td><td>81.9</td></tr>
+<tr><td>storm</td><td>-17.3</td><td>-3.4</td><td>41.1</td></tr>
+<tr><td>street</td><td>-17.3</td><td>-6.4</td><td>74.2</td></tr>
+<tr><td>title</td><td>-17.3</td><td>-5.9</td><td>11.3</td></tr>
+</table></div><h2>Music loop points</h2><p>The pink line is where the loop jumps back to the start. A smooth line through it means no click. Jump is the sample step at the seam; for comparison, the 99th percentile step inside the track.</p><div class='grid'>
+<figure style='margin:0'><img src='audio-proof/loop_boss.png' alt='loop point of boss'><figcaption>boss: jump at the seam 0.0921, normal step 0.2356 (fine)</figcaption></figure>
+<figure style='margin:0'><img src='audio-proof/loop_card.png' alt='loop point of card'><figcaption>card: jump at the seam 0.0630, normal step 0.3790 (fine)</figcaption></figure>
+<figure style='margin:0'><img src='audio-proof/loop_ending.png' alt='loop point of ending'><figcaption>ending: jump at the seam 0.0264, normal step 0.0550 (fine)</figcaption></figure>
+<figure style='margin:0'><img src='audio-proof/loop_park.png' alt='loop point of park'><figcaption>park: jump at the seam 0.0789, normal step 0.2126 (fine)</figcaption></figure>
+<figure style='margin:0'><img src='audio-proof/loop_road.png' alt='loop point of road'><figcaption>road: jump at the seam 0.0280, normal step 0.2043 (fine)</figcaption></figure>
+<figure style='margin:0'><img src='audio-proof/loop_storm.png' alt='loop point of storm'><figcaption>storm: jump at the seam 0.0080, normal step 0.2187 (fine)</figcaption></figure>
+<figure style='margin:0'><img src='audio-proof/loop_street.png' alt='loop point of street'><figcaption>street: jump at the seam 0.0222, normal step 0.2082 (fine)</figcaption></figure>
+<figure style='margin:0'><img src='audio-proof/loop_title.png' alt='loop point of title'><figcaption>title: jump at the seam 0.0180, normal step 0.2141 (fine)</figcaption></figure>
+</div><h2>Sound effects</h2><div class='wrap'><table><tr><th>Effect</th><th>LUFS</th><th>True peak dB</th><th>Length s</th></tr>
+<tr><td>bell</td><td>-26.9</td><td>-0.7</td><td>1.6</td></tr>
+<tr><td>bin</td><td>-70.0</td><td>-0.8</td><td>0.2</td></tr>
+<tr><td>block</td><td>-70.0</td><td>-1.5</td><td>0.4</td></tr>
+<tr><td>chime</td><td>-70.0</td><td>-0.8</td><td>0.3</td></tr>
+<tr><td>crate</td><td>-70.0</td><td>-0.7</td><td>0.4</td></tr>
+<tr><td>crate2</td><td>-19.1</td><td>-1.0</td><td>0.7</td></tr>
+<tr><td>finish</td><td>-20.4</td><td>0.8</td><td>0.6</td></tr>
+<tr><td>go</td><td>-70.0</td><td>-3.5</td><td>0.4</td></tr>
+<tr><td>gullhit0</td><td>-8.3</td><td>-0.4</td><td>0.5</td></tr>
+<tr><td>gullhit1</td><td>-14.5</td><td>-1.2</td><td>0.6</td></tr>
+<tr><td>gullko</td><td>-14.9</td><td>-1.6</td><td>1.1</td></tr>
+<tr><td>hurt</td><td>-18.0</td><td>-0.5</td><td>0.5</td></tr>
+<tr><td>jump</td><td>-70.0</td><td>-2.9</td><td>0.4</td></tr>
+<tr><td>kick</td><td>-20.4</td><td>-0.5</td><td>0.6</td></tr>
+<tr><td>land</td><td>-70.0</td><td>-0.7</td><td>0.2</td></tr>
+<tr><td>launch</td><td>-17.7</td><td>-1.1</td><td>0.5</td></tr>
+<tr><td>punch0</td><td>-70.0</td><td>-0.6</td><td>0.4</td></tr>
+<tr><td>punch1</td><td>-70.0</td><td>-0.7</td><td>0.4</td></tr>
+<tr><td>scatter</td><td>-25.8</td><td>-1.6</td><td>0.9</td></tr>
+<tr><td>skid</td><td>-70.0</td><td>0.1</td><td>0.4</td></tr>
+<tr><td>squawk0</td><td>-8.8</td><td>-1.1</td><td>0.8</td></tr>
+<tr><td>squawk1</td><td>-14.7</td><td>-0.7</td><td>0.9</td></tr>
+<tr><td>squawkbig</td><td>-13.6</td><td>-0.2</td><td>0.6</td></tr>
+<tr><td>step0</td><td>-70.0</td><td>-0.9</td><td>0.2</td></tr>
+<tr><td>step1</td><td>-70.0</td><td>-1.0</td><td>0.2</td></tr>
+<tr><td>step2</td><td>-70.0</td><td>-0.5</td><td>0.2</td></tr>
+<tr><td>step3</td><td>-70.0</td><td>-0.6</td><td>0.2</td></tr>
+<tr><td>stepwood</td><td>-70.0</td><td>-0.4</td><td>0.3</td></tr>
+<tr><td>thump</td><td>-18.0</td><td>-0.5</td><td>0.5</td></tr>
+<tr><td>whoosh0</td><td>-24.1</td><td>-1.7</td><td>0.5</td></tr>
+<tr><td>whoosh1</td><td>-22.2</td><td>-2.4</td><td>0.5</td></tr>
+<tr><td>whoosh2</td><td>-70.0</td><td>-2.5</td><td>0.4</td></tr>
+</table></div><p>Short effects (under about 0.4 s) give a low or no integrated loudness reading: EBU R128 needs 400 ms blocks.</p></main></body></html>
