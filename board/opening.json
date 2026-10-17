@@ -1,5 +1,5 @@
 {
- "play": 24.1645,
+ "play": 24.195,
  "shots": [
   {
    "f": "o_00.jpg",
@@ -9,12 +9,12 @@
   {
    "f": "o_01.jpg",
    "label": "leo: Don't be late!",
-   "t": 4.4
+   "t": 4.5
   },
   {
    "f": "o_02.jpg",
    "label": "matilda: I won't!",
-   "t": 7.1
+   "t": 7.2
   },
   {
    "f": "o_03.jpg",
@@ -34,7 +34,7 @@
   {
    "f": "o_06.jpg",
    "label": "in play",
-   "t": 24.6
+   "t": 24.7
   }
  ],
  "errors": [
